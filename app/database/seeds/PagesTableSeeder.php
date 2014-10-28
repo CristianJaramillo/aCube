@@ -16,6 +16,23 @@ class PagesTableSeeder extends Seeder {
 		$pages = [
 			[
 				'name' => 'login',
+				'app'  => 'apps.login',
+			],
+			[
+				'name' => '401',
+				'app'  => 'errors.401',
+			],
+			[
+				'name' => '403',
+				'app'  => 'errors.403',
+			],
+			[
+				'name' => '404',
+				'app'  => 'errors.404',
+			],
+			[
+				'name' => '500',
+				'app'  => 'errors.500',
 			],
 		];
 

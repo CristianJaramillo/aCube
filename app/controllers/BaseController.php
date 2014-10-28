@@ -57,7 +57,9 @@ class BaseController extends Controller {
 	{
 		$page = new PageRepo();
 
-		return $page->current();
+		$type = Auth::check() ? 'private' : 'public';
+
+		return $page->current($type);
 	}
 
 	/**
@@ -80,6 +82,9 @@ class BaseController extends Controller {
 	 */
 	protected function index()
 	{
+
+		// dd($this->params);
+
 		return View::make($this->layout, $this->params);
 	}
 

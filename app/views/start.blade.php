@@ -26,5 +26,10 @@
 			{{ $page->title }}
 		@endsection
 	@endif
+
+	{{-- APP --}}
+	@if(isset($page->app))
+		@include($page->app)
+	@endif
 	
 @endif
