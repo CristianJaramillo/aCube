@@ -5,7 +5,7 @@ namespace aCube\Entities;
 class Page extends \Eloquent {
 
 	/**
-	 * The database table used by the model.
+	 * The database table used by the entitie.
 	 *
 	 * @var string
 	 */
