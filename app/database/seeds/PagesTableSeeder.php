@@ -19,6 +19,10 @@ class PagesTableSeeder extends Seeder {
 				'app'  => 'apps.login',
 			],
 			[
+				'name' => 'dashboard',
+				'app'  => 'apps.dashboard',
+			],
+			[
 				'name' => '401',
 				'app'  => 'errors.401',
 			],

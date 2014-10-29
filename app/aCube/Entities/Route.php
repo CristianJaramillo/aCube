@@ -2,18 +2,18 @@
 
 namespace aCube\Entities;
 
-class ExtSipPerm extends \Eloquent {
+class Route extends \Eloquent {
 	/**
 	 * The database table used by the entitie.
 	 *
 	 * @var string
 	 */
-	protected $table = 'ext_sip_perms';
+	protected $table = 'routes';
 	
 	/**
 	 * The attibutes from the method create.
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['ext_sip_phone_id', 'route_type_id', 'perm', 'password'];
+	protected $fillable = [];
 }

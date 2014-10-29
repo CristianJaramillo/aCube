@@ -1,4 +1,3 @@
-
 @section('app')
 	<style>
 		.error-text-2 {

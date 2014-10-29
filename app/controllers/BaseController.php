@@ -59,7 +59,11 @@ class BaseController extends Controller {
 
 		$type = Auth::check() ? 'private' : 'public';
 
-		return $page->current($type);
+		$name = Route::currentRouteName();
+		
+		$name = $name != null ? $name : Route::getCurrentRoute()->getUri();		
+
+		return $page->current($name, $type);
 	}
 
 	/**

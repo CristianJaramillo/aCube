@@ -57,7 +57,7 @@ class CreateExtSipPhonesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ext_sip_phones');
+		Schema::dropIfExists('ext_sip_phones');
 	}
 
 }

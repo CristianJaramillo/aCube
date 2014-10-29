@@ -12,9 +12,9 @@ class PageRepo extends BaseRepo
 	 * 
 	 * @return Eloquent
 	 */
-	public function current($type = 'public')
+	public function current($name, $type = 'public')
     {
-        return $this->entitie->current()->where('type', $type)->first();
+        return $this->entitie->current($name)->where('type', $type)->first();
     }
 
 	/**

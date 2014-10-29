@@ -44,9 +44,9 @@ class Page extends \Eloquent {
 	 * @param $query
 	 * @return $query
 	 */
-	public function scopeCurrent($query)
+	public function scopeCurrent($query, $name)
     {
-        return $query->where('name', \Route::currentRouteName());
+        return $query->where('name', $name);
     }
 
 	/**

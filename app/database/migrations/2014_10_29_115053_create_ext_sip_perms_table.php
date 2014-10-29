@@ -16,7 +16,9 @@ class CreateExtSipPermsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('ext_sip_phone_id')->unsigned();
-			$table->foreign('ext_sip_phone_id')->references('id')->on('ext_sip_phone')->onDelete('cascade')->onUpdate('cascade');
+			$table->foreign('ext_sip_phone_id')->references('id')->on('ext_sip_phones')->onDelete('cascade')->onUpdate('cascade');
+			$table->integer('route_type_id')->unsigned();
+			$table->foreign('route_type_id')->references('id')->on('route_types')->onDelete('cascade')->onUpdate('cascade');
 			$table->enum('perm', array('no', 'password', 'yes'))->default('yes');
 			$table->string('password');
 			$table->timestamps();
@@ -31,7 +33,7 @@ class CreateExtSipPermsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('ext_sip_perms');
+		Schema::dropIfExists('ext_sip_perms');
 	}
 
 }

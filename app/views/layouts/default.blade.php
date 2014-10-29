@@ -54,7 +54,8 @@
 	</head>
 	
 	<body class="animated fadeInDown">
-
+		
+		@section('header')
 		<header id="header">
 
 			<div id="logo-group">
@@ -64,6 +65,7 @@
 			<span id="extr-page-header-space"> <span class="hidden-mobile">Need an account?</span> <a href="register.html" class="btn btn-danger">Create account</a> </span>
 
 		</header>
+		@show
 
 		<!-- MAIN PANEL -->
 		<div id="main" role="main">
