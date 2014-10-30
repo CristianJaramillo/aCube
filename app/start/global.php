@@ -52,7 +52,7 @@ App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
 
-	if ($code <= 500) {
+	if ($code != 500) {
 		$page = new PageRepo();
 
 		$page = $page->current($code);

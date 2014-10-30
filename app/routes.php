@@ -6,15 +6,13 @@
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', ['as' => 'login', 'uses' => 'LoginController@index']);
+Route::get('/', ['as' => 'login', 'uses' => 'HomeController@index']);
+Route::post('/', ['as' => 'sign-in', 'uses' => 'HomeController@signIn']);
 
-Route::post('/', function () {
-	return Redirect::to('dashboard');
-});
+Route::get('sign-up', ['as' => 'sign-up', 'uses' => 'HomeController@index']);
+Route::post('register', ['as' => 'register', 'uses' => 'HomeController@register']);
 
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'LoginController@index']);
+Route::get('forgotpassword', ['as' => 'forgotpassword', 'uses' => 'HomeController@index']);
+Route::post('forgot', ['as' => 'forgot', 'uses' => 'HomeController@forgot']);
 
-/**
- * Esta página no esta registrada en la base de datos.
- */
-Route::get('example', ['uses', 'LoginController@index']);
+Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@index']);

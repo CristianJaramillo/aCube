@@ -57,7 +57,7 @@
 								</b> 
 							</label>
 							<div class="note">
-								<a href="forgotpassword.html">Forgot password?</a>
+								<a href="{{ route('forgotpassword') }}">Forgot password?</a>
 							</div>
 						</section>
 
