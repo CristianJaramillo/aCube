@@ -1,5 +1,7 @@
 <?php
 
+use aCube\Entities\Page;
+
 class PagesTableSeeder extends Seeder {
 
 	public function run()
@@ -22,8 +24,12 @@ class PagesTableSeeder extends Seeder {
 				'app'  => 'apps.forgotpassword',
 			],
 			[
-				'name' => 'dashboard',
-				'app'  => 'apps.dashboard',
+				'name' => 'extensions',
+				'app'  => 'apps.extensions',
+			],
+			[
+				'name' => 'users',
+				'app'  => 'apps.users',
 			],
 			[
 				'name' => '401',

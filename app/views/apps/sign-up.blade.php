@@ -34,8 +34,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
 			<div class="well no-padding">
-
-				<form action="php/demo-register.php" id="smart-form-register" class="smart-form client-form">
+				{{ Form::open(['class' => 'smart-form client-form', 'id' => 'smart-form-register', 'method' => 'POST', 'route' => 'register']) }}
 					<header>
 						Registration is FREE*
 					</header>
@@ -118,7 +117,7 @@
 							Thank you for your registration!
 						</p>
 					</div>
-				</form>
+				{{ Form::close() }}
 
 			</div>
 			<p class="note text-center">*FREE Registration ends on October 2015.</p>

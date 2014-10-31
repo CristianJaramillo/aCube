@@ -34,7 +34,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
 			<div class="well no-padding">
-				{{ Form::open(['class' => 'smart-form client-form', 'id' => 'login-form', 'method' => 'POST']) }}
+				{{ Form::open(['class' => 'smart-form client-form', 'id' => 'login-form', 'method' => 'POST', 'route' => 'sign-in']) }}
 					<header>
 						Sign In
 					</header>

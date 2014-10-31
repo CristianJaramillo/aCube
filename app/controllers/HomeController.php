@@ -18,12 +18,12 @@ class HomeController extends BaseController {
 
 	public function signIn()
 	{
-		dd(input::all());
+		dd(Input::all());
 	}
 
 	public function register()
 	{
-		dd(input::all());
+		dd(Input::all());
 	}
 
 }
