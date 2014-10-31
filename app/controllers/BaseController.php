@@ -55,15 +55,25 @@ class BaseController extends Controller {
 	 */
 	protected function getPage()
 	{
-		$page = new PageRepo();
+		$page = null;
+		if(Request::isMethod('get'))
+		{
+			$page = new PageRepo();
 
-		$type = Auth::check() ? 'private' : 'public';
+			$type = Auth::check() ? 'private' : 'public';
 
-		$name = Route::currentRouteName();
-		
-		$name = $name != null ? $name : Route::getCurrentRoute()->getUri();		
+			$name = Route::currentRouteName();
+			
+			$name = $name != null ? $name : Route::getCurrentRoute()->getUri();		
 
-		return $page->current($name, $type);
+			$page = $page->current($name, $type);
+
+			if(!is_object($page))
+			{
+				throw new Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+			}
+		}
+		return $page;		
 	}
 
 	/**

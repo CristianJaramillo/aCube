@@ -125,6 +125,8 @@ return array(
 		'Barryvdh\Debugbar\ServiceProvider',
 		// Fast Workflow in Laravel With Custom Generators
 		'Way\Generators\GeneratorsServiceProvider',
+		// Custom
+        'aCube\Components\FieldServiceProvider',
 	),
 
 	/*
@@ -168,6 +170,8 @@ return array(
 		'Debugbar'        => 'Barryvdh\Debugbar\Facade',
 		'Eloquent'        => 'Illuminate\Database\Eloquent\Model',
 		'Event'           => 'Illuminate\Support\Facades\Event',
+		// Custom
+        'Field'           => 'aCube\Components\Field',
 		'File'            => 'Illuminate\Support\Facades\File',
 		'Form'            => 'Illuminate\Support\Facades\Form',
 		'Hash'            => 'Illuminate\Support\Facades\Hash',

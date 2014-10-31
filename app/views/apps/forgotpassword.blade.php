@@ -41,24 +41,8 @@
 
 					<fieldset>
 						
-						<section>
-							<label class="label">Enter your email address</label>
-							<label class="input"> <i class="icon-append fa fa-envelope"></i>
-								<input type="email" name="email">
-								<b class="tooltip tooltip-top-right"><i class="fa fa-envelope txt-color-teal"></i> Please enter email address for password reset</b></label>
-						</section>
-						<section>
-							<span class="timeline-seperator text-center text-primary"> <span class="font-sm">OR</span> 
-						</section>
-						<section>
-							<label class="label">Your Username</label>
-							<label class="input"> <i class="icon-append fa fa-user"></i>
-								<input type="text" name="username">
-								<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Enter your username</b> </label>
-							<div class="note">
-								<a href="{{ route('login') }}">I remembered my password!</a>
-							</div>
-						</section>
+						{{-- PASSWORD --}}
+						{{ Field::email('email', ['id' => 'email', 'required'], 'forgotpassword') }}
 
 					</fieldset>
 					<footer>

@@ -1,4 +1,14 @@
 @section('app')
+	{{-- MESSAGE --}}
+	@if (Session::has('message'))
+		<div class="alert alert-success fade in">
+			<button class="close" data-dismiss="alert">
+				×
+			</button>
+			<i class="fa-fw fa fa-check"></i>
+			{{ \Lang::get('utils.message.'.Session::get('message')) }}
+		</div>
+	@endif
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 hidden-xs hidden-sm">
 			<h1 class="txt-color-red login-header-big">aCube</h1>
@@ -40,34 +50,14 @@
 					</header>
 
 					<fieldset>
-						<section>
-							<label class="label">E-mail</label>
-							<label class="input"> <i class="icon-append fa fa-user"></i>
-							<input type="email" name="email">
-							<b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b></label>
-						</section>
+						
+						{{-- EMAIL --}}
+						{{ Field::email('email', ['id' => 'email', 'required'], NULL) }}
 
-						<section>
-							<label class="label">Password</label>
-							<label class="input"> <i class="icon-append fa fa-lock"></i>
-								<input type="password" name="password">
-								<b class="tooltip tooltip-top-right">
-									<i class="fa fa-lock txt-color-teal"></i> 
-									Enter your password
-								</b> 
-							</label>
-							<div class="note">
-								<a href="{{ route('forgotpassword') }}">Forgot password?</a>
-							</div>
-						</section>
-
-						<section>
-							<label class="checkbox">
-								<input type="checkbox" name="remember" checked="">
-								<i></i>
-								Stay signed in
-							</label>
-						</section>
+						{{-- PASSWORD --}}
+						{{ Field::password('password', ['id' => 'password', 'required'], 'password') }}
+						{{-- REMEMBER --}}
+						{{ Field::checkbox('remember', NULL, ['id' => 'remember'], NULL, 'checkbox') }}
 					</fieldset>
 
 					<footer>
@@ -75,6 +65,7 @@
 							Sign in
 						</button>
 					</footer>
+
 				{{ Form::close() }}
 			</div>
 

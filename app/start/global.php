@@ -51,7 +51,7 @@ use aCube\Repositories\PageRepo;
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
-
+	
 	if ($code != 500) {
 		$page = new PageRepo();
 
@@ -59,6 +59,17 @@ App::error(function(Exception $exception, $code)
 
 	    return Response::view('start', compact('page'), $code);
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Application Error Register Handler
+|--------------------------------------------------------------------------
+|
+*/
+
+App::error(function (\aCube\Managers\ManagerValidationException $exception) {
+    return Redirect::back()->withInput()->withErrors($exception->getErrors());
 });
 
 /*

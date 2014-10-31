@@ -1,5 +1,7 @@
 <?php
 
+use aCube\Managers\RegisterManager;
+
 class HomeController extends BaseController {
 
 	/*
@@ -23,7 +25,13 @@ class HomeController extends BaseController {
 
 	public function register()
 	{
-		dd(Input::all());
+		$manager = new RegisterManager(new \aCube\Entities\User, Input::all());
+        
+        $manager->save();
+
+        Session::flash('message', 'register-sucess');
+
+        return Redirect::route('sign-in');
 	}
 
 }
