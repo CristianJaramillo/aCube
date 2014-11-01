@@ -70,7 +70,7 @@ class BaseController extends Controller {
 
 			if(!is_object($page))
 			{
-				throw new Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+				// throw new Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 			}
 		}
 		return $page;		

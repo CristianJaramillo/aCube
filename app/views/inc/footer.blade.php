@@ -54,3 +54,5 @@
 	</div>
 	<!-- END PAGE FOOTER -->
 @endsection
+
+<!-- Arturo Colorado ---- sotano-quevedo  -->

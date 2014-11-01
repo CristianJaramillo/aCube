@@ -12,6 +12,18 @@ class PagesTableSeeder extends Seeder {
 		 */
 		$pages = [
 			[
+				'name'   => 'dashboard',
+				'layout' => 'layouts.dashboard',
+				'app'    => NULL,
+			],
+			[
+				'name'   => 'blank_',
+				'layout' => NULL,
+				'title'  => 'blank',
+				'app'    => 'apps.dashboard.blank_',
+				'type'   => 'private',
+			],
+			[
 				'name' => 'login',
 				'app'  => 'apps.login',
 			],
