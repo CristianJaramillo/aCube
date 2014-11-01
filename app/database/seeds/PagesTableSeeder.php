@@ -15,6 +15,7 @@ class PagesTableSeeder extends Seeder {
 				'name'   => 'dashboard',
 				'layout' => 'layouts.dashboard',
 				'app'    => NULL,
+				'type'   => 'private',
 			],
 			[
 				'name'   => 'blank_',
@@ -34,14 +35,6 @@ class PagesTableSeeder extends Seeder {
 			[
 				'name' => 'forgotpassword',
 				'app'  => 'apps.forgotpassword',
-			],
-			[
-				'name' => 'extensions',
-				'app'  => 'apps.extensions',
-			],
-			[
-				'name' => 'users',
-				'app'  => 'apps.users',
 			],
 			[
 				'name' => '401',

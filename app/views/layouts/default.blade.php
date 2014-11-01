@@ -72,21 +72,12 @@
 
 		<!-- MAIN PANEL -->
 		<div id="main" role="main">
-			@if(Auth::check())
-				@yield('shortcuts')
-				@yield('left-panel')
-				@yield('ribbon')
-				<!-- APP -->
-				@yield('app')
-				<!-- END APP -->
-			@else
-				<!-- MAIN CONTENT -->
+			<!-- MAIN CONTENT -->
 				<div id="content" class="container">
 					<!-- APP -->
 					@yield('app')
 					<!-- END APP -->
 				</div>
-			@endif
 			</div>
 		<!-- END MAIN PANEL -->
 

@@ -52,8 +52,11 @@
 						{{ Field::email('email', ['id' => 'email', 'required'], NULL) }}
 						{{-- CONFIRM EMAIL --}}
 						{{ Field::email('email_confirmation', ['id' => 'email_confirmation', 'required'], NULL) }}
-						{{-- REMEMBER --}}
-						{{ Field::checkbox('authorized', NULL, ['id' => 'authorized'], NULL, 'checkbox') }}
+						<div class="row">
+							{{-- AUTHORIZED --}}
+							{{ Field::checkbox('authorized', NULL, ['checked' => 'checked', 'id' => 'authorized'], NULL, 'toggle') }}
+							<div class=" col col-xs-8 col-sm-9 col-md-7"></div>
+						</div>
 					</fieldset>
 					<footer>
 						<button type="submit" class="btn btn-primary">

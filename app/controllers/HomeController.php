@@ -19,7 +19,7 @@ class HomeController extends BaseController {
 		$page = new PageRepo();
 		$page = $page->current($app, 'private');
 
-		// dd($page);
+		unset($app);
 
 		if(!is_object($page))
 		{
@@ -37,14 +37,9 @@ class HomeController extends BaseController {
 		dd(Input::all());
 	}
 
-	public function signIn()
-	{
-		dd(Input::all());
-	}
-
 	public function register()
 	{
-		$manager = new RegisterManager(new \aCube\Entities\User, Input::all());
+		$manager = new RegisterManager(new aCube\Entities\User, Input::all());
         
         $manager->save();
 

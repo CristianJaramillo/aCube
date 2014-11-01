@@ -34,7 +34,7 @@
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
 			<div class="well no-padding">
-				<form action="login.html" id="login-form" class="smart-form client-form">
+				{{ Form::open(['class' => 'smart-form client-form', 'id' => 'login-form', 'method' => 'POST', 'route' => 'forgot']) }}
 					<header>
 						Forgot Password
 					</header>
@@ -50,8 +50,7 @@
 							<i class="fa fa-refresh"></i> Reset Password
 						</button>
 					</footer>
-				</form>
-
+				{{ Form::close() }}
 			</div>
 						
 			<h5 class="text-center"> - Or sign in using -</h5>

@@ -50,10 +50,8 @@
 					</header>
 
 					<fieldset>
-						
 						{{-- EMAIL --}}
 						{{ Field::email('email', ['id' => 'email', 'required'], NULL) }}
-
 						{{-- PASSWORD --}}
 						{{ Field::password('password', ['id' => 'password', 'required'], 'password') }}
 						{{-- REMEMBER --}}

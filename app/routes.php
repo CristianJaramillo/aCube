@@ -8,18 +8,68 @@
 
 // Debugbar::disable();
 
-Route::get('/', ['as' => 'login', 'uses' => 'HomeController@index']);
-Route::post('/', ['as' => 'sign-in', 'uses' => 'HomeController@signIn']);
+/*
+ | GUEST public group
+ */
+Route::group(array('before' => 'guest'), function(){
+	
+	/*
+	 | login route
+	 */
+	Route::get('/', ['as' => 'login', 'uses' => 'HomeController@index']);
+	/*
+	 | sing-up route
+	 */
+	Route::get('sign-up', ['as' => 'sign-up', 'uses' => 'HomeController@index']);
+	/*
+	 | forgotpassword route
+	 */
+	 Route::get('forgotpassword', ['as' => 'forgotpassword', 'uses' => 'HomeController@index']);
 
-Route::get('sign-up', ['as' => 'sign-up', 'uses' => 'HomeController@index']);
-Route::post('register', ['as' => 'register', 'uses' => 'HomeController@register']);
+	/*
+	 | CSRT security group
+	 */
+	Route::group(array('before' => 'csrf'), function(){
+		/*
+		 | sign-in route 
+		 */
+		Route::post('/', ['as' => 'sign-in', 'uses' => 'AuthController@login']);
+		/*
+		 | register router
+		 */
+		 Route::post('register', ['as' => 'register', 'uses' => 'HomeController@register']);
+		/*
+		 | forgot route
+		 */
+		Route::post('forgot', ['as' => 'forgot', 'uses' => 'HomeController@forgot']);
+	});
 
-Route::get('forgotpassword', ['as' => 'forgotpassword', 'uses' => 'HomeController@index']);
-Route::post('forgot', ['as' => 'forgot', 'uses' => 'HomeController@forgot']);
+});
 
-Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@index']);
+/*
+ | AUTH private group
+ */
+Route::group(array('before' => 'auth'), function(){
+	
+	/*
+	 | dashboard route
+	 */
+	Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+	/*
+	 | ajax/{app} route
+	 */
+	Route::get('ajax/{app}', ['uses' => 'HomeController@ajax']);
+	
+	/*
+	 | logout route
+	 */
+	Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
 
-Route::get('dashboard/users', ['as' => 'users', 'uses' => 'HomeController@index']);
-Route::get('dashboard/extensions', ['as' => 'extensions', 'uses' => 'HomeController@index']);
+	/*
+	 | CSRT security group
+	 */
+	Route::group(array('before' => 'csrf'), function(){
+		
+	});
 
-Route::get('ajax/{app}', ['uses' => 'HomeController@ajax']);
+});

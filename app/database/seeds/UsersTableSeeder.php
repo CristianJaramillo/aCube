@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder {
 				'username'   => $faker->userName,
 				'password'   => $faker->password,
 				'email'      => $faker->email,
-				'authorized' => $faker->randomElement(array('false', 'true')),
+				'authorized' => $faker->randomElement(array('off', 'on')),
 			]);
 		}
 

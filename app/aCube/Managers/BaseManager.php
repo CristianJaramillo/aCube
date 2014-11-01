@@ -13,7 +13,12 @@ abstract class BaseManager
     /**
      * @var array
      */
-    protected $data;
+    protected $data  = array();
+
+    /**
+     * @var array
+     */
+    protected $rules = array();
 
     /**
      * @param \Eloquent $entity
@@ -23,7 +28,18 @@ abstract class BaseManager
     public function __construct($entity, array $data)
     {
         $this->entity = $entity;
-        $this->data   = array_only($data, array_keys($this->getRules()));
+        $this->rules  = $this->getRules();
+        $this->data   = array_only($data, array_keys($this->rules)); 
+    }
+
+    public function addData($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
+
+    public function addRule($key, $value)
+    {
+        $this->rules[$key] = $value;
     }
 
     /**
@@ -37,9 +53,7 @@ abstract class BaseManager
      */
     public function isValid()
     {
-        $rules = $this->getRules();
-
-        $validation = \Validator::make($this->data, $rules);
+        $validation = \Validator::make($this->data, $this->rules);
 
         if ($validation->fails())
         {

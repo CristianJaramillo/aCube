@@ -15,7 +15,7 @@ class RegisterManager extends BaseManager
 			'password_confirmation' => 'min:6|max:25|required',
 			'email'                 => 'confirmed|email|required|unique:users,email',
 			'email_confirmation'    => 'required',
-			'authorized'            => 'required',
+			'authorized'            => 'in:on,off|required',
 		];
 	}
 
@@ -26,7 +26,6 @@ class RegisterManager extends BaseManager
 	public function preparateData(array $data)
 	{
 		$data['full_name'] = strip_tags($data['full_name']);
-		$data['authorized'] = $data['authorized'] == 'on' ? true : false; 
 
 		$delete = ['password_confirmation', 'email_confirmation'];
 
