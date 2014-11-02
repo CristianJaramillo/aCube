@@ -73,4 +73,33 @@
 
 @section('script')
 	@parent
+	<script type="text/javascript">
+		runAllForms();
+
+		$(function() {
+			// Validation
+			$("#login-form").validate({
+				// Rules for form validation
+				rules : {
+					email : {
+						required : true,
+						email : true
+					}
+				},
+
+				// Messages for form validation
+				messages : {
+					email : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email'))) }}',
+						email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email'))) }}'
+					}
+				},
+
+				// Do not change code below
+				errorPlacement : function(error, element) {
+					error.insertAfter(element.parent());
+				}
+			});
+		});
+	</script>
 @endsection

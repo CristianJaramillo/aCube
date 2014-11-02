@@ -1,12 +1,12 @@
 @section('app')
 	{{-- MESSAGE --}}
 	@if (Session::has('message'))
-		<div class="alert alert-success fade in">
+		<div class="alert alert-<?php echo Session::get('message') == 'login-error' ? 'warning': 'info' ; ?> fade in">
 			<button class="close" data-dismiss="alert">
 				×
 			</button>
 			<i class="fa-fw fa fa-check"></i>
-			{{ \Lang::get('utils.message.'.Session::get('message')) }}
+			{{ \Lang::get('utils.message.' . Session::get('message')) }}
 		</div>
 	@endif
 	<div class="row">
@@ -115,11 +115,11 @@
 				// Messages for form validation
 				messages : {
 					email : {
-						required : 'Please enter your email address',
-						email : 'Please enter a VALID email address'
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email'))) }}',
+						email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email'))) }}'
 					},
 					password : {
-						required : 'Please enter your password'
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password'))) }}'
 					}
 				},
 

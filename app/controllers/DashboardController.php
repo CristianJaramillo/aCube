@@ -11,9 +11,17 @@ class DashboardController extends BaseController {
 	|
 	*/
 
-	public function index_()
+	/**
+	 * POST ajax/{app}
+	 *
+	 * @param string $app
+	 * @return \View
+	 */
+	public function ajax($app)
 	{
-		// dd(Auth::user()->full_name);
+		$this->addParam('app', $app);
+
+		dd($this->params);
 	}
 
 }

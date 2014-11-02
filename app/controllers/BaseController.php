@@ -55,14 +55,9 @@ class BaseController extends Controller {
 	 */
 	protected function getPage()
 	{
-		$page = null;
-		
-		if(Request::isMethod('get'))
-		{
-			$page = new PageRepo();
-			$type = Auth::check() ? 'private' : 'public';
-			$page = $page->current(Route::currentRouteName(), $type);
-		}
+		$page = new PageRepo();
+		$type = Auth::check() ? 'private' : 'public';
+		$page = $page->current(Route::currentRouteName(), $type);
 
 		return $page;		
 	}
@@ -76,7 +71,7 @@ class BaseController extends Controller {
 	{
 		if ( ! is_null($this->layout))
 		{
-			if (empty($this->params)) {
+			if (empty($this->params) && !Request::is('logout') && !Request::ajax()) {
 				$this->addParam('page', $this->getPage());
 			}
 		}

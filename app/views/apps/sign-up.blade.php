@@ -47,7 +47,7 @@
 						{{-- PASSWORD --}}
 						{{ Field::password('password', ['id' => 'password', 'required']) }}
 						{{-- CONFIRM PASSWORD --}}
-						{{ Field::password('password_confirmation', ['id' => 'password', 'required']) }}
+						{{ Field::password('password_confirmation', ['id' => 'password_confirmation', 'required']) }}
 						{{-- EMAIL --}}
 						{{ Field::email('email', ['id' => 'email', 'required'], NULL) }}
 						{{-- CONFIRM EMAIL --}}
@@ -128,17 +128,6 @@
 		<script type="text/javascript">
 			runAllForms();
 			
-			// Model i agree button
-			$("#i-agree").click(function(){
-				$this=$("#terms");
-				if($this.checked) {
-					$('#myModal').modal('toggle');
-				} else {
-					$this.prop('checked', true);
-					$('#myModal').modal('toggle');
-				}
-			});
-			
 			// Validation
 			$(function() {
 				// Validation
@@ -153,59 +142,51 @@
 							required : true,
 							email : true
 						},
+						email_confirmation: {
+							required: true,
+							email: true, 
+							equalTo: '#email'
+						},
 						password : {
 							required : true,
 							minlength : 3,
 							maxlength : 20
 						},
-						passwordConfirm : {
+						password_confirmation : {
 							required : true,
 							minlength : 3,
 							maxlength : 20,
 							equalTo : '#password'
 						},
-						firstname : {
-							required : true
-						},
-						lastname : {
-							required : true
-						},
-						gender : {
-							required : true
-						},
-						terms : {
+						full_name : {
 							required : true
 						}
 					},
 
 					// Messages for form validation
 					messages : {
-						login : {
-							required : 'Please enter your login'
+						username : {
+							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.username'))) }}'
 						},
 						email : {
-							required : 'Please enter your email address',
-							email : 'Please enter a VALID email address'
+							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email'))) }}',
+							email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email'))) }}'
+						},
+						email_confirmation : {
+							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}',
+							email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}',
+							equalTo : '{{ Lang::get('validation.confirmed', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}'
 						},
 						password : {
-							required : 'Please enter your password'
+							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password'))) }}'
 						},
-						passwordConfirm : {
-							required : 'Please enter your password one more time',
-							equalTo : 'Please enter the same password as above'
+						password_confirmation : {
+							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password_confirmation'))) }}',
+							equalTo : '{{ Lang::get('validation.confirmed', array('attribute' => Lang::get('validation.attributes.password_confirmation'))) }}'
 						},
-						firstname : {
-							required : 'Please select your first name'
+						full_name : {
+							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.full_name'))) }}'
 						},
-						lastname : {
-							required : 'Please select your last name'
-						},
-						gender : {
-							required : 'Please select your gender'
-						},
-						terms : {
-							required : 'You must agree with Terms and Conditions'
-						}
 					},
 
 					// Ajax form submition

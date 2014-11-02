@@ -9,7 +9,26 @@
 // Debugbar::disable();
 
 /*
- | GUEST public group
+ |--------------------------------------------------------------------------
+ | GLOBAL ROUTES
+ |--------------------------------------------------------------------------
+ */
+
+/*
+ | logout route
+ */
+Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
+
+/*
+ |--------------------------------------------------------------------------
+ | END GLOBAL ROUTES
+ |--------------------------------------------------------------------------
+ */
+
+/*
+ |--------------------------------------------------------------------------
+ | GUEST PUBLIC GROUP ROUTES
+ |--------------------------------------------------------------------------
  */
 Route::group(array('before' => 'guest'), function(){
 	
@@ -45,9 +64,16 @@ Route::group(array('before' => 'guest'), function(){
 	});
 
 });
+/*
+ |--------------------------------------------------------------------------
+ | END GUEST PUBLIC GROUP ROUTES
+ |--------------------------------------------------------------------------
+ */
 
 /*
- | AUTH private group
+ |--------------------------------------------------------------------------
+ | AUTH PRIVATE GROUP ROUTES
+ |--------------------------------------------------------------------------
  */
 Route::group(array('before' => 'auth'), function(){
 	
@@ -58,12 +84,7 @@ Route::group(array('before' => 'auth'), function(){
 	/*
 	 | ajax/{app} route
 	 */
-	Route::get('ajax/{app}', ['uses' => 'HomeController@ajax']);
-	
-	/*
-	 | logout route
-	 */
-	Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
+	Route::get('ajax/{app}', ['uses' => 'DashboardController@ajax']);
 
 	/*
 	 | CSRT security group
@@ -73,3 +94,8 @@ Route::group(array('before' => 'auth'), function(){
 	});
 
 });
+/*
+ |--------------------------------------------------------------------------
+ | END AUTH PRIVATE GROUP ROUTES
+ |--------------------------------------------------------------------------
+ */

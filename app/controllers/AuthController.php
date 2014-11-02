@@ -4,6 +4,10 @@ use aCube\Managers\AuthManager;
 
 class AuthController extends BaseController {
 
+    /**
+     *
+     * @return
+     */
     public function login()
     {
         $manager = new AuthManager(Input::all());
@@ -11,20 +15,24 @@ class AuthController extends BaseController {
         if (!$manager->save())
         {
             Session::flash('message', 'login-error');
+            return Redirect::to('/');
+        } else {
+            Session::flash('message', 'login-success');
+            return Redirect::to('dashboard');
         }
-        
-        Session::flash('message', 'login-success');
-        
-        return Redirect::route('dashboard');
     }
 
+    /**
+     *
+     * @return
+     */
     public function logout()
     {
         Auth::logout();
         
         Session::flash('message', 'logout-success');
         
-        return Redirect::route('login');
+        return Redirect::to('/');
     }
 
 } 

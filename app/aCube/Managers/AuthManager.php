@@ -18,8 +18,6 @@ class AuthManager extends BaseManager
     {
         $this->rules  = $this->getRules();
         $this->data   = array_only($data, array_keys($this->rules));
-        // $this->addData('authorized', 'on');
-        // $this->addRule('authorized', 'required');
     }
 
 	/**

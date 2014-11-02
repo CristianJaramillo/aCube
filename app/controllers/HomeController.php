@@ -1,7 +1,6 @@
 <?php
 
 use aCube\Managers\RegisterManager;
-use aCube\Repositories\PageRepo;
 
 class HomeController extends BaseController {
 
@@ -14,29 +13,22 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function ajax($app = 'blank_')
-	{
-		$page = new PageRepo();
-		$page = $page->current($app, 'private');
-
-		unset($app);
-
-		if(!is_object($page))
-		{
-			unset($page);
-			throw new Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-		}
-
-		$this->addParam(['sub_title' => $page->title]);
-
-		return View::make('apps.dashboard.blank_', $this->params);
-	}
-
+	/**
+	 * POST forgot
+	 *
+     * return 
+	 */
 	public function forgot()
 	{
 		dd(Input::all());
 	}
 
+	/**
+	 * POST register
+	 *
+	 * @return \View
+	 * @throws aCube\Managers\ManagerValidationException
+	 */
 	public function register()
 	{
 		$manager = new RegisterManager(new aCube\Entities\User, Input::all());

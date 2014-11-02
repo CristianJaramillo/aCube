@@ -15,7 +15,7 @@ class RegisterManager extends BaseManager
 			'password_confirmation' => 'min:6|max:25|required',
 			'email'                 => 'confirmed|email|required|unique:users,email',
 			'email_confirmation'    => 'required',
-			'authorized'            => 'in:on,off|required',
+			'authorized'            => 'in:on,off',
 		];
 	}
 

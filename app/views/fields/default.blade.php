@@ -4,7 +4,7 @@
 		{{ $control }}
 		<b class="tooltip tooltip-top-right">
 			<i class="fa fa-user txt-color-teal"></i> 
-			Please enter {{ $label }}
+			{{ Lang::get('validation.message_enter', ['attribute' => $label]) }}
 		</b>
 	</label>
     @if ($error)
