@@ -11,7 +11,7 @@ class ExtSipPhonesTableSeeder extends Seeder {
 	{
 		$faker = Faker::create();
 		$list_id_users = User::all()->lists('id');
-		foreach(range(1, 10) as $index)
+		foreach(range(1, 100) as $index)
 		{
 			$id = $faker->randomElement($list_id_users);
 			$name = 99 + $index;

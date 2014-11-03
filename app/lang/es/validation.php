@@ -103,6 +103,7 @@ return array(
 		'departament_id' => 'departamento',
         'email'       => 'correo electronico',
         'email_confirmation'    => 'repita su correo electronico',
+        'extension' => 'extensión',
         'full_name'   => 'nombre completo',
         'first_last_name'   => 'apellido paterno',
         'second_last_name'  => 'apellido materno',

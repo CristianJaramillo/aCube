@@ -1,5 +1,4 @@
 {{-- UI configuration (nav, ribbon, etc.) --}}
-@include('inc.config-ui')
 
 {{-- include header --}}
 @include('inc.header')

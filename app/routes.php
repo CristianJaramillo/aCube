@@ -49,6 +49,7 @@ Route::group(array('before' => 'guest'), function(){
 	 | CSRT security group
 	 */
 	Route::group(array('before' => 'csrf'), function(){
+	
 		/*
 		 | sign-in route 
 		 */
@@ -61,6 +62,7 @@ Route::group(array('before' => 'guest'), function(){
 		 | forgot route
 		 */
 		Route::post('forgot', ['as' => 'forgot', 'uses' => 'HomeController@forgot']);
+	
 	});
 
 });
@@ -80,11 +82,15 @@ Route::group(array('before' => 'auth'), function(){
 	/*
 	 | dashboard route
 	 */
-	Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+	Route::get('dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@show']);
 	/*
 	 | ajax/{app} route
 	 */
 	Route::get('ajax/{app}', ['uses' => 'DashboardController@ajax']);
+	/*
+	 | extensions
+	 */
+	Route::post('extensions', ['as' => 'extensions', 'uses' => 'HomeController@extensions']);
 
 	/*
 	 | CSRT security group

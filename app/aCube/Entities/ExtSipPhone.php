@@ -21,7 +21,8 @@ class ExtSipPhone extends \Eloquent {
 	/**
 	 * return encode to utf8 accountcode.
 	 *
-	 * @var string 
+	 * @var string
+	 * @return string
 	 */
 	public function getAccountcodeAttribute($value)
     {
@@ -31,7 +32,8 @@ class ExtSipPhone extends \Eloquent {
 	/**
 	 * The decode to utf8 accountcode.
 	 *
-	 * @var string 
+	 * @var string
+	 * @return void
 	 */
 	public function setAccountcodeAttribute($value)
     {
@@ -39,6 +41,15 @@ class ExtSipPhone extends \Eloquent {
         {
             $this->attributes['accountcode'] = utf8_decode($value);
         }
+    }
+
+    /**
+	 *
+	 * @return \Eloquent
+	 */
+	public function user()
+    {
+    	return $this->belongsTo('aCube\Entities\User');
     }
 
 }

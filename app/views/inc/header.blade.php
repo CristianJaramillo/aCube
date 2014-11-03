@@ -56,10 +56,10 @@
 		<link rel="apple-touch-startup-image" href="{{ asset('img/splash/ipad-portrait.png') }}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="{{ asset('img/splash/iphone.png') }}" media="screen and (max-device-width: 320px)">
 	</head>
-	<body class="">
+	<body class="smart-style-1">
 		<!-- POSSIBLE CLASSES: minified, fixed-ribbon, fixed-header, fixed-width
 			 You can also add different skin classes such as "smart-skin-1", "smart-skin-2" etc...-->
-		@if(true)
+		@if($main_header)
 				<!-- HEADER -->
 				<header id="header">
 					<div id="logo-group">
@@ -74,7 +74,6 @@
 
 						<!-- AJAX-DROPDOWN : control this dropdown height, look and feel from the LESS variable file -->
 						<div class="ajax-dropdown">
-
 							<!-- the ID links are fetched via AJAX to the ajax container "ajax-notifications" -->
 							<div class="btn-group btn-group-justified" data-toggle="buttons">
 								<label class="btn btn-default">
@@ -90,14 +89,11 @@
 
 							<!-- notification content -->
 							<div class="ajax-notifications custom-scroll">
-
 								<div class="alert alert-transparent">
 									<h4>Click a button to show messages here</h4>
 									This blank page message helps protect your privacy, or you can show the first message here automatically.
 								</div>
-
 								<i class="fa fa-lock fa-4x fa-border"></i>
-
 							</div>
 							<!-- end notification content -->
 
@@ -107,17 +103,14 @@
 									<i class="fa fa-refresh"></i>
 								</button> </span>
 							<!-- end footer -->
-
 						</div>
 						<!-- END AJAX-DROPDOWN -->
 					</div>
 
 					<!-- projects dropdown -->
 					<div class="project-context hidden-xs">
-
 						<span class="label">Projects:</span>
 						<span id="project-selector" class="popover-trigger-element dropdown-toggle" data-toggle="dropdown">Recent projects <i class="fa fa-angle-down"></i></span>
-
 						<!-- Suggestion: populate this list with fetch and push technique -->
 						<ul class="dropdown-menu">
 							<li>
@@ -135,7 +128,6 @@
 							</li>
 						</ul>
 						<!-- end dropdown-menu-->
-
 					</div>
 					<!-- end projects dropdown -->
 
@@ -227,8 +219,7 @@
 						</div>
 						<!-- end voice command -->
 
-						<!-- multiple lang dropdown : find all flags in the flags page -->
-											
+						<!-- multiple lang dropdown : find all flags in the flags page -->					
 						<ul class="header-dropdown-list hidden-xs">
 							<li>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
@@ -267,12 +258,9 @@
 								</ul>
 							</li>
 						</ul>
-						
 						<!-- end multiple lang -->
-
 					</div>
 					<!-- end pulled right: nav area -->
-
 				</header>
 				<!-- END HEADER -->
 
@@ -303,5 +291,4 @@
 					</ul>
 				</div>
 				<!-- END SHORTCUT AREA -->
-
 		@endif

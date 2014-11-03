@@ -14,14 +14,15 @@ class PagesTableSeeder extends Seeder {
 			[
 				'name'   => 'dashboard',
 				'layout' => 'layouts.dashboard',
+				'title'  => 'Dashboard',
 				'app'    => NULL,
 				'type'   => 'private',
 			],
 			[
-				'name'   => 'blank_',
+				'name'   => 'jqgrid-extensions',
 				'layout' => NULL,
-				'title'  => 'blank',
-				'app'    => 'apps.dashboard.blank_',
+				'title'  => 'Extensiones',
+				'app'    => 'apps.dashboard.jqgrid-extensions',
 				'type'   => 'private',
 			],
 			[

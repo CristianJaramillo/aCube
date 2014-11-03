@@ -2,12 +2,6 @@
 
 //CONFIGURATION for SmartAdmin UI
 
-//ribbon breadcrumbs config
-//array("Display Name" => "URL");
-$breadcrumbs = array(
-	"aCube" => route('login')
-);
-
 /*navigation array config
 
 ex:

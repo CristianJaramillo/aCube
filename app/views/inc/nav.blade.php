@@ -32,14 +32,6 @@
 				<ul>
 					<?php
 
-						$page_nav = array(
-							"dashboard" => array(
-								"title" => "Dashboard",
-								"url" => "ajax/blank_",
-								"icon" => "fa-home"
-							),
-						);
-
 						foreach ($page_nav as $key => $nav_item) {
 							//process parent nav
 							$nav_htm = '';
