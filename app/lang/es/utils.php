@@ -7,7 +7,7 @@ return [
         'technical' => 'Técnico'
     ],
     'message' => [
-    	'login-error'     => 'Lo sentimos su cuenta aun no ha sido activada!',
+    	'login-error'     => 'Lo sentimos correo electronico y/o contraseña invalida!',
     	'login-success'   => 'Bienvenido Administrador',
         'logout-success'          => 'Regresa pronto!',
     	'register-sucess' => 'Su solicitu de registro a sido recibida.',

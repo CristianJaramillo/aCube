@@ -88,3 +88,13 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+ |--------------------------------------------------------------------------
+ | Access Authorization to Content
+ |--------------------------------------------------------------------------
+ */
+Route::filter('authorized', function()
+{
+
+});

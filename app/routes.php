@@ -15,6 +15,20 @@
  */
 
 /*
+ | 
+ */
+Route::bind('user', function($value, $route)
+{
+	return;
+});
+/*
+ |
+ */
+Route::get('user/{user}', function ($user){
+	return $user;
+});
+
+/*
  | logout route
  */
 Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);

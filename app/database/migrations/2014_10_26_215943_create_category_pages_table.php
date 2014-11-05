@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateUsersTable extends Migration {
+class CreateCategoryPagesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,13 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('users', function(Blueprint $table)
+		Schema::create('category_pages', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('full_name');
-			$table->string('username')->unique();
-			$table->string('email', 320)->unique();
-			$table->string('password')->default('intruder');			
 			$table->integer('category_id')->unsigned();
 			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-			$table->enum('authorized', ['off', 'on'])->default('off');
-			$table->string('remember_token')->nullable();
+			$table->integer('page_id')->unsigned();
+			$table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade')->onUpdate('cascade');
 			$table->timestamps();
 		});
 	}
@@ -35,7 +31,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('users');
+		Schema::dropIfExists('category_pages');
 	}
 
 }

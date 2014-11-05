@@ -47,11 +47,12 @@ class AuthManager extends BaseManager
      */
     public function prepareData(array $data)
     {
-
     	if (isset($data['remember'])) {
-    		$this->remember = true;
+    		$this->remember = $data['remember'] == 'on' ? true : false ;
     		unset($data['remember']);
     	}
+
+    	$data['authorized'] = 'on';
 
         return $data;
     }

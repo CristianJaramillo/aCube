@@ -25,18 +25,7 @@ class HomeController extends BaseController {
 
 		$extSipPhones = $extSipPhoneRepo->extensionsAndUsers();
 
-		$json = array();
-
-		foreach ($extSipPhones as $extension) {
-			$json[] = array(
-					'id'        => $extension->id,
-					'extension'      => $extension->name,
-					'full_name' => $extension->user->full_name,
-					'email'     => $extension->user->email
-				);
-		}
-
-		return Response::json($json);
+		return Response::json($extSipPhones);
 	}
 
 	/**
@@ -57,7 +46,9 @@ class HomeController extends BaseController {
 	 */
 	public function register()
 	{
-		$manager = new RegisterManager(new aCube\Entities\User, Input::all());
+		$userRepo = new aCube\Repositories\UserRepo;
+
+		$manager = new RegisterManager($userRepo->newUser(), Input::all());
         
         $manager->save();
 

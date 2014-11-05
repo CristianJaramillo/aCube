@@ -430,23 +430,19 @@
 						sortable : false
 					}, {
 						name : 'id',
-						index : 'id',
-						sortable : true
+						index : 'id'
 					}, {
 						name : 'extension',
 						index : 'extension',
 						editable : true,
-						sortable : true
 					}, {
 						name : 'full_name',
 						index : 'full_name',
-						editable : true,
-						sortable : true
+						editable : true
 					}, {
 						name : 'email',
 						index : 'email',
-						editable : true,
-						sortable : true
+						editable : true
 					}],
 					rowNum : 10,
 					rowList : [10, 20, 30],
@@ -454,7 +450,7 @@
 					sortname : 'id',
 					toolbarfilter : true,
 					viewrecords : true,
-					sortorder : "asc",
+					sortorder : "desc",
 					gridComplete : function() {
 						var ids = jQuery("#jqgrid").jqGrid('getDataIDs');
 						for (var i = 0; i < ids.length; i++) {
@@ -491,7 +487,9 @@
 					add : false,
 					del : true
 				});
+				
 				jQuery("#jqgrid").jqGrid('inlineNav', "#pjqgrid");
+				
 				/* Add tooltips */
 				$('.navtable .ui-pg-button').tooltip({
 					container : 'body'

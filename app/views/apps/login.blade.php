@@ -1,11 +1,11 @@
 @section('app')
 	{{-- MESSAGE --}}
 	@if (Session::has('message'))
-		<div class="alert alert-<?php echo Session::get('message') == 'login-error' ? 'warning': 'info' ; ?> fade in">
+		<div class="alert alert-<?php echo Session::get('message') == 'login-error' ? 'danger': 'info' ; ?> fade in">
 			<button class="close" data-dismiss="alert">
 				×
 			</button>
-			<i class="fa-fw fa fa-check"></i>
+			<i class="fa-fw fa fa-<?php echo Session::get('message') == 'login-error' ? 'times': 'check' ; ?>"></i>
 			{{ \Lang::get('utils.message.' . Session::get('message')) }}
 		</div>
 	@endif
