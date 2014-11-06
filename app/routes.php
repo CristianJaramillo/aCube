@@ -15,20 +15,6 @@
  */
 
 /*
- | 
- */
-Route::bind('user', function($value, $route)
-{
-	return;
-});
-/*
- |
- */
-Route::get('user/{user}', function ($user){
-	return $user;
-});
-
-/*
  | logout route
  */
 Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
@@ -44,7 +30,7 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'AuthController@logout']);
  | GUEST PUBLIC GROUP ROUTES
  |--------------------------------------------------------------------------
  */
-Route::group(array('before' => 'guest'), function(){
+Route::group(array('before' => array('guest')), function(){
 	
 	/*
 	 | login route
@@ -91,7 +77,7 @@ Route::group(array('before' => 'guest'), function(){
  | AUTH PRIVATE GROUP ROUTES
  |--------------------------------------------------------------------------
  */
-Route::group(array('before' => 'auth'), function(){
+Route::group(array('before' => array('auth', 'authorized')), function(){
 	
 	/*
 	 | dashboard route

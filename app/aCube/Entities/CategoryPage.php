@@ -18,4 +18,14 @@ class CategoryPage extends \Eloquent {
 	 */
 	protected $fillable = [];
 
+	/**
+     * @param $query
+     * @param $page_id
+     * @param $user_id
+     * @return $query
+     */
+    public function scopeCountPage($query, $page_id, $category_id)
+    {
+        return $query->where('page_id', $page_id)->where('category_id', $category_id)->count();
+    }
 }
