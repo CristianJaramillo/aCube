@@ -51,15 +51,15 @@ class BaseController extends Controller {
 	}
 
 	/**
-	 * @return object Report\Repositories\PageRepo
+	 * @return void
 	 */
-	protected function getPage()
+	protected function setupPage()
 	{
 		$page = new PageRepo();
 		$type = Auth::check() ? 'private' : 'public';
 		$page = $page->current(Route::currentRouteName(), $type);
-
-		return $page;		
+		if(is_object($page)) $this->addParam('page', $page);
+		unset($page);
 	}
 
 	/**
@@ -72,7 +72,7 @@ class BaseController extends Controller {
 		if ( ! is_null($this->layout))
 		{
 			if (empty($this->params) && !Request::is('logout') && !Request::ajax()) {
-				$this->addParam('page', $this->getPage());
+				// $this->addParam('page', $this->getPage());
 			}
 		}
 	}

@@ -61,14 +61,16 @@ class DashboardController extends BaseController {
 	 *
 	 * @return \view
 	 */
-	public function show()
+	public function index()
 	{
+		$this->setupPage();
+
 		$this->addParam(array(
 			'main_header' => $this->main_header,
 			'page_nav'    => $this->page_nav,
 		));
 
-		return $this->index();
+		return parent::index();
 	}
 
 }

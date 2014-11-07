@@ -67,7 +67,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('dashboard');
+	if (Auth::check()) return Redirect::route('dashboard');
 });
 
 /*
@@ -94,4 +94,4 @@ Route::filter('csrf', function()
  | Access Authorization to Content
  |--------------------------------------------------------------------------
  */
-Route::filter('authorized', 'AuthorizedFilter');
+// Route::filter('authorized', 'AuthorizedFilter');

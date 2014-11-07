@@ -2,7 +2,7 @@
 
 namespace aCube\Managers;
 
-class AuthManager extends BaseManager
+class AuthSessionManager extends BaseManager
 {
 
 	/**
@@ -26,7 +26,7 @@ class AuthManager extends BaseManager
 	 */
 	public function auth($credentials)
 	{
-		return \Auth::attempt($credentials, $this->remember);
+		return \Auth::attempt($credentials);
 	}
 
 	/**
@@ -48,7 +48,7 @@ class AuthManager extends BaseManager
     public function prepareData(array $data)
     {
     	if (isset($data['remember'])) {
-    		$this->remember = $data['remember'] == 'on' ? true : false ;
+    		$this->remember = $data['remember'] == 'on' ? true : false;
     		unset($data['remember']);
     	}
 
