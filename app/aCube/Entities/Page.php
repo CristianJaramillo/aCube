@@ -75,4 +75,12 @@ class Page extends \Eloquent {
         }
     }
 
+    /**
+     * @return aCube\Entities\ConfigQueueMember
+     */
+    public function categoryPages()
+    {
+    	return $this->hasMany('aCube\Entities\CategoryPage', 'page_id', 'id');
+    }
+
 }

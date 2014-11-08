@@ -43,4 +43,12 @@ class Category extends \Eloquent {
         }
     }
 
+    /**
+     * @return
+     */
+    public function categoryPages()
+    {
+    	return $this->hasMany('aCube\Entities\CategoryPage', 'category_id', 'id');
+    }
+
 }

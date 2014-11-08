@@ -33,6 +33,15 @@ abstract class BaseRepo {
 
     /**
      * @param
+     * @return
+     */
+    public function find($id)
+    {
+        return $this->entitie->find($id);
+    }
+
+    /**
+     * @param
      * @param
      * @param
      * @return
@@ -40,15 +49,6 @@ abstract class BaseRepo {
     public function where($key, $exp = '=', $value)
     {
         return $this->entitie->where($key, $exp, $value)->first();
-    }
-
-    /**
-     * @param
-     * @return
-     */
-    public function find($id)
-    {
-        return $this->entitie->find($id);
     }
 
 }

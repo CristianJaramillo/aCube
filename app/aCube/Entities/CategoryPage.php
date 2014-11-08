@@ -28,4 +28,29 @@ class CategoryPage extends \Eloquent {
     {
         return $query->where('page_id', $page_id)->where('category_id', $category_id)->count();
     }
+
+    /**
+     * @return
+     */
+    public function scopeWithAll($query, $column, $value)
+    {
+        return $query->where($column, $value)->with('category', 'page');
+    }
+
+    /**
+     * @return
+     */
+    public function category()
+    {
+        return $this->belongsTo('aCube\Entities\Category', 'category_id', 'id');
+    }
+
+    /**
+     * @return
+     */
+    public function page()
+    {
+        return $this->belongsTo('aCube\Entities\Page', 'page_id', 'id');
+    }
+
 }

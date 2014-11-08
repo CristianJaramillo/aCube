@@ -6,7 +6,8 @@ use aCube\Repositories\UserRepo;
 class SessionController extends BaseController {
 
 	/**
-	 * GET /
+	 * GET /login
+	 *
 	 * @return \View
 	 */
 	public function index()
@@ -16,6 +17,7 @@ class SessionController extends BaseController {
 	}
 
 	/**
+     * POST /login
      *
      * @return \View
      * @throws aCube\Managers\ManagerValidationException
@@ -35,7 +37,8 @@ class SessionController extends BaseController {
     }
 
     /**
-     * GET logout
+     * GET /logout
+     *
      * @return
      */
     public function logout()
@@ -48,7 +51,8 @@ class SessionController extends BaseController {
     }
 
 	/**
-	 * GET sign-up
+	 * GET /sign-up
+	 *
 	 * @return \View
 	 */
 	public function signUp()
@@ -58,7 +62,7 @@ class SessionController extends BaseController {
 	}
 
 	/**
-	 * POST register
+	 * POST /register
 	 *
 	 * @return \View
 	 * @throws aCube\Managers\ManagerValidationException
@@ -79,7 +83,8 @@ class SessionController extends BaseController {
 	}
 
 	/**
-	 * GET password-reset
+	 * GET /password-reset
+	 *
 	 * @return \View
 	 */
 	public function passwordReset()
@@ -89,7 +94,8 @@ class SessionController extends BaseController {
 	}
 
 	/**
-	 * POST forgot
+	 * POST /forgot
+	 *
 	 * @return 
 	 */
 	public function forgot()

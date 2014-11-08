@@ -1,5 +1,7 @@
 <?php
 
+use aCube\SmartUI\DashboardUI;
+
 class DashboardController extends BaseController {
 
 	/*
@@ -63,14 +65,21 @@ class DashboardController extends BaseController {
 	 */
 	public function index()
 	{
-		$this->setupPage();
+		// Obtención de pagina desde base de datos.
+		// $this->setupPage();
 
-		$this->addParam(array(
-			'main_header' => $this->main_header,
-			'page_nav'    => $this->page_nav,
-		));
+		// Nueva instancia DashboardUI
+		$dashboard = new DashboardUI(Auth::user());
 
-		return parent::index();
+		// Añadimos la configuración de dashboard.
+		$this->addParam($dashboard->getConfig());
+
+		echo page_prop($dashboard->getPageBodyProp());
+
+		// Parametros globales por enviar a la vista.
+		dd($this->params);
+
+		// return parent::index();
 	}
 
 }
