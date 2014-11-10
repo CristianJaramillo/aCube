@@ -19,7 +19,7 @@ class SessionController extends BaseController {
 	/**
      * POST /login
      *
-     * @return \View
+     * @return \RedirectResponse
      * @throws aCube\Managers\ManagerValidationException
      */
     public function login()
@@ -37,16 +37,18 @@ class SessionController extends BaseController {
     }
 
     /**
-     * GET /logout
+     * POST /logout 
      *
-     * @return
+     * @return \RedirectResponse
      */
     public function logout()
     {
         Auth::logout();
         
+		Session::regenerate();
+
         Session::flash('message', 'logout-success');
-        
+
         return Redirect::route('login');
     }
 
@@ -64,7 +66,7 @@ class SessionController extends BaseController {
 	/**
 	 * POST /register
 	 *
-	 * @return \View
+	 * @return \RedirectResponse
 	 * @throws aCube\Managers\ManagerValidationException
 	 */
 	public function register()
@@ -94,9 +96,9 @@ class SessionController extends BaseController {
 	}
 
 	/**
-	 * POST /forgot
+	 * POST /password-reset
 	 *
-	 * @return 
+	 * @return \RedirectResponse
 	 */
 	public function forgot()
 	{

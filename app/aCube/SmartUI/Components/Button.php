@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class Button extends SmartUI {
 
@@ -25,6 +25,7 @@ class Button extends SmartUI {
 		'container' => self::BUTTON_CONTAINER_BUTTON,
 		'size' => self::BUTTON_SIZE_MEDIUM,
 		'attr' => array(),
+		'id' => '',
 		'class' => '',
 		'dropdown' => array()
 	);
@@ -129,7 +130,7 @@ class Button extends SmartUI {
 		// labeled and icon
 		
 		if (trim($icon)) {
-			$icon = '<i class="fa '.$icon.'"></i>';
+			$icon = '<i class="'.SmartUI::$icon_source.' '.$icon.'"></i>';
 			if ($structure->options['labeled']) {
 				$classes[] = 'btn-labeled';
 				$icon = $structure->options['labeled'] ? '<span class="btn-label">'.$icon.'</span>' : $icon;
@@ -154,6 +155,8 @@ class Button extends SmartUI {
 		$class_htm = $classes ? ' '.implode(' ', $classes) : '';
 
 		$result = '';
+
+		if ($structure->id) $attr[] = 'id="'.$structure->id.'"';
 		if ($structure->dropdown) {
 			$dd_prop = array(
 				'items' => array(),
@@ -164,7 +167,7 @@ class Button extends SmartUI {
 			$new_dd_prop = parent::get_clean_structure($dd_prop, $structure->dropdown, array($this), 'items');
 
 			if (is_array($new_dd_prop['items'])) {
-				$dropdown_html = parent::print_dropdown($new_dd_prop['items'], $new_dd_prop['multilevel'], true);
+				$dropdown_html = parent::print_dropdown($new_dd_prop['items'], array('multilevel' => $new_dd_prop['multilevel']), true);
 			} else {
 				$dropdown_html = $new_dd_prop['items'];
 			}

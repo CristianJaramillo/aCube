@@ -1,5 +1,7 @@
 <?php
 
+namespace aCube\SmartUI\Components;
+
 class SmartUtil {
 
     public static function is_assoc($array) {
@@ -42,14 +44,14 @@ class SmartUtil {
         return array_map(array(__CLASS__, 'object_to_array'), $object);
     }
 
-    public static function create_id($md5=false) {
-        $uid = substr(uniqid((double)microtime() * 10000, 1), 0, 12);
+    public static function create_id($md5 = false) {
+        $uid = uniqid((double)microtime() * 10000, true);
         $result = str_replace(".", "", $uid);
         $result = $md5 ? md5($result) : $result;
         return $result;
     }
 
-     protected function _get_property_value_func() {
+     protected static function _get_property_value_func() {
         return function($prop, $prop_methods) {
             $prop_string = "";
             if (SmartUtil::is_closure($prop)) {
@@ -112,8 +114,7 @@ class SmartUtil {
         }
 
         foreach ($array_value as $key => $value) {
-            if (isset($default_structure[$key])) 
-                $default_structure[$key] = $value;
+            $default_structure[$key] = $value;
         }
         return $default_structure;
     }
@@ -132,6 +133,20 @@ class SmartUtil {
         }
 
         return call_user_func_array($callback, $ref_args);
+    }
+
+    public static function replace_col_codes($str, $row, $url_encode=false) {
+        preg_match_all("/\{([^&={{}}]+)\}/", $str, $matched_cols);
+        $col_replace = array();
+        $col_search = array();
+        foreach($matched_cols[1] as $matched_col) {
+            if (is_array($row)) $row = self::array_to_object($row);
+            if (isset($row->{$matched_col})) {
+                $col_replace[] = $url_encode ? urlencode($row->{$matched_col}) : $row->{$matched_col};
+                $col_search[] = "/{{".$matched_col."}}/";
+            }
+        }
+        return preg_replace($col_search, $col_replace, $str);
     }
 }
 

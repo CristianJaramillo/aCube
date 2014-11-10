@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class Wizard extends SmartUI {
 
@@ -215,3 +215,5 @@ class Wizard extends SmartUI {
 		else echo $result;
 	}
 }
+
+?>

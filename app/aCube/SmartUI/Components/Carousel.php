@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class Carousel extends SmartUI {
 

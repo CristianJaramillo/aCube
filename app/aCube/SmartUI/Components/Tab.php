@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class Tab extends SmartUI {
 
@@ -9,12 +9,15 @@ class Tab extends SmartUI {
 		'position' => '',
 		'pull' => '',
 		'padding' => 10,
-		'widget' => false
+		'widget' => false,
+		'toggle' => true,
+		'titles' => 'text'
 	);
 
 	private $_structure = array(
 		'tab' => array(),
 		'content' => array(),
+		'url' => array(),
 		'content_id' => '',
 		'content_class' => '',
 		'icon' => array(),
@@ -91,7 +94,8 @@ class Tab extends SmartUI {
 				'dropdown' => isset($structure->dropdown[$tab_id]) ? $structure->dropdown[$tab_id] : '',
 				'position' => isset($structure->position[$tab_id]) ? $structure->position[$tab_id] : '',
 				'active' => isset($structure->active[$tab_id]) && $structure->active[$tab_id] === true,
-				'fade' => false
+				'fade' => false,
+				'url' => isset($structure->url[$tab_id]) ? $structure->url[$tab_id] : '#'.$tab_id
 			);
 
 			$new_tab_prop = parent::get_clean_structure($tab_structure, $tab_prop, array($that, $tabs, $tab_id), 'title');
@@ -111,12 +115,23 @@ class Tab extends SmartUI {
 			$a_classes = array();
 			$a_attr = array();
 
-			if ((!$structure->active && !$has_active) || ($new_tab_prop['active'] === true && !$has_active)) {
+			if ($new_tab_prop['active'] === true && !$has_active) {
 				$li_classes[] = 'active';
 				$tab_content_classes[] = 'in active';
 				$has_active = true;
 			} 
-			$title = $new_tab_prop['title'];
+			
+			// $a_attr[] = 'title="'.$new_tab_prop['title'].'"';
+			if (!$structure->options['titles']) {
+				$title = '';
+			} else if ($structure->options['titles'] == 'tooltip') {
+				$title = '';
+				$a_attr[] = 'rel="tooltip"';
+				$a_attr[] = 'data-placement="top"';
+				$a_attr[] = 'title="'.$new_tab_prop['title'].'"';
+			} else {
+				$title = $new_tab_prop['title'];
+			}
 			$dropdown_html = '';
 			if ($new_tab_prop['dropdown']) {
 				$dropdown = $new_tab_prop['dropdown'];
@@ -127,16 +142,17 @@ class Tab extends SmartUI {
 				$a_attr[] = 'data-toggle="dropdown"';
 				$title .= ' <b class="caret"></b>';
 			} else {
-				$href = '#'.$tab_id;
-				$a_attr[] = 'data-toggle="tab"';
+				$href = $new_tab_prop['url'];
+				if ($structure->options['toggle']) 
+					$a_attr[] = 'data-toggle="tab"';
 			}
 
 			if ($new_tab_prop['position']) $li_classes[] = 'pull-'.$new_tab_prop['position'];
-			$icon = $new_tab_prop['icon'] ? '<i class="fa '.$new_tab_prop['icon'].'"></i> ' : '';
+			$icon = $new_tab_prop['icon'] ? '<i class="'.SmartUI::$icon_source.' '.$new_tab_prop['icon'].'"></i> ' : '';
 			$class = $li_classes ? ' class="'.implode(' ', $li_classes).'"' : '';
 
 			$li_html = '<li'.$class.'>';
-			$li_html .= '<a href="'.$href.'" '.($a_classes ? 'class="'.implode(' ', $a_classes).'"' : '').($a_attr ? ' '.implode(' ', $a_attr) : '').'>'.$icon.$title.'</a>';
+			$li_html .= '<a href="'.$href.'" '.($a_classes ? 'class="'.implode(' ', $a_classes).'"' : '').($a_attr ? ' '.implode(' ', $a_attr) : '').' rel="tooltip" data-placement="top">'.$icon.$title.'</a>';
 			$li_html .= $dropdown_html;
 			$li_html .= '</li>';
 			$li_list[] = $li_html;
@@ -218,3 +234,5 @@ class Tab extends SmartUI {
 		else echo $result;
 	}
 }
+
+?>

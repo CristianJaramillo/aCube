@@ -48,9 +48,7 @@ class AuthorizedFilter {
 			foreach ($uri as $key => $value) {
 				$count = 0;
 				$aux = preg_replace($pattern, $path[$key], $value, 1, $count);
-				if ($count || count($auxName)) {
-					$auxName[] = $aux;
-				}
+				$auxName[] = $aux;
 			}
 			return implode('/', $auxName);
 		}

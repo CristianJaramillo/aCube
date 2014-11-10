@@ -4,58 +4,25 @@ use aCube\SmartUI\DashboardUI;
 
 class DashboardController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Dashboard Controller
-	|--------------------------------------------------------------------------
-	|
-	|	Route::get('{url}', 'DashboardController@index');
-	|
-	*/
-
 	/**
-	 * @var array $breadcrumbs
-	 */
-	protected $breadcrumbs = array();
-
-	/**
-	 * @var boolean $main_header
-	 */
-	protected $main_header = true;
-
-	/**
-	 * @var array 
-	 */
-	protected $page_nav = array(
-							"Dashboard" => array(
-								"title" => "Dashboard",
-								"url" => "ajax/jqgrid-extensions",
-								"icon" => "fa-home"
-							),
-						);
-
-	/**
-	 * POST ajax/{app}
-	 *
-	 * @param string $app
+	 * GET app/{name}
+	 * 
+	 * @param $name
 	 * @return \View
+	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
 	 */
-	public function ajax($app)
+	public function app($app)
 	{
 		$page = new aCube\Repositories\PageRepo();
 		// Falta validar que el usuario tenga acceso a este contenido.
 		$page = $page->current($app, 'private');
-
 		if(is_null($page)) throw new Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 		
 		$this->addParam(array(
 					'title' => $page->title,
 				));
-
 		$this->layout = $page->app;
-
 		return $this->index();
-
 	}
 
 	/**
@@ -65,21 +32,28 @@ class DashboardController extends BaseController {
 	 */
 	public function index()
 	{
-		// Obtención de pagina desde base de datos.
-		// $this->setupPage();
+		// Obtención de objeto page y agregado a params.
+		$this->setupPage();
 
 		// Nueva instancia DashboardUI
 		$dashboard = new DashboardUI(Auth::user());
 
-		// Añadimos la configuración de dashboard.
+		// Añadimos la clase por default
+		$dashboard->setPageBodyProp('class', 'smart-style-1 fixed-navigation fixed-header fixed-ribbon');
+
+		// Genaramos la estructura del menu de navegación
+		$dashboard->setupNav();
+
+		// Generamos la configuración.
+		$dashboard->setupConfig();
+
+		// Añadimos las configuraciones del dashboard.
 		$this->addParam($dashboard->getConfig());
 
-		echo page_prop($dashboard->getPageBodyProp());
-
 		// Parametros globales por enviar a la vista.
-		dd($this->params);
+		// dd($this->params);
 
-		// return parent::index();
+		return parent::index();
 	}
 
 }

@@ -19,6 +19,11 @@ class BaseController extends Controller {
 	 */
 	protected $params = array();
 
+	public function example()
+	{
+		return 'dymamic routes';
+	}
+
 	/**
 	 * @param array|string $var
 	 * @param mixed $param

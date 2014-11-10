@@ -19,7 +19,7 @@ class CreateCategoryPagesTable extends Migration {
 			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
 			$table->integer('page_id')->unsigned();
 			$table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade')->onUpdate('cascade');
-			$table->enum('type', ['app', 'resource'])->default('app');
+			$table->enum('type', ['layout', 'app', 'resource'])->default('app');
 			$table->timestamps();
 		});
 	}

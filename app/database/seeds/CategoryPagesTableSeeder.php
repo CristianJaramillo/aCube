@@ -11,6 +11,7 @@ class CategoryPagesTableSeeder extends Seeder {
 				array(
 					'category_id' => 1,
 					'page_id'     => 1,
+					'type'        => 'layout'
 				),
 				array(
 					'category_id' => 1,

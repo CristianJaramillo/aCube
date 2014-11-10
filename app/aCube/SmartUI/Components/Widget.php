@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class Widget extends SmartUI {
 
@@ -43,7 +43,8 @@ class Widget extends SmartUI {
 			"editbox" => "",
 			"content" => "",
 			"class" => "",
-			"toolbar" => null
+			"toolbar" => null,
+			"footer" => null
 		);
 		$this->_structure->body = parent::set_array_prop_def($body_structure, $new_user_contents["body"], "content");
 
@@ -132,7 +133,7 @@ class Widget extends SmartUI {
 				"if_other" => function($body) {
 					return '<div class="widget-body">'.$body.'</div>';
 				},
-				"if_array" => function($body) {
+				"if_array" => function($body) use ($that) {
 					$editbox = '';
 					if (isset($body["editbox"])) {
 						$editbox = '<div class="jarviswidget-editbox">';
@@ -140,7 +141,16 @@ class Widget extends SmartUI {
 						$editbox .= '</div>';
 					}
 
-					$content = isset($body["content"]) ? $body["content"] : '';
+					$content = '';
+					if (isset($body['content'])) {
+						if (SmartUtil::is_closure($body['content'])) {
+							$content = SmartUtil::run_callback($body['content'], array($that));
+						} else {
+							$content = $body['content'];
+						}
+					}
+
+
 					$class = 'widget-body';
 					if (isset($body["class"])) {
 						if (is_array($body["class"])) {
@@ -157,10 +167,18 @@ class Widget extends SmartUI {
 						$toolbar .= '</div>';
 					}
 
+					$footer = '';
+					if (isset($body['footer'])) {
+						$footer = '<div class="widget-footer">';
+						$footer .= $body['footer'];
+						$footer .= '</div>';
+					}
+
 					$result = $editbox;
 					$result .= '<div class="'.$class.'">';
 					$result .= $toolbar;
 					$result .= $content;
+					$result .= $footer;
 					$result .= '</div>';
 
 					return $result;
@@ -177,13 +195,8 @@ class Widget extends SmartUI {
 					$toolbar_htm = '';
 
 					if (isset($body["icon"])) {
-						$toolbar_htm .= '<span class="widget-icon"> <i class="fa '.$body["icon"].'"></i> </span>';
+						$toolbar_htm .= '<span class="widget-icon"> <i class="'.SmartUI::$icon_source.' '.$body["icon"].'"></i> </span>';
 					}
-
-					if (isset($body["title"])) {
-						$toolbar_htm .= $body["title"];
-					} else
-						$toolbar_htm .= '<h2><code>SmartUI::Widget->header[content] not defined</code></h2>';
 
 					if (isset($body["toolbar"])) {
 						$toolbar_htm .= $get_property_value($body["toolbar"], array(
@@ -225,6 +238,12 @@ class Widget extends SmartUI {
 							}
 						));
 					}
+
+					if (isset($body["title"])) {
+						$toolbar_htm .= $body["title"];
+					} else
+						$toolbar_htm .= '<h2><code>SmartUI::Widget->header[content] not defined</code></h2>';
+
 					return $toolbar_htm;
 				}
 			)
@@ -268,7 +287,8 @@ class Widget extends SmartUI {
 		$result .= '<div>'.$body.'</div>';
 		$result .= '</div>';
 
-		if ($return) return $result;
-		else echo $result;
+		return $result;
 	}
 }
+
+?>

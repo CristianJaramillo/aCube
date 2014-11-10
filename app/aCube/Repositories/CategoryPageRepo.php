@@ -17,9 +17,9 @@ class CategoryPageRepo extends BaseRepo {
 	/**
 	 * @return
 	 */
-	public function withWhere($column, $value)
+	public function withWhereAndType($column, $value, $type = 'app')
 	{
-		return $this->entitie->withAll($column, $value)->get();
+		return $this->entitie->where('type', $type)->withAll($column, $value)->get();
 	}
 
 	/**

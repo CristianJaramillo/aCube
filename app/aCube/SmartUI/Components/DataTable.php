@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class DataTable extends SmartUI {
 
@@ -9,7 +9,15 @@ class DataTable extends SmartUI {
 		"row_details" => false,
 		"checkboxes" => false,
 		"static" => false,
-		"paginate" => true
+		"paginate" => true,
+		"columns" => true,
+		"table" => true,
+		"striped" => true,
+		"bordered" => true,
+		"hover" => true,
+		"condensed" => false,
+		"forum" => false,
+		"default_col" => "No Data"
 	);
 
 	private $_structure = array(
@@ -18,13 +26,15 @@ class DataTable extends SmartUI {
 		"options" => array(),
 		"data" => array(),
 		"widget" => null,
+		"each" => array(),
 		"id" => "",
 		"row" => array(),
 		"hidden" => array(),
 		"hide" => array(),
 		"js" => array(),
 		"sort" => array(),
-		"toolbar" => array()
+		"toolbar" => array(),
+		"class" => array()
 	);
 
 	private $_uid = '';
@@ -48,15 +58,15 @@ class DataTable extends SmartUI {
 		$this->_uid = $uid;
 		$ui = new parent();
 		$this->_structure->widget = $ui->create_widget();
-		$this->_structure->widget->header('icon', 'fa-table')
+		$this->_structure->widget->header('icon', SmartUI::$icon_source.'-table')
 			->header('title', $widget_title)
 			->body("class", "no-padding")
 			->body("editbox", '<input class="form-control" type="text">
-                        <span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>');
+                        <span class="note"><i class="'.SmartUI::$icon_source.' '.SmartUI::$icon_source.'-check text-success"></i> Change title to update and save instantly!</span>');
 
 
 		if (!$this->_structure->data) {
-			$col_list = array("No Data");
+			$col_list = $this->_structure->options["default_col"] ? array($this->_structure->options["default_col"]) : array();
 		} else {
 			$col_list = array_keys(is_object($data[0]) ? get_object_vars($data[0]) : $data[0]);
 		}
@@ -146,14 +156,14 @@ class DataTable extends SmartUI {
                     if ( '.$otable_var.'.fnIsOpen(nTr) )
                     {
                         /* This row is already open - close it */
-                        $(this).removeClass("fa-minus-square").addClass("fa-plus-square");
+                        $(this).removeClass("'.SmartUI::$icon_source.'-chevron-down").addClass("'.SmartUI::$icon_source.'-chevron-right");
                         this.title = "Show Details";
                         '.$otable_var.'.fnClose( nTr );
                     }
                     else
                     {
                         /* Open this row */
-                        $(this).removeClass("fa-plus-square").addClass("fa-minus-square");
+                        $(this).removeClass("'.SmartUI::$icon_source.'-chevron-right").addClass("'.SmartUI::$icon_source.'-chevron-down");
                         this.title = "Hide Details";
                         '.$otable_var.'.fnOpen( nTr, fnFormatDetails('.$otable_var.', nTr), "details" );
                     }
@@ -257,20 +267,6 @@ class DataTable extends SmartUI {
         return preg_replace('/\s+/', ' ', $result); //remove white spaces
     }
 
-    public static function replace_col_codes($str, $row, $url_encode=false) {
-        preg_match_all("/\{([^&={{}}]+)\}/", $str, $matched_cols);
-        $col_replace = array();
-        $col_search = array();
-        foreach($matched_cols[1] as $matched_col) {
-            if (is_array($row)) $row = self::array_to_object($row);
-            if (isset($row->{$matched_col})) {
-                $col_replace[] = $url_encode ? urlencode($row->{$matched_col}) : $row->{$matched_col};
-                $col_search[] = "/{{".$matched_col."}}/";
-            }
-        }
-        return preg_replace($col_search, $col_replace, $str);
-    }
-
 	public function print_html($return = false) {
 		$get_property_value = parent::_get_property_value_func();
 
@@ -288,9 +284,13 @@ class DataTable extends SmartUI {
 						"checkbox" => true,
 						"detail" => true,
 						"class" => "",
-						"attr" => "",
+						"attr" => array(),
 						"content" => true
 					);
+
+					if (isset($structure->each['row']) && $structure->each['row']) {
+						$structure->row[$row_index + 1] = SmartUtil::set_closure_prop_def($row_prop, $structure->each['row'], array($row_data, $row_index), 'class');
+					}
 
 					$new_row_prop = $row_prop;
 
@@ -307,13 +307,14 @@ class DataTable extends SmartUI {
 
 					$rows_html = '';
 					foreach ($row_data as $col_name => $cell_value) {
-						$hide_class = '';
+						$cell_classes = array();
+						$cell_attrs = array();
 						if ((isset($structure->hide[$col_name]) && $structure->hide[$col_name] === true) || in_array($col_name, $structure->hidden)) {
-            				$hide_class = ' class="hidden"';
+            				$cell_classes[] = 'hidden';
             			}
 
 						if (isset($new_row_prop["content"]) && !$new_row_prop["content"]) {
-							$rows_html .= '<td'.$hide_class.'></td>';
+							$rows_html .= '<td class="'.implode(' ', $cell_classes).'"></td>';
 							continue;
 						}
 						$cell_html = $cell_value;
@@ -324,7 +325,7 @@ class DataTable extends SmartUI {
             					"if_closure" => function($prop) use ($that, $row_data, $row_index, $cell_value) {
             						return SmartUtil::run_callback($prop, array($row_data, $cell_value, $row_index));
             					},
-            					"if_array" => function($cell_prop) use ($that, $row_data, $row_index, $cell_value, $get_property_value) {
+            					"if_array" => function($cell_prop) use ($that, $row_data, $row_index, $cell_value, $get_property_value, &$cell_classes, &$cell_attrs) {
             						//icon, content, color, url[href, title, tooltip, attr]
             						$cell_html = $cell_value;
 
@@ -337,8 +338,8 @@ class DataTable extends SmartUI {
 				                        		return $content_value;
 
 				                        	},
-				                        	"if_other" => function($content) use ($cell_html) {
-				                        		$cell_html = $content;
+				                        	"if_other" => function($content) use ($that, $row_data, $cell_html) {
+				                        		$cell_html = $that::replace_col_codes($content, $row_data);
 				                        		return $cell_html;
 				                        	}
 				                        ));
@@ -382,10 +383,10 @@ class DataTable extends SmartUI {
 				                        $cell_html = $get_property_value($cell_prop["icon"], array(
 				                        	"if_closure" => function($icon) use ($row_data, $row_index, $cell_value, $cell_html) {
 				                        		$icon_value = SmartUtil::run_callback($prop, array($row_data, $cell_value, $row_index));
-				                        		return '<i class="fa '.$icon_value.' fa-md"></i> '.$cell_html;
+				                        		return '<i class="'.SmartUI::$icon_source.' '.$icon_value.'"></i> '.$cell_html;
 				                        	},
 				                        	"if_other" => function($icon) use ($cell_html) {
-				                        		return '<i class="fa '.$icon.' fa-md"></i> '.$cell_html;
+				                        		return '<i class="'.SmartUI::$icon_source.' '.$icon.'"></i> '.$cell_html;
 				                        	}
 				                        ));
 				                    }
@@ -401,6 +402,21 @@ class DataTable extends SmartUI {
 				                        		return '<span class="'.$color.'">'.$cell_html.'</span>';
 				                        	}
 				                        ));
+				                    }
+
+				                    //class
+				                    if (isset($cell_prop["class"])) {
+				                    	 if (is_array($cell_prop["class"])) {
+				                    	 	$cell_classes = array_merge($cell_classes, $cell_prop["class"]);
+				                    	 } else $cell_classes[] = $cell_prop["class"];
+				                    }
+
+				                    if (isset($cell_prop["attr"])) {
+				                    	if (is_array($cell_prop["attr"])) {
+											foreach ($cell_prop["attr"] as $attr => $value) {
+												$cell_attrs[] = $attr.'="'.$value.'"';
+											}
+				                    	} else $cell_attrs[] = $cell_prop["attr"];
 				                    }
 
 				                    //callback
@@ -419,7 +435,7 @@ class DataTable extends SmartUI {
             				));
             			}
 
-            			$rows_html .= '<td'.$hide_class.'> '.$cell_html.' </td>';
+            			$rows_html .= '<td'.($cell_classes ? ' class="'.implode(' ', $cell_classes).'"' : '').($cell_attrs ? ' '.implode(' ', $cell_attrs) : '').'> '.$cell_html.' </td>';
 					}
 
 
@@ -427,7 +443,15 @@ class DataTable extends SmartUI {
 					if ($new_row_prop["class"]) $row_classes[] = $new_row_prop["class"];
 					if ($new_row_prop["hidden"] === true) $row_classes[] = 'hidden';
 
-					$attr = $new_row_prop["attr"] ? ' '.$new_row_prop["attr"] : '';
+					$attrs = array();
+					if (is_array($new_row_prop["attr"])) {
+						foreach ($new_row_prop["attr"] as $attr => $value) {
+							$attrs[] = $attr.'="'.$value.'"';
+						}
+					} else {
+						$attrs[] = $new_row_prop["attr"];
+					}
+					$attr = $attrs ? ' '.implode(' ', $attrs) : '';
 
 					$row_class = $row_classes ? ' class="'.implode(' ', $row_classes).'"' : '';
 
@@ -452,14 +476,14 @@ class DataTable extends SmartUI {
 							$content = '';
 
 						$row_checkbox = '
-			                <td class="center" width="20px"> '.$content.' </td>';
+			                <td class="center table-checkbox" width="20px"> '.$content.' </td>';
 					}
 
 					if (isset($structure->options["row_details"]) && $structure->options["row_details"]) {
 						$option = $structure->options["row_details"];
 						$detail_prop = array(
 							"id" => "",
-							"icon" => 'fa-plus-square',
+							"icon" => SmartUI::$icon_source.'-chevron-right',
 							"title" => 'Show Details'
 						);
 
@@ -467,7 +491,7 @@ class DataTable extends SmartUI {
 						$id = $new_detail_prop["id"] ? 'id="'.$new_detail_prop["id"].'"' : '';
 
 						$content = '<a href="#" '.$id.'>
-									<i class="fa '.$detail_prop['icon'].' fa-lg" data-toggle="row-detail" title="'.$detail_prop['title'].'"></i>
+									<i class="'.SmartUI::$icon_source.' '.$detail_prop['icon'].' '.SmartUI::$icon_source.'-lg" data-toggle="row-detail" title="'.$detail_prop['title'].'"></i>
 								</a>';
 						if ($new_row_prop["detail"] === false)
 							$content = '';
@@ -490,74 +514,76 @@ class DataTable extends SmartUI {
 			}
 		));
 
-		$cols = $get_property_value($structure->col, array(
-			"if_array" => function($cols) use ($that, $get_property_value, $structure) {
-				$html_col_list = array();
+		if ($structure->options['columns']) {
+			$cols = $get_property_value($structure->col, array(
+				"if_array" => function($cols) use ($that, $get_property_value, $structure) {
+					$html_col_list = array();
 
-				foreach ($cols as $col_name => $col_value) {
+					foreach ($cols as $col_name => $col_value) {
 
-					if (is_null($col_value) || $col_value === false) continue;;
-					$col_value_prop = array(
-						"name" => $col_name,
-						"class" => "",
-						"attr" => array(),
-						"icon" => "",
-						"hidden" => (isset($structure->hide[$col_name]) && $structure->hide[$col_name] === true) || in_array($col_name, $structure->hidden)
-					);
+						if (is_null($col_value) || $col_value === false) continue;;
+						$col_value_prop = array(
+							"title" => $col_name,
+							"class" => "",
+							"attr" => array(),
+							"icon" => "",
+							"hidden" => (isset($structure->hide[$col_name]) && $structure->hide[$col_name] === true) || in_array($col_name, $structure->hidden)
+						);
 
-					$new_col_value = SmartUtil::get_clean_structure($col_value_prop, $col_value, array($that, $cols), 'name');
-					if ($new_col_value['attr']) {
-						if (is_array($new_col_value["attr"])) {
-							foreach ($new_col_value["attr"] as $attr => $value) {
-								$attrs[] = $attr.'="'.$value.'"';
+						$new_col_value = SmartUtil::get_clean_structure($col_value_prop, $col_value, array($that, $cols), 'title');
+						if ($new_col_value['attr']) {
+							if (is_array($new_col_value["attr"])) {
+								foreach ($new_col_value["attr"] as $attr => $value) {
+									$attrs[] = $attr.'="'.$value.'"';
+								}
+
+							} else {
+								$attrs[] = $new_col_value["attr"];
 							}
-
-						} else {
-							$attrs[] = $new_col_value["attr"];
+							$new_col_value["attr"] = $attrs;
 						}
-						$new_col_value["attr"] = $attrs;
+
+						$classes = array();
+						if ($new_col_value['class'])
+							$classes[] = $new_col_value['class'];
+
+						if ($new_col_value['hidden'] === true)
+							$classes[] = "hidden";
+
+						$class = $classes ? 'class="'.implode(' ', $classes).'"' : '';
+
+						$main_attributes = array($class, implode(' ', $new_col_value['attr']));
+						$htm_attrs = trim(implode(' ', $main_attributes));
+						$htm_attrs = $htm_attrs ? ' '.$htm_attrs : '';
+
+						$html_col_list[] = '<th'.$htm_attrs.'>'.$new_col_value['icon'].' '.$new_col_value['title'].' </th>';
 					}
 
-					$classes = array();
-					if ($new_col_value['class'])
-						$classes[] = $new_col_value['class'];
 
-					if ($new_col_value['hidden'] === true)
-						$classes[] = "hidden";
+					$html_cols = implode('', $html_col_list);
 
-					$class = $classes ? 'class="'.implode(' ', $classes).'"' : '';
+					$checkbox_header = '';
+					$detail_header = '';
 
-					$main_attributes = array($class, implode(' ', $new_col_value['attr']));
-					$htm_attrs = trim(implode(' ', $main_attributes));
-					$htm_attrs = $htm_attrs ? ' '.$htm_attrs : '';
+					if (isset($structure->options["checkboxes"]) && ($structure->options["checkboxes"])) {
+						$checkbox_header = '
+							<th class="center table-checkbox" width="20px">
+								<label class="checkbox-inline">
+									<input type="checkbox" class="checkbox style-0">
+									<span></span>
+								</label>
+							</th>';
+					}
 
-					$html_col_list[] = '<th'.$htm_attrs.'>'.$new_col_value['icon'].' '.$new_col_value['name'].' </th>';
+					if (isset($structure->options["row_details"]) && ($structure->options["row_details"])) {
+						$detail_header = '
+							<th class="center" width="20px"></th>';
+					}
+
+					return '<tr>'.$detail_header.$checkbox_header.$html_cols.'</tr>';
 				}
-
-
-				$html_cols = implode('', $html_col_list);
-
-				$checkbox_header = '';
-				$detail_header = '';
-
-				if (isset($structure->options["checkboxes"]) && ($structure->options["checkboxes"])) {
-					$checkbox_header = '
-						<th class="center" width="20px">
-							<label class="checkbox-inline">
-								<input type="checkbox" class="checkbox style-0">
-								<span></span>
-							</label>
-						</th>';
-				}
-
-				if (isset($structure->options["row_details"]) && ($structure->options["row_details"])) {
-					$detail_header = '
-						<th class="center" width="20px"></th>';
-				}
-
-				return '<tr>'.$detail_header.$checkbox_header.$html_cols.'</tr>';
-			}
-		));
+			));
+		} else $cols = '';
 
 		$id = $get_property_value(
 			$structure->id,
@@ -573,7 +599,19 @@ class DataTable extends SmartUI {
 
 		$id = $id ? 'id="'.$id.'"' : '';
 
-		$table_html = '<table '.$id.' class="table table-striped table-bordered table-hover">';
+		$classes = array();
+		if ($structure->options['table']) $classes[] = 'table';
+		if ($structure->options['striped']) $classes[] = 'table-striped';
+		if ($structure->options['bordered']) $classes[] = 'table-bordered';
+		if ($structure->options['hover']) $classes[] = 'table-hover';
+		if ($structure->options['condensed']) $classes[] = 'table-condensed';
+		if ($structure->options['forum']) $classes[] = 'table-forum';
+
+		if ($structure->class) {
+			$classes[] = is_array($structure->class) ? implode(' ', $structure->class) : $structure->class;
+		}
+
+		$table_html = '<table '.$id.' class="'.implode(' ', $classes).'">';
 		$table_html .= '<thead>';
 		$table_html .= $cols;
 		$table_html .= '</thead>';
@@ -600,3 +638,7 @@ class DataTable extends SmartUI {
 
 
 }
+
+
+
+?>

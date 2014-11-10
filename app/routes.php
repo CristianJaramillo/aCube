@@ -14,6 +14,11 @@
  |--------------------------------------------------------------------------
  */
 
+Route::get('widget', function()
+{
+	echo Widget::body('content', '<h1>First Widget</h1>')->options('editbutton', false)->header('title', '<h2>SmartUI::Tab</h2>')->print_html();
+	dd();
+});
 /*
  |--------------------------------------------------------------------------
  | END GLOBAL ROUTES
@@ -82,6 +87,11 @@ Route::group(['before' => 'auth'], function(){
 	 | logout route
 	 */
 	Route::get('logout', ['as' => 'logout', 'uses' => 'SessionController@logout']);
+
+	/*
+	 | app/{name} route
+	 */
+	Route::get('app/{app_name}', ['as' => 'app', 'uses' => 'DashboardController@app']);
 
 	/*
 	 | CSRT security group

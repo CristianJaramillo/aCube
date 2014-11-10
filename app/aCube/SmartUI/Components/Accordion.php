@@ -1,11 +1,11 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class Accordion extends SmartUI {
 
 	private $_options_map = array(
-		'global_icons' => array('fa-lg fa-angle-down pull-right', 'fa-lg fa-angle-up pull-right')
+		'global_icons' => array()
 	);
 
 	private $_structure = array(
@@ -20,6 +20,7 @@ class Accordion extends SmartUI {
 	);
 
 	public function __construct($panels, $options = array()) {
+		$this->_options_map['global_icons'] = array(SmartUI::$icon_source.'-lg '.SmartUI::$icon_source.'-chevron-down pull-right', ''.SmartUI::$icon_source.'-lg '.SmartUI::$icon_source.'-chevron-up pull-right');
 		$this->_init_structure($panels, $options);
 	}
 
@@ -109,7 +110,7 @@ class Accordion extends SmartUI {
 			$a_attr[] = 'data-toggle="collapse"';
 
 			$icons = is_array($new_header_prop['icons']) ? implode(' ', array_map(function($icon){
-				return '<i class="fa '.$icon.'"></i> ';
+				return '<i class="'.SmartUI::$icon_source.' '.$icon.'"></i> ';
 			}, $new_header_prop['icons'])) : $new_header_prop['icons'];
 
 			$body_classes = array();

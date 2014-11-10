@@ -61,12 +61,15 @@
 			<div id="logo-group">
 				<span id="logo"> <img src="{{ asset('img/logo.png') }}" alt="SmartAdmin"> </span>
 			</div>
-
 			<span id="extr-page-header-space">
+			@if(Auth::guest())
 				<a href="{{ route('login') }}" class="btn btn-primary">Login</a>
 				<a href="{{ route('sign-up') }}" class="btn btn-danger">Create account</a>
+			@else
+				<a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
+				<a href="{{ route('logout') }}" class="btn btn-danger">Logout</a>
+			@endif
 			</span>
-
 		</header>
 		@show
 

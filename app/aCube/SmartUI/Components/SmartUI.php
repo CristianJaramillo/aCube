@@ -1,6 +1,6 @@
 <?php
 
-namespace aCube\SmartUI;
+namespace aCube\SmartUI\Components;
 
 class SmartUI extends SmartUtil {
 
@@ -9,10 +9,13 @@ class SmartUI extends SmartUtil {
     const SMARTUI_BUTTON = "button";
     const SMARTUI_TAB = "tab";
 
-    private static $_ui_calls = array("create", "set", "get");
+    private static $_ui_calls = array("create", "set", "get", "print");
     private $_track_start_time;
 
     private static $_uis = array();
+    private static $_alerts = array('info', 'danger', 'primary', 'default', 'warning', 'success');
+    public static $icon_source = 'fa';
+    public static $debug = true;
 
     public static function register($name, $class) {
         self::$_uis[$name] = $class;
@@ -81,12 +84,18 @@ class SmartUI extends SmartUtil {
 
         $ui_class = strtolower($calls[1]);
 
-        if (isset(self::$_uis[$ui_class])) {
-            $reflection = new ReflectionClass(self::$_uis[$ui_class]); 
+        if (isset(self::$_uis[$ui_class]) && $calls[0] == 'create') {
+            $reflection = new \ReflectionClass(self::$_uis[$ui_class]); 
             $new_ui = $args ? $reflection->newInstanceArgs($args) : $reflection->newInstance(); 
 
             $this->start_track();
             return $new_ui;
+        } else if ($calls[0] == 'print' && in_array($calls[1], self::$_alerts)) {
+            $alert_args = array($args[0], $calls[1]);
+            for ($i = 1; $i < count($args); $i++) {
+                $alert_args[] = $args[$i];
+            }
+            return call_user_func_array(array($this, 'print_alert'), $alert_args);
         }
 
         self::err("\"$ui_class\" is not a registered member of SmartUI: Class not found");
@@ -100,8 +109,10 @@ class SmartUI extends SmartUtil {
     }
 
 	public static function err($message = "SmartUI Error notice:") {
-		$trace = debug_backtrace();
-        trigger_error($message.' in '.$trace[0]['file'].' on line '.$trace[0]['line'], E_USER_NOTICE);
+        if (self::$debug) {
+            $trace = debug_backtrace();
+            trigger_error($message.' in '.$trace[0]['file'].' on line '.$trace[0]['line'], E_USER_NOTICE);
+        }
 	}
 
     public static function get_progress($value, $type = '', $options = array()) {
@@ -256,7 +267,13 @@ class SmartUI extends SmartUtil {
             $container_attrs_html[] = $container_attr.'="'.$attr_value.'"';
         }
 
-        $result = '<div class="'.implode(' ', $container_classes).'" '.implode(' ', $container_attrs_html).'>';
+        $classes = array();
+        $classes[] = implode(' ', $container_classes);
+        $classes[] = implode(' ', $new_options_map['class'] ? $new_options_map['class'] : array());
+
+        $container_attrs_html[] = implode(' ', $new_options_map['attr']);
+
+        $result = '<div class="'.implode(' ', $classes).'" '.implode(' ', $container_attrs_html).'>';
         $result .= self::get_progress($value, $type, $options);
         $result .= '</div>';
 
@@ -271,14 +288,15 @@ class SmartUI extends SmartUtil {
             'container' => 'div',
             'class' => array(),
             'fade_in' => true,
-            'icon' => $type
+            'icon' => $type,
+            'js_escape' => false
         );
 
         $icon_map = array(
-            'info' => 'fa-info',
-            'warning' => 'fa-warning',
-            'danger' => 'fa-times',
-            'success' => 'fa-check'
+            'info' => SmartUI::$icon_source.'-info',
+            'warning' => SmartUI::$icon_source.'-alert '.SmartUI::$icon_source.'-warning',
+            'danger' => SmartUI::$icon_source.'-times '.SmartUI::$icon_source.'-x',
+            'success' => ''.SmartUI::$icon_source.'-check'
         );
         $new_options_map = parent::set_array_prop_def($options_map, $options, 'class');
         $closebutton_html = $new_options_map['closebutton'] ? 
@@ -292,26 +310,104 @@ class SmartUI extends SmartUtil {
         if ($new_options_map['fade_in']) $classes[] = 'fade in';
         if ($new_options_map['block']) $classes[] = 'alert-block';
 
-        $icon_html = $new_options_map['icon'] ? '<i class="fa-fw fa '.(isset($icon_map[$type]) ? $icon_map[$type] : 'fa-info').'"></i>' : '';
+        $icon_html = $new_options_map['icon'] ? '<i class="'.SmartUI::$icon_source.' '.SmartUI::$icon_source.'-fw '.(isset($icon_map[$type]) ? $icon_map[$type] : SmartUI::$icon_source.'-info').'"></i>' : '';
 
     	$result = '<div class="'.implode(' ', $classes).'">
                         '.$closebutton_html.'
                         '.$icon_html.'
                         '.$message.'
                     </div>';
+
+        if ($new_options_map['js_escape']) $result = preg_replace("/\s+/", " ", $result);
+
     	if ($return) return $result;
     	else echo $result;
     }
 
-    public static function print_dropdown($items, $multi_level = false, $return = false) {
+    public static function print_list($items, $options = array(), $return = false) {
         $get_property_value = self::_get_property_value_func();
         $items_html = '';
+        $main_attrs = array();
+
+        $default_options = array(
+            'type' => 'ul',
+            'attr' => array(),
+            'class' => array(),
+            'id' => ''
+        );
+
+        $new_options = parent::set_array_prop_def($default_options, $options, 'class');
+
+        foreach ($items as $item) {
+            $item_html = '';
+            $item_prop = array(
+                'content' => '',
+                'subitems' => array(),
+                'class' => '',
+                'attr' => array()
+            );
+
+            $new_item_prop = parent::get_clean_structure($item_prop, $item, array($item), 'content');
+
+            $content = $new_item_prop['content'];
+
+            if ($new_item_prop['subitems']) {
+                $content .= self::print_list($new_item_prop['subitems'], false, true);
+            }
+
+            $attrs = array();
+            if ($new_item_prop['class']) $attrs[] = 'class="'.(is_array($new_item_prop['class']) ? implode(' ', $new_item_prop['class']) : $new_item_prop['class']).'"';
+
+            if ($new_item_prop['attr']) {
+                foreach ($new_item_prop['attr'] as $key => $value) {
+                    $attrs[] = $key.'="'.$value.'"';
+                }
+            }
+
+            $item_html = '<li'.($attrs ? ' '.implode(' ', $attrs) : '').'>'.$content.'</li>';
+            $items_html .= $item_html;
+        }
+
+        if ($new_options['class']) $main_attrs[] = 'class="'.(is_array($new_options['class']) ? implode(' ', $new_options['class']) : $new_options['class']).'"';
+        if ($new_options['attr']) {
+            foreach ($new_options['attr'] as $key => $value) {
+                $main_attrs[] = $key.'="'.$value.'"';
+            }
+        }
+
+        if ($new_options['id']) $main_attrs[] = 'id="'.$new_options['id'].'"';
+
+        $result = '<'.$new_options['type'].($main_attrs ? ' '.implode(' ', $main_attrs) : '').'>';
+        $result .= $items_html;
+        $result .= '</'.$new_options['type'].'>';
+        
+        if ($return) return $result;
+        else echo $result;
+    }
+
+    public static function print_dropdown($items, $options = array(), $return = false) {
+        $get_property_value = self::_get_property_value_func();
+        $items_html = '';
+
+        $main_attrs = array();
+
+        $default_options = array(
+            'type' => 'ul',
+            'attr' => array(),
+            'class' => '',
+            'id' => '',
+            'multilevel' => false
+        );
+
+        $new_options = parent::set_array_prop_def($default_options, $options, 'class');
+
         foreach ($items as $item) {
             $item_html = '';
             $item_prop = array(
                 'content' => '',
                 'submenu' => array(),
-                'class' => ''
+                'class' => array(),
+                'attr' => array()
             );
 
             $new_item_prop = $get_property_value($item, array(
@@ -329,24 +425,50 @@ class SmartUI extends SmartUtil {
 
             $classes = array();
             if ($new_item_prop['class'])
-                $classes[] = $new_item_prop['class'];
+                $classes[] = is_array($new_item_prop['class']) ? implode(' ', $new_item_prop['class']) : $new_item_prop['class'];
+
+            $attrs = array();
+
+            if ($new_item_prop['attr']) {
+                foreach ($new_item_prop['attr'] as $key => $value) {
+                    $attrs[] = $key.'="'.$value.'"';
+                }
+            }
 
             $content = $new_item_prop['content'];
 
             if ($new_item_prop['submenu']) {
-                $content .= self::print_dropdown($new_item_prop['submenu'], false, true);
+                $content .= self::print_dropdown($new_item_prop['submenu'], null, true);
                 $classes[] = 'dropdown-submenu';
             } else if ($content === '-') {
                 $classes[] = 'divider';
+            } else if (preg_match("/##(.*)?##/", $content, $header_matches)) {
+                $classes[] = 'dropdown-header';
+                $content = trim($header_matches[1]);
             }
 
-            $class = $classes ? ' class="'.trim(implode(' ', $classes)).'"' : '';
+            $attrs[] = $classes ? ' class="'.trim(implode(' ', $classes)).'"' : '';
 
-            $item_html = '<li'.$class.'>'.$content.'</li>';
+            $item_html = '<li'.($attrs ? ' '.implode(' ', $attrs) : '').'>'.$content.'</li>';
             $items_html .= $item_html;
         }
 
-        $result = '<ul class="dropdown-menu'.($multi_level ? ' multi-level' : '').'" role="menu">';
+        $classes = array('dropdown-menu');
+        if ($new_options['multilevel']) $classes[] = 'multi-level';
+        $main_attrs[] = 'role="menu"';
+
+        if ($new_options['class']) $classes[] = $new_options['class'];
+        if ($new_options['attr']) {
+            foreach ($new_options['attr'] as $key => $value) {
+                $main_attrs[] = $key.'="'.$value.'"';
+            }
+        }
+
+        if ($new_options['id']) $main_attrs[] = 'id="'.$new_options['id'].'"';
+
+        $main_attrs[] = 'class="'.implode(' ', $classes).'"';
+
+        $result = '<ul '.implode(' ', $main_attrs).'>';
         $result .= $items_html;
         $result .= '</ul>';
 
@@ -354,3 +476,6 @@ class SmartUI extends SmartUtil {
         else echo $result;
     }
 }
+
+
+?>

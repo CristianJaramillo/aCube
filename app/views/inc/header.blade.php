@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="@yield('lang', 'es')">
+<html lang="@yield('lang', 'es')" {{ page_prop($page_html_prop) }}>
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -56,10 +56,10 @@
 		<link rel="apple-touch-startup-image" href="{{ asset('img/splash/ipad-portrait.png') }}" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)">
 		<link rel="apple-touch-startup-image" href="{{ asset('img/splash/iphone.png') }}" media="screen and (max-device-width: 320px)">
 	</head>
-	<body class="smart-style-1">
+	<body {{ page_prop($page_body_prop) }}>
 		<!-- POSSIBLE CLASSES: minified, fixed-ribbon, fixed-header, fixed-width
 			 You can also add different skin classes such as "smart-skin-1", "smart-skin-2" etc...-->
-		@if($main_header)
+		@if(!$no_main_header)
 				<!-- HEADER -->
 				<header id="header">
 					<div id="logo-group">
@@ -165,7 +165,7 @@
 									</li>
 									<li class="divider"></li>
 									<li>
-										<a href="login.php" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
+										<a href="{{ route('logout') }}" class="padding-10 padding-top-5 padding-bottom-5" data-action="userLogout"><i class="fa fa-sign-out fa-lg"></i> <strong><u>L</u>ogout</strong></a>
 									</li>
 								</ul>
 							</li>

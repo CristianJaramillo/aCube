@@ -180,19 +180,19 @@ class DashboardUI {
 	/**
 	 * @return void
 	 */
-	public function setupNav()
+	public function setupNav($route_name = 'app')
 	{
 		$repository = new CategoryPageRepo();
 		
-		$categoryPages = $repository->withWhere('category_id', $this->user->category_id);
+		$categoryPages = $repository->withWhereAndType('category_id', $this->user->category_id);
 
 		$items = array();
 
 		foreach ($categoryPages as $categoryPage) {
 			$items[] = array(
 					'title' => $categoryPage->page->title,
-					'url'   => $categoryPage->page->name,
-					'icon' => 'fa-home',
+					'url'   => preg_replace('/\//', '', route($route_name, [$categoryPage->page->name], false), 1),
+					'icon' => 'fa',
 				);
 		}
 
