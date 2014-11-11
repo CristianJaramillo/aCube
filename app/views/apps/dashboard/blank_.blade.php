@@ -1,45 +1,16 @@
 <!-- widget grid -->
 <section id="widget-grid" class="">
-		
+	@foreach(range(1,5) as $x)
 	<!-- row -->
-	<div class="row">
-				
+	<div class="row">		
 		<!-- NEW WIDGET START -->
 		<article class="col-xs-12">
-			{{ Widget::body('content', '<h1>First Widget</h1>')->options('editbutton', false)->header('title', '<h2>SmartUI::Tab</h2>')->print_html() }}
+			{{ Widget::print_html() }}
 		</article>
 		<!-- WIDGET END -->	
 	</div>
-		
-	<!-- end row -->
-	<!-- row -->
-		
-	<div class="row">
-		
-		<div class="col-sm-12">
-
-		</div>
-		
-	</div>
-
-	<!-- end row -->
-
-	<!-- row -->
-		
-	<div class="row">
-		
-		<div class="col-sm-12">
-			<div class="well">
-
-			</div>
-		
-		</div>
-		
-	</div>
-
-		
-	<!-- end row -->
-		
+	<!-- end row -->	
+	@endforeach
 </section>
 <!-- end widget grid -->
 

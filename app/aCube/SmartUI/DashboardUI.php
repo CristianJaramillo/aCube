@@ -180,7 +180,7 @@ class DashboardUI {
 	/**
 	 * @return void
 	 */
-	public function setupNav($route_name = 'app')
+	public function setupNav()
 	{
 		$repository = new CategoryPageRepo();
 		
@@ -191,7 +191,7 @@ class DashboardUI {
 		foreach ($categoryPages as $categoryPage) {
 			$items[] = array(
 					'title' => $categoryPage->page->title,
-					'url'   => preg_replace('/\//', '', route($route_name, [$categoryPage->page->name], false), 1),
+					'url'   => preg_replace('/\//', '', route($categoryPage->page->name, NULL, false), 1),
 					'icon' => 'fa',
 				);
 		}

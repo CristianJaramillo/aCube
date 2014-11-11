@@ -290,5 +290,3 @@ class Widget extends SmartUI {
 		return $result;
 	}
 }
-
-?>

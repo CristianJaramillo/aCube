@@ -11,18 +11,22 @@ class DashboardController extends BaseController {
 	 * @return \View
 	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
 	 */
-	public function app($app)
+	public function app($app = 'app-dashboard')
 	{
-		$page = new aCube\Repositories\PageRepo();
-		// Falta validar que el usuario tenga acceso a este contenido.
-		$page = $page->current($app, 'private');
-		if(is_null($page)) throw new Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-		
-		$this->addParam(array(
-					'title' => $page->title,
-				));
-		$this->layout = $page->app;
-		return $this->index();
+		// Obtención de objeto page y agregado a params.
+		$this->setupApp($app);
+		$this->setupDashboard();
+		return parent::index();
+	}
+
+	/**
+	 * @return void
+	 */
+	public function setupDashboard()
+	{
+		Tab::tab(['Sistema'])
+				->content(0, '<h1>Contenido</h1>')
+				->options('pull', 'right');
 	}
 
 	/**

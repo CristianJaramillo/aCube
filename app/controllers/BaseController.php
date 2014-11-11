@@ -58,6 +58,20 @@ class BaseController extends Controller {
 	/**
 	 * @return void
 	 */
+	protected function setupApp($app)
+	{
+		$page = new PageRepo();
+		// Falta validar que el usuario tenga acceso a este contenido.
+		$page = $page->current($app, 'private');
+		if(is_null($page)) return App::abort();
+		$this->addParam(array('title' => $page->title,));
+		$this->layout = $page->app;
+		unset($page);
+	}
+
+	/**
+	 * @return void
+	 */
 	protected function setupPage()
 	{
 		$page = new PageRepo();

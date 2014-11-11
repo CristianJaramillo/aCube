@@ -13,11 +13,36 @@
  | GLOBAL ROUTES
  |--------------------------------------------------------------------------
  */
+use ZetaComponents\SystemInformation\ezcSystemInfo;
+use ZetaComponents\SystemInformation\Readers\ezcSystemInfoWindowsReader;
 
-Route::get('widget', function()
-{
-	echo Widget::body('content', '<h1>First Widget</h1>')->options('editbutton', false)->header('title', '<h2>SmartUI::Tab</h2>')->print_html();
-	dd();
+Route::get('info', function(){
+	$info = new ezcSystemInfoWindowsReader();
+	$memory = win32_ps_stat_mem();
+	
+	foreach ($memory as $key => $value) {
+		if($key!='load') $value = formatBytes($value);
+		echo $key . "->". $value . '<br/>';
+	}
+
+	$dev = './';   
+    $freespace = disk_free_space($dev);   
+	$totalspace = disk_total_space($dev);   
+	$freespace_mb = $freespace/1024/1024;   
+	$totalspace_mb = $totalspace/1024/1024;   
+	$freespace_percent = ($freespace/$totalspace)*100;   
+	//$used_percent = (1-($freespace/$totalspace))*100; 
+	// dar formato a los datos obtenidos 
+	                     
+	$freespace_mb=number_format($freespace_mb,0,",","."); 
+
+	$freespace_percent=number_format($freespace_percent,2,",","."); 
+
+	echo "<br />"; 
+	echo "Espacio libre en disco: $freespace_mb Mb <br /><br />"; 
+	echo "Porcentaje de espacio libre: $freespace_percent %";  
+
+	dd($info);
 });
 /*
  |--------------------------------------------------------------------------
@@ -91,7 +116,13 @@ Route::group(['before' => 'auth'], function(){
 	/*
 	 | app/{name} route
 	 */
-	Route::get('app/{app_name}', ['as' => 'app', 'uses' => 'DashboardController@app']);
+	Route::get('app/dashboard', ['as' => 'app-dashboard', 'uses' => 'DashboardController@app']);
+
+	/*
+	 | app/{name} route
+	 */
+	Route::get('apps/blank', ['as' => 'app-blank', 'uses' => 'DashboardController@app']);
+
 
 	/*
 	 | CSRT security group

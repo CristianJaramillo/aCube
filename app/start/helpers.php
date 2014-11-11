@@ -19,6 +19,10 @@ if(!function_exists('page_prop'))
  |------------------------------------------------
  */
 if (!function_exists('process_parent_nav')) {
+	/**
+	 * @param array $nav_item
+	 * @return string 
+	 */
 	function process_parent_nav(array $nav_item)
 	{
 		$nav_htm = '';
@@ -45,6 +49,10 @@ if (!function_exists('process_parent_nav')) {
  */
 if(!function_exists('process_sub_nav'))
 {
+	/**
+	 * @param array $nav_item
+	 * @return $sub_item_htm string
+	 */
 	function process_sub_nav($nav_item) {
 		$sub_item_htm = "";
 		if (isset($nav_item["sub"]) && $nav_item["sub"]) {
@@ -70,53 +78,81 @@ if(!function_exists('process_sub_nav'))
 	}
 }
 
-/**
- * set document type
- * @param string $type type of document
+/*
+ |------------------------------------------------
+ |
+ |------------------------------------------------
  */
-function set_content_type($type = 'application/json') {
-    header('Content-Type: '.$type);
+if (!function_exists('read_csv')) {
+	/**
+	 * Read CSV from URL or File
+	 * @param  string $filename  Filename
+	 * @param  string $delimiter Delimiter
+	 * @return array            [description]
+	 */
+	function read_csv($filename, $delimiter = ",") {
+	    $file_data = array();
+	    $handle = @fopen($filename, "r") or false;
+	    if ($handle !== FALSE) {
+	        while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+	            $file_data[] = $data;
+	        }
+	        fclose($handle);
+	    }
+	    return $file_data;
+	}
 }
 
-/**
- * Read CSV from URL or File
- * @param  string $filename  Filename
- * @param  string $delimiter Delimiter
- * @return array            [description]
- */
-function read_csv($filename, $delimiter = ",") {
-    $file_data = array();
-    $handle = @fopen($filename, "r") or false;
-    if ($handle !== FALSE) {
-        while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
-            $file_data[] = $data;
-        }
-        fclose($handle);
-    }
-    return $file_data;
+if (!function_exists('plog')) {
+	/**
+	 * Print Log to the page
+	 * @param  mixed  $var    Mixed Input
+	 * @param  boolean $pre    Append <pre> tag
+	 * @param  boolean $return Return Output
+	 * @return string/void     Dependent on the $return input
+	 */
+	function plog($var, $pre=true, $return=false) {
+	    $info = print_r($var, true);
+	    $result = $pre ? "<pre>$info</pre>" : $info;
+	    if ($return) return $result;
+	    else echo $result;
+	}
 }
 
-/**
- * Print Log to the page
- * @param  mixed  $var    Mixed Input
- * @param  boolean $pre    Append <pre> tag
- * @param  boolean $return Return Output
- * @return string/void     Dependent on the $return input
+/*
+ |------------------------------------------------
+ |
+ |------------------------------------------------
  */
-function plog($var, $pre=true, $return=false) {
-    $info = print_r($var, true);
-    $result = $pre ? "<pre>$info</pre>" : $info;
-    if ($return) return $result;
-    else echo $result;
+if (!function_exists('elog')) {
+	/**
+	 * Log to file
+	 * @param  string $log Log
+	 * @return void
+	 */
+	function elog($log, $fn = "debug.log") {
+	    $fp = fopen($fn, "a");
+	    fputs($fp, "[".date("d-m-Y h:i:s")."][Log] $log\r\n");
+	    fclose($fp); 
+	}
 }
 
-/**
- * Log to file
- * @param  string $log Log
- * @return void
+/*
+ |------------------------------------------------
+ |
+ |------------------------------------------------
  */
-function elog($log, $fn = "debug.log") {
-    $fp = fopen($fn, "a");
-    fputs($fp, "[".date("d-m-Y h:i:s")."][Log] $log\r\n");
-    fclose($fp); 
+if(!function_exists('formatBytes'))
+{
+	/**
+	 * @param $bytes
+	 * @param $precision
+	 * @return string
+	 */
+	function formatBytes($bytes, $precision = 2) {
+	    if ($bytes > pow(1024,3)) return round($bytes / pow(1024,3), $precision)."GB";
+	    else if ($bytes > pow(1024,2)) return round($bytes / pow(1024,2), $precision)."MB";
+	    else if ($bytes > 1024) return round($bytes / 1024, $precision)."KB";
+	    else return ($bytes)."B";
+	}
 }
