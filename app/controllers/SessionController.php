@@ -1,6 +1,7 @@
 <?php
 
 use aCube\Managers\AuthSessionManager;
+use aCube\Managers\RegisterManager;
 use aCube\Repositories\UserRepo;
 
 class SessionController extends BaseController {

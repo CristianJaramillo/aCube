@@ -1,5 +1,6 @@
 <?php
 
+use aCube\Linfo\Linfo;
 use aCube\SmartUI\DashboardUI;
 
 class DashboardController extends BaseController {
@@ -24,9 +25,15 @@ class DashboardController extends BaseController {
 	 */
 	public function setupDashboard()
 	{
-		Tab::tab(['Sistema'])
-				->content(0, '<h1>Contenido</h1>')
-				->options('pull', 'right');
+		$linfo = new Linfo();
+	    $this->addParam([
+			'core' => $linfo->core,
+			'device' => $linfo->device,
+			'memory' => $linfo->memory,
+			'memorySystem' => $linfo->memorySystem,
+			'network' => $linfo->network,	    	
+	    ]);
+	    unset($linfo);
 	}
 
 	/**

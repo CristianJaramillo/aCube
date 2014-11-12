@@ -13,37 +13,22 @@
  | GLOBAL ROUTES
  |--------------------------------------------------------------------------
  */
-use ZetaComponents\SystemInformation\ezcSystemInfo;
-use ZetaComponents\SystemInformation\Readers\ezcSystemInfoWindowsReader;
 
-Route::get('info', function(){
-	$info = new ezcSystemInfoWindowsReader();
-	$memory = win32_ps_stat_mem();
-	
-	foreach ($memory as $key => $value) {
-		if($key!='load') $value = formatBytes($value);
-		echo $key . "->". $value . '<br/>';
+use aCube\Linfo\Linfo;
+use aCube\Responses\LinfoResponse;
+Route::get('Linfo', function (){
+	$linfo = new Linfo();
+	$core = $linfo->core;
+
+	foreach ($core as $key => $value) {
+		foreach ($value as $aux) {
+			print_r($aux);
+		}
 	}
 
-	$dev = './';   
-    $freespace = disk_free_space($dev);   
-	$totalspace = disk_total_space($dev);   
-	$freespace_mb = $freespace/1024/1024;   
-	$totalspace_mb = $totalspace/1024/1024;   
-	$freespace_percent = ($freespace/$totalspace)*100;   
-	//$used_percent = (1-($freespace/$totalspace))*100; 
-	// dar formato a los datos obtenidos 
-	                     
-	$freespace_mb=number_format($freespace_mb,0,",","."); 
-
-	$freespace_percent=number_format($freespace_percent,2,",","."); 
-
-	echo "<br />"; 
-	echo "Espacio libre en disco: $freespace_mb Mb <br /><br />"; 
-	echo "Porcentaje de espacio libre: $freespace_percent %";  
-
-	dd($info);
+	dd();
 });
+
 /*
  |--------------------------------------------------------------------------
  | END GLOBAL ROUTES
