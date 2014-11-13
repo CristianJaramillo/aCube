@@ -1,6 +1,6 @@
-<?php
+<?php namespace Linfo;
 
-namespace aCube\Linfo;
+use Linfo\Get\GetInfoException;
 
 class Linfo extends Base
 {

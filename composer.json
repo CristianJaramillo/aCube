@@ -13,7 +13,8 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"aCube\\": "app/aCube"
+			"aCube\\": "app/aCube",
+			"Linfo\\": "app/Linfo"
 		}, 
 		"classmap": [
 			"app/commands",

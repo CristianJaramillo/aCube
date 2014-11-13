@@ -15,10 +15,6 @@ class CategoryPagesTableSeeder extends Seeder {
 				),
 				array(
 					'category_id' => 1,
-					'page_id'     => 3,
-				),
-				array(
-					'category_id' => 1,
 					'page_id'     => 2,
 				),				
 			);

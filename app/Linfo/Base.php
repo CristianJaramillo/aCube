@@ -1,6 +1,13 @@
-<?php
+<?php namespace Linfo;
 
-namespace aCube\Linfo;
+use Linfo\Get\GetInfoException;
+use Linfo\Linfo\LinfoError;
+
+/*
+ |---------------------------------------------------
+ |
+ |---------------------------------------------------
+ */
 
 abstract class Base {
 
@@ -72,7 +79,7 @@ abstract class Base {
 	 * @return array the system information
 	 * @throws \Exception
 	 */
-	public function loadSystemOsClass($type, $settings, $namespace = 'aCube\Linfo\OS\OS_') {
+	public function loadSystemOsClass($type, $settings, $namespace = 'Linfo\OS\OS_') {
 		$class = $namespace.$type;
 
 		if(class_exists($class)) return new $class($settings);

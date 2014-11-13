@@ -21,15 +21,6 @@ class PagesTableSeeder extends Seeder {
 				'type'   => 'private',
 			],
 			[
-				'name'   => 'app-blank',
-				'uri'    => 'app/blank',
-				'layout' => NULL,
-				'title'  => 'Widget',
-				'description' => 'Simple Widget para mostrar el Facade SmartUI::widget().',
-				'app'    => 'apps.dashboard.blank_',
-				'type'   => 'private',
-			],
-			[
 				'name'   => 'app-dashboard',
 				'uri'    => 'app/dashboard',
 				'layout' => NULL,

@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Linfo\OS;
+<?php namespace Linfo\Linfo;
 
 /**
  * This file is part of Linfo (c) 2010 Joseph Gillotti.
@@ -20,9 +18,9 @@ namespace aCube\Linfo\OS;
 */
 
 /**
- * Use this class for all error handling
+ * Used to time how long it takes to fetch each bit of information. 
  */
-class LinfoError {
+class LinfoTimer {
 	
 	/**
 	 * Store singleton instance here 
@@ -40,49 +38,40 @@ class LinfoError {
 	 * @access public
 	 * @return object LinfoError instance
 	 */
-	static public function Fledging($settings = null) {
+	public static function Fledging($settings = null) {
 		$c = __CLASS__;
 		if (!isset(self::$_fledging))
 			self::$_fledging = new $c($settings);
 		return self::$_fledging;
 	}
+
+	/**
+	 * Store the timer results here
+	 * 
+	 * @var array
+	 * @access protected
+	 */
+	protected $_results = array();  
 	
 	/**
-	 * Store error messages here
-	 *
-	 * @var array
-	 * @access private
-	 */
-	private $_errors = array();
-
-	/**
-	 * Add an error message
-	 *
+	 * Save a timed result. 
+	 * 
+	 * @param string $id timer name
+	 * @param float $duration amount taken
 	 * @access public
-	 * @param string $whence name of error message source
-	 * @param string $message error message text
+	 * @return void
 	 */
-	public function add($whence, $message) {
-		$this->_errors[] = array($whence, $message);
+	public function save($id, $duration) {
+		$this->_results[] = array($id, $duration);
 	}
-
+	
 	/**
-	 * Get all error messages
-	 *
+	 * Return the results
+	 * 
 	 * @access public
-	 * @return array of errors
+	 * @return array the results
 	 */
-	public function show() {
-		return $this->_errors;
-	}
-
-	/**
-	 * How many are there?
-	 *
-	 * @access public
-	 * @return int number of errors
-	 */
-	public function num() {
-		return count($this->_errors);
+	public function getResults() {
+		return $this->_results;
 	}
 }

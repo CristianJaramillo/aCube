@@ -1,6 +1,4 @@
-<?php 
-
-namespace aCube\Linfo;
+<?php namespace Linfo\Get;
 
 /**
  * Exception for info classes

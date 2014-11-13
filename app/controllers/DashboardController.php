@@ -1,7 +1,7 @@
 <?php
 
-use aCube\Linfo\Linfo;
 use aCube\SmartUI\DashboardUI;
+use Linfo\Linfo;
 
 class DashboardController extends BaseController {
 

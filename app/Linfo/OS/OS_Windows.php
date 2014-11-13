@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Linfo\OS;
+<?php namespace Linfo\OS;
 
 /*
  * This file is part of Linfo (c) 2010 Joseph Gillotti.
@@ -20,7 +18,9 @@ namespace aCube\Linfo\OS;
  * 
 */
 
-use aCube\Linfo\GetInfoException;
+use Linfo\Get\GetInfoException;
+use Linfo\Linfo\LinfoError;
+use Linfo\Linfo\LinfoTimerStart;
 
 /**
  * Get info on Windows systems
@@ -100,7 +100,7 @@ class OS_Windows {
 	 * @access private
 	 * @return string current windows version
 	 */
-	private function getOS() {
+	public function getOS() {
 		
 		foreach ($this->wmi->ExecQuery("SELECT Caption FROM Win32_OperatingSystem") as $os) {
 			return $os->Caption;
@@ -287,7 +287,7 @@ class OS_Windows {
 			);
 		}
 		
-		usort($drives, array('aCube\Linfo\OS\OS_Windows', 'compare_drives'));
+		usort($drives, array('Linfo\OS\OS_Windows', 'compare_drives'));
 		
 		return $drives;
 	}
@@ -389,7 +389,7 @@ class OS_Windows {
 			$volumes[] = $a;
 		}
 		
-		usort($volumes, array('aCube\Linfo\OS\OS_Windows', 'compare_mounts'));
+		usort($volumes, array('Linfo\OS\OS_Windows', 'compare_mounts'));
 		
 		return $volumes;
 	}
@@ -428,7 +428,7 @@ class OS_Windows {
 		}
 		
 		// Sort by 1. Type, 2. Vendor
-		usort($devs, array('aCube\Linfo\OS\OS_Windows', 'compare_devices'));
+		usort($devs, array('Linfo\OS\OS_Windows', 'compare_devices'));
 		
 		return $devs;
 	}

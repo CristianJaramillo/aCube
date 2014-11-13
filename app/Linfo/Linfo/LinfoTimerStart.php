@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Linfo\OS;
+<?php namespace Linfo\Linfo;
 
 /**
  * Started/created at the beginning of a function declaration.

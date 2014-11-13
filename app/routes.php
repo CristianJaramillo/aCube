@@ -14,19 +14,24 @@
  |--------------------------------------------------------------------------
  */
 
-use aCube\Linfo\Linfo;
-use aCube\Responses\LinfoResponse;
-Route::get('Linfo', function (){
-	$linfo = new Linfo();
-	$core = $linfo->core;
+use Linfo\OS\OS_Windows;
 
-	foreach ($core as $key => $value) {
-		foreach ($value as $aux) {
-			print_r($aux);
-		}
-	}
+Route::get('core', function(){
+	
+	$settings = array();
 
-	dd();
+	/*
+	 * Usual configuration
+	 */
+	$settings['byte_notation'] = 1024; // Either 1024 or 1000; defaults to 1024
+	$settings['dates'] = 'm/d/y h:i A (T)'; // Format for dates shown. See php.net/date for syntax
+	$settings['language'] = 'en'; // Refer to the lang/ folder for supported lanugages
+	$settings['icons'] = true; // simple icons 
+
+	$settings['show']['os'] = true;
+
+	$windows = new OS_Windows($settings);
+	return $windows->getOS();
 });
 
 /*
