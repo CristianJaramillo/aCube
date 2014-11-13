@@ -115,7 +115,7 @@ class OS_Windows {
 	 * @access private
 	 * @return string kernel version
 	 */
-	private function getKernel() {
+	public function getKernel() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -135,7 +135,7 @@ class OS_Windows {
 	 * @access private
 	 * @return string the host name
 	 */
-	private function getHostName() {
+	public function getHostName() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -154,7 +154,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array the memory information
 	 */
-	private function getRam(){
+	public function getRam(){
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -186,7 +186,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array of cpu info
 	 */
-	private function getCPU() {
+	public function getCPU() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -226,7 +226,7 @@ class OS_Windows {
 	 * @access private
 	 * @return string uptime
 	 */
-	private function getUpTime () {
+	public function getUpTime () {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -258,7 +258,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array the hard drive info
 	 */
-	private function getHD() {
+	public function getHD() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -313,7 +313,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array the mounted the file systems
 	 */
-	private function getMounts() {
+	public function getMounts() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -400,7 +400,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array of devices
 	 */
-	private function getDevs() {
+	public function getDevs() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -421,9 +421,9 @@ class OS_Windows {
 				$caption = iconv("Windows-1252", "UTF-8//TRANSLIT", $caption);
 			}
 			$devs[] = array(
+				'type' => $type,
 				'vendor' => $manufacturer,
-				'device' => $caption,
-				'type' => $type
+				'device' => utf8_decode($caption),
 			);
 		}
 		
@@ -454,7 +454,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array of current system load values
 	 */
-	private function getLoad() {
+	public function getLoad() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -473,7 +473,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array of network devices
 	 */
-	private function getNet() {
+	public function getNet() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -609,7 +609,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array of soundcards
 	 */
-	private function getSoundCards() {
+	public function getSoundCards() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -642,7 +642,7 @@ class OS_Windows {
 	 * @access private
 	 * @return array of process stats
 	 */
-	private function getProcessStats() {
+	public function getProcessStats() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -668,9 +668,9 @@ class OS_Windows {
 	 * @access private
 	 * @return array the services
 	 */
-	private function getServices() {
+	public function getServices() {
 	
-		return array(); // TODO
+		return win32_ps_list_procs(); // TODO
 	}
 	
 	/**
@@ -690,7 +690,7 @@ class OS_Windows {
 	 * @access private
 	 * @return string the arch and bits
 	 */
-	private function getCPUArchitecture() {
+	public function getCPUArchitecture() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))

@@ -15,23 +15,36 @@
  */
 
 use Linfo\OS\OS_Windows;
+Route::get('windows', function(){
+	$windows = new OS_Windows(array(
+			'dates' => 'm/d/y h:i A (T)'
+		));
 
-Route::get('core', function(){
+	$core = array(
+			'os'     => $windows->getOS(),
+			'kernel' => $windows->getKernel(),
+			'accessed_ip' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
+			'upTime' => $windows->getUpTime(),
+			'hostname' => $windows->getHostName(),
+			'cpus'   => $windows->getCPU(),
+			'cpu_arch' => $windows->getCPUArchitecture(),
+			'load'   => $windows->getLoad(),
+			'process_stats' => $windows->getProcessStats()
+		);
+
+	$device = $windows->getDevs();
+
+	$memory = $windows->getRam();
+
+	$mount = $windows->getMounts();
 	
-	$settings = array();
+	$network = $windows->getNet();
 
-	/*
-	 * Usual configuration
-	 */
-	$settings['byte_notation'] = 1024; // Either 1024 or 1000; defaults to 1024
-	$settings['dates'] = 'm/d/y h:i A (T)'; // Format for dates shown. See php.net/date for syntax
-	$settings['language'] = 'en'; // Refer to the lang/ folder for supported lanugages
-	$settings['icons'] = true; // simple icons 
+	$hd = $windows->getHD();
 
-	$settings['show']['os'] = true;
+	$sound_cards = $windows->getSoundCards();
 
-	$windows = new OS_Windows($settings);
-	return $windows->getOS();
+	dd(array($core, $device, $memory, $mount, $network, $hd, $sound_cards));
 });
 
 /*
