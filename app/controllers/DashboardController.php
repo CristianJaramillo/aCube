@@ -16,7 +16,6 @@ class DashboardController extends BaseController {
 	{
 		// Obtención de objeto page y agregado a params.
 		$this->setupApp($app);
-		$this->setupDashboard();
 		return parent::index();
 	}
 

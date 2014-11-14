@@ -464,7 +464,7 @@ class OS_Windows {
 		foreach ($this->wmi->ExecQuery("SELECT LoadPercentage FROM Win32_Processor") as $cpu) {
 			$load[] = $cpu->LoadPercentage;
 		}
-		return round(array_sum($load) / count($load), 2) . "%";
+		return round(array_sum($load) / count($load), 2);
 	}
 	
 	/**

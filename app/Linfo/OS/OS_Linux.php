@@ -98,7 +98,7 @@ class OS_Linux {
 	 * @access private
 	 * @return string Linux
 	 */
-	private function getOS() {
+	public function getOS() {
 		
 		// Linux, obviously
 		return 'Linux';
@@ -110,7 +110,7 @@ class OS_Linux {
 	 * @access private
 	 * @return string kernel version
 	 */
-	private function getKernel() {
+	public function getKernel() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -144,7 +144,7 @@ class OS_Linux {
 	 * @access private
 	 * @return string the host name
 	 */
-	private function getHostName() {
+	public function getHostName() {
 		
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -174,7 +174,7 @@ class OS_Linux {
 	 * @access private
 	 * @return array the memory information
 	 */
-	private function getRam(){
+	public function getRam(){
 		
 		// Time?
 		if (!empty($this->settings['timer']))
