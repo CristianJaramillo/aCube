@@ -13,23 +13,14 @@
  | GLOBAL ROUTES
  |--------------------------------------------------------------------------
  */
-
+use Linfo\Linfo;
 use Linfo\OS\OS_Windows;
 Route::get('core', function(){
-	$windows = new OS_Windows(array(
-			'dates' => 'm/d/y h:i A (T)'
-		));
-	$core = array(
-			'os'     => $windows->getOS(),
-			'kernel' => $windows->getKernel(),
-			'accessed_ip' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
-			'upTime' => $windows->getUpTime(),
-			'hostname' => $windows->getHostName(),
-			'cpus'   => $windows->getCPU(),
-			'cpu_arch' => $windows->getCPUArchitecture(),
-			'load'   => $windows->getLoad(),
-			'process_stats' => $windows->getProcessStats()
-		);
+	$linfo = new Linfo();
+	$linfo->setupCore();
+
+	$core = $linfo->getCore();
+
 	return \View::make('apps.dashboard.widgets.linfo.core', compact('core'));
 });
 

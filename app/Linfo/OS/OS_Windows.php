@@ -97,7 +97,7 @@ class OS_Windows {
 	/**
 	 * getOS 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return string current windows version
 	 */
 	public function getOS() {
@@ -112,7 +112,7 @@ class OS_Windows {
 	/**
 	 * getKernel 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return string kernel version
 	 */
 	public function getKernel() {
@@ -132,7 +132,7 @@ class OS_Windows {
 	/**
 	 * getHostName 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return string the host name
 	 */
 	public function getHostName() {
@@ -151,7 +151,7 @@ class OS_Windows {
 	/**
 	 * getRam 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array the memory information
 	 */
 	public function getRam(){
@@ -183,7 +183,7 @@ class OS_Windows {
 	/**
 	 * getCPU 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of cpu info
 	 */
 	public function getCPU() {
@@ -223,7 +223,7 @@ class OS_Windows {
 	/**
 	 * getUpTime 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return string uptime
 	 */
 	public function getUpTime () {
@@ -249,13 +249,13 @@ class OS_Windows {
 		);
 		$booted_ts = mktime($booted['hour'], $booted['minute'], $booted['second'], $booted['month'], $booted['day'], $booted['year']);
 		
-		return seconds_convert(time() - $booted_ts) . '; booted ' . date($this->settings['dates'], $booted_ts);
+		return seconds_convert(time() - $booted_ts) + array('booted' => date($this->settings['dates'], $booted_ts));
 	}
 	
 	/**
 	 * getHD 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array the hard drive info
 	 */
 	public function getHD() {
@@ -295,22 +295,35 @@ class OS_Windows {
 	/**
 	 * getTemps 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array the temps
 	 */
-	private function getTemps() {
+	public function getTemps() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
 			$t = new LinfoTimerStart('Temperature');
 		
-		return array(); // TODO
+		$temps = array();
+
+		foreach($this->wmi->ExecQuery("SELECT DeviceID, Status, Resolution, Tolerance, Accuracy FROM Win32_TemperatureProbe") as $temp)
+		{
+			$temps[] = array(
+				'device'     => $temp->DeviceID, 
+				'status'     => $temp->Status, 
+				'resolution' => $temp->Resolution, 
+				'tolerance'  => $temp->Tolerance, 
+				'accuracy'   => $temp->Accuracy
+			);
+		}
+
+		return $temps; // TODO
 	}
 	
 	/**
 	 * getMounts 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array the mounted the file systems
 	 */
 	public function getMounts() {
@@ -397,7 +410,7 @@ class OS_Windows {
 	/**
 	 * getDevs 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of devices
 	 */
 	public function getDevs() {
@@ -436,7 +449,7 @@ class OS_Windows {
 	/**
 	 * getRAID 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of raid arrays
 	 */
 	private function getRAID() {
@@ -451,7 +464,7 @@ class OS_Windows {
 	/**
 	 * getLoad 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of current system load values
 	 */
 	public function getLoad() {
@@ -461,16 +474,17 @@ class OS_Windows {
 			$t = new LinfoTimerStart('Load Averages');
 		
 		$load = array();
-		foreach ($this->wmi->ExecQuery("SELECT LoadPercentage FROM Win32_Processor") as $cpu) {
-			$load[] = $cpu->LoadPercentage;
+		foreach ($this->wmi->ExecQuery("SELECT LoadPercentage FROM Win32_Processor") as $key => $cpu) {
+			$load[$key] = $cpu->LoadPercentage;
 		}
+
 		return round(array_sum($load) / count($load), 2);
 	}
 	
 	/**
 	 * getNet 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of network devices
 	 */
 	public function getNet() {
@@ -578,7 +592,7 @@ class OS_Windows {
 	/**
 	 * getBattery 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of battery status
 	 */
 	private function getBattery() {
@@ -593,7 +607,7 @@ class OS_Windows {
 	/**
 	 * getWifi 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of wifi devices
 	 */
 	private function getWifi() {
@@ -606,7 +620,7 @@ class OS_Windows {
 	/**
 	 * getSoundCards 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of soundcards
 	 */
 	public function getSoundCards() {
@@ -639,7 +653,7 @@ class OS_Windows {
 	/**
 	 * getProcessStats 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array of process stats
 	 */
 	public function getProcessStats() {
@@ -665,7 +679,7 @@ class OS_Windows {
 	/**
 	 * getServices 
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array the services
 	 */
 	public function getServices() {
@@ -676,7 +690,7 @@ class OS_Windows {
 	/**
 	 * getDistro
 	 * 
-	 * @access private
+	 * @access public
 	 * @return array the distro,version or false
 	 */
 	private function getDistro() {
@@ -687,7 +701,7 @@ class OS_Windows {
 	/**
 	 * getCPUArchitecture
 	 * 
-	 * @access private
+	 * @access public
 	 * @return string the arch and bits
 	 */
 	public function getCPUArchitecture() {

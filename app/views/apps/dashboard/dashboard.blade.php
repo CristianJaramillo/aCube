@@ -17,7 +17,7 @@
 					<span class="widget-icon">
 						<i class="fa fa-desktop"></i>
 					</span>
-					<h2>{{ Lang::get('linfo.core') }}</h2>
+					<h2>{{ Lang::get('linfo.header') }}</h2>
 				</header>
 
 				<!-- widget div-->

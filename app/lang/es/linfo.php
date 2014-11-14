@@ -1,15 +1,17 @@
 <?php
 
 return [
-    'header'      => 'System Health and Information',
+    'booted'      => 'Arrancado',
+    'header'      => 'Información del Sistema',
     'core'        => 'Núcleo',
-    'os'          => 'OS',
-    'kernel'      => 'Kernel',
-    'accessed_ip' => 'Accessed IP',
+    'os'          => 'Sistema Operativo',
+    'kernel'      => 'Núcleo',
+    'icon'        => 'icono',
+    'accessed_ip' => 'IP de acceso',
     'uptime'      => 'Uptime',
-    'hostname'    => 'Hostname',
+    'hostname'    => 'Nombre de Equipo',
     'cpus'        => 'CPUs',
-    'load'        => 'Load',
+    'load'        => 'Carga',
     'processes'   => 'Processes',
     'threads'     => 'Threads',
     'total'       => 'Total',
@@ -70,7 +72,7 @@ return [
     'services'   => 'Services',
     'memory_usage' => 'Memory Usage',
     'distro'     => 'Distribution',
-    'cpu_arch'   => 'Architecture',
+    'cpu_arch'   => 'Arquitectura',
     'model'      => 'Model',
     'numLoggedIn'  => 'Active Users'
 ];

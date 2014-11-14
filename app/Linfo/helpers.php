@@ -123,8 +123,6 @@ if (!function_exists('seconds_convert'))
 	 * @return string
 	 */
 	function seconds_convert($uptime) {
-
-		global $lang;
 		
 		// Method here heavily based on freebsd's uptime source
 		$uptime += $uptime > 60 ? 30 : 0;
@@ -141,21 +139,21 @@ if (!function_exists('seconds_convert'))
 		$return = array();
 
 		if ($years > 0)
-			$return[] = $years.' '.($years > 1 ? $lang['years'] : substr($lang['years'], 0, strlen($lang['years']) - 1));
+			$return['years'] = $years;
 
 		if ($days > 0)
-			$return[] = $days.' '.$lang['days'];
+			$return['days'] = $days;
 		
 		if ($hours > 0)
-			$return[] = $hours.' '.$lang['hours'];
+			$return['hours'] = $hours;
 
 		if ($minutes > 0)
-			$return[] = $minutes.' '.$lang['minutes'];
+			$return['minutes'] = $minutes;
 
 		if ($seconds > 0)
-			$return[] = $seconds. (date('m/d') == '06/03' ? ' sex' : ' '.$lang['seconds']);
+			$return['seconds'] = $seconds;
 
-		return implode(', ', $return);
+		return $return;
 	}
 }
 
