@@ -14,9 +14,9 @@
  |--------------------------------------------------------------------------
  */
 use Linfo\Linfo;
-use Linfo\OS\OS_Windows;
 Route::get('core', function(){
 	$linfo = new Linfo();
+
 	$linfo->setupCore();
 
 	$core = $linfo->getCore();
@@ -24,6 +24,37 @@ Route::get('core', function(){
 	return \View::make('apps.dashboard.widgets.linfo.core', compact('core'));
 });
 
+Route::get('device', function(){
+	$linfo = new Linfo();
+
+	$linfo->setupDevice();
+
+	$device = $linfo->getDevice();
+
+	return \View::make('apps.dashboard.widgets.linfo.device', compact('device'));
+});
+
+Route::get('network', function(){
+	$linfo = new Linfo();
+
+	$linfo->setupNetwork();
+
+	$network = $linfo->getNetwork();
+
+	return \View::make('apps.dashboard.widgets.linfo.network', compact('network'));
+});
+
+Route::get('memory', function(){
+	$linfo = new Linfo();
+
+	$linfo->setupMemory();
+
+	$memory = $linfo->getMemory();
+
+	return \View::make('apps.dashboard.widgets.linfo.memory', compact('memory'));
+});
+
+use Linfo\OS\OS_Windows;
 Route::get('windows', function(){
 	$windows = new OS_Windows(array(
 			'dates' => 'm/d/y h:i A (T)'
@@ -54,25 +85,6 @@ Route::get('windows', function(){
 	$sound_cards = $windows->getSoundCards();
 
 	dd(array($core, $device, $memory, $mount, $network, $hd, $sound_cards));
-});
-
-use Linfo\OS\OS_Linux;
-Route::get('linux', function(){
-	$linux = new OS_Linux(array(
-			'dates' => 'm/d/y h:i A (T)'
-		));
-
-	// $core = array(
-			// 'os'     => $windows->getOS(),
-			// 'kernel' => $windows->getKernel(),
-			// 'accessed_ip' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
-			// 'upTime' => $windows->getUpTime(),
-			// 'hostname' => $windows->getHostName(),
-			// 'cpus'   => $windows->getCPU(),
-			// 'cpu_arch' => $windows->getCPUArchitecture(),
-			// 'load'   => $windows->getLoad(),
-			// 'process_stats' => $windows->getProcessStats()
-		// );
 });
 
 /*

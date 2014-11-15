@@ -11,6 +11,21 @@ class Linfo extends Base // implements LinfoInterface
 	protected $core = array();
 
 	/**
+	 * @var array
+	 */
+	protected $device = array();
+
+	/**
+	 * @var array
+	 */
+	protected $memory = array();
+
+	/**
+	 * @var array
+	 */
+	protected $network = array();
+
+	/**
 	 * @return void
 	 */
 	public function __construct()
@@ -26,6 +41,30 @@ class Linfo extends Base // implements LinfoInterface
 	public function getCore()
 	{
 		return $this->core;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function getDevice()
+	{
+		return $this->device;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function getMemory()
+	{
+		return $this->memory;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function getNetwork()
+	{
+		return $this->network;
 	}
 
 	/**
@@ -58,6 +97,30 @@ class Linfo extends Base // implements LinfoInterface
 				// 'temp'        => $this->OSClass->getTemps(),
 			);
 		$this->core = $core;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function setupDevice()
+	{
+		$this->device = $this->OSClass->getDevs();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function setupMemory()
+	{
+		$this->memory = $this->OSClass->getRam();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function setupNetwork()
+	{
+		$this->network = $this->OSClass->getNet();
 	}
 
 	/**
