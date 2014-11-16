@@ -55,6 +55,11 @@ class OS_Windows {
 		if (!is_object($this->wmi)) {
 			throw new GetInfoException('This needs access to WMI. Please enable DCOM in php.ini and allow the current user to access the WMI DCOM object.');
 		}
+
+		foreach ($this->wmi->ExecQuery("SELECT WindowsVersion FROM Win32_Process WHERE Handle = 0") as $process) {
+			$this->windows_version = $process->WindowsVersion;
+		}
+		unset($process);
 	}
 
 	/**
@@ -436,7 +441,7 @@ class OS_Windows {
 			$devs[] = array(
 				'type' => $type,
 				'vendor' => $manufacturer,
-				'device' => utf8_decode($caption),
+				'device' => $caption,
 			);
 		}
 		
@@ -683,7 +688,6 @@ class OS_Windows {
 	 * @return array the services
 	 */
 	public function getServices() {
-	
 		return win32_ps_list_procs(); // TODO
 	}
 	
@@ -694,7 +698,6 @@ class OS_Windows {
 	 * @return array the distro,version or false
 	 */
 	private function getDistro() {
-	
 		return false;
 	}
 	

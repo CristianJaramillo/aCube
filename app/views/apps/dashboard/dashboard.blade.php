@@ -15,7 +15,7 @@
 
 				<header role="heading">
 					<span class="widget-icon">
-						<i class="fa fa-desktop"></i>
+						<i class="fa fa-cube"></i>
 					</span>
 					<h2>{{ Lang::get('linfo.header') }}</h2>
 				</header>
@@ -74,7 +74,7 @@
 
 				<header role="heading">
 					<span class="widget-icon">
-						<i class="fa fa-hdd-o"></i>
+						<i class="fa fa-desktop"></i>
 					</span>
 					<h2>{{ Lang::get('linfo.hardware') }}</h2>
 				</header>
@@ -127,7 +127,7 @@
 					<!-- end widget edit box -->
 					
 					<!-- widget content -->
-					<div class="widget-body"/>
+					<div class="widget-body no-padding"/>
 					<!-- end widget content -->
 
 				</div>
@@ -140,6 +140,41 @@
 		<!-- WIDGET END -->
 	</div>
 	<!-- end row -->
+
+	<!-- row -->
+	<div class="row">		
+		<!-- NEW WIDGET START -->
+		<article class="col-xs-12">
+			<!-- Widget ID (each widget will need unique ID)-->
+			<div class="jarviswidget" id="wid-id-mount"
+				data-widget-load="{{ asset('mount') }}"
+				data-widget-deletebutton="false"
+				data-widget-editbutton="false" 
+				data-widget-fullscreenbutton="false">
+
+				<header role="heading">
+					<span class="widget-icon">
+						<i class="fa fa-hdd-o"></i>
+					</span>
+					<h2>{{ Lang::get('linfo.filesystem_mounts') }}</h2>
+				</header>
+
+				<!-- widget div-->
+				<div role="content">
+
+					<!-- widget content -->
+					<div class="widget-body no-padding"/>
+					<!-- end widget content -->
+
+				</div>
+				<!-- end widget div -->
+			</div>
+			<!-- end widget -->
+		</article>
+		<!-- END WIDGET START -->
+	</div>
+	<!-- end row -->
+
 </section>
 <!-- end widget grid -->
 

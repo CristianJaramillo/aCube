@@ -23,6 +23,11 @@ class Linfo extends Base // implements LinfoInterface
 	/**
 	 * @var array
 	 */
+	protected $mount = array();
+
+	/**
+	 * @var array
+	 */
 	protected $network = array();
 
 	/**
@@ -57,6 +62,14 @@ class Linfo extends Base // implements LinfoInterface
 	public function getMemory()
 	{
 		return $this->memory;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function getMount()
+	{
+		return $this->mount;
 	}
 
 	/**
@@ -113,6 +126,14 @@ class Linfo extends Base // implements LinfoInterface
 	public function setupMemory()
 	{
 		$this->memory = $this->OSClass->getRam();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function setupMount()
+	{
+		$this->mount = $this->OSClass->getMounts();
 	}
 
 	/**

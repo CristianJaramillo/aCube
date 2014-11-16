@@ -13,8 +13,6 @@
 
 <script type="text/javascript">
 
-	var device = {{ json_encode($device) }};
-
 	(function($){
 			
 		var defaults = {
@@ -30,9 +28,6 @@
 
 			// Canfiguraciones del usuario.
 			var settings = undefined;
-
-			// Icono
-			var icon = undefined;
 
 			/**
 			 * Añade 1 o mas filas a la tabla.
@@ -61,12 +56,21 @@
 				nodeStruct();
 				// Cargamos la estructura
 				loadStruct(settings.data);
+				// Notificamos al usuario.
+				$.smallBox({
+					title : "Widget core device!",
+					content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
+					color : "#5F895F",
+					iconSmall : "fa fa-check bounce animated",
+					timeout : 4000
+				});
 			};
 
 			/**
 			 * Carga la estructura de la tabla
 			 */
-			var loadStruct = function(data){				$.each(data, addRow);
+			var loadStruct = function(data){
+				$.each(data, addRow);
 			};
 
 			/**
@@ -82,6 +86,6 @@
 
 	})(jQuery);
 
-	$('#table-device-linfo').tableDevice({'data':device});
+	$('#table-device-linfo').tableDevice({'data': {{ json_encode($device) }}});
 
 </script>

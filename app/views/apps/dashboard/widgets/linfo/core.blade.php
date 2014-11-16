@@ -3,9 +3,8 @@
 		<tbody></tbody>
 	</table>
 </div>
-<script type="text/javascript">
 
-	var core = {{ json_encode($core) }};
+<script type="text/javascript">
 
 	(function($){
 			
@@ -84,6 +83,14 @@
 				nodeStruct();
 				// Cargamos la estructura
 				loadStruct(settings.data);
+				// Notificamos al usuario.
+				$.smallBox({
+					title : "Widget core list!",
+					content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
+					color : "#5F895F",
+					iconSmall : "fa fa-check bounce animated",
+					timeout : 4000
+				});
 			};
 
 			/**
@@ -117,6 +124,6 @@
 
 	})(jQuery);
 
-	$('#table-core-linfo').tableCore({'data':core});
+	$('#table-core-linfo').tableCore({'data':{{ json_encode($core) }}});
 
 </script>

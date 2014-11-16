@@ -54,6 +54,22 @@ Route::get('memory', function(){
 	return \View::make('apps.dashboard.widgets.linfo.memory', compact('memory'));
 });
 
+Route::get('json/memory', function(){
+	$linfo = new Linfo();
+	$linfo->setupMemory();
+	return \Response::json($linfo->getMemory());
+});
+
+Route::get('mount', function(){
+	$linfo = new Linfo();
+
+	$linfo->setupMount();
+
+	$mount = $linfo->getMount();
+
+	return \View::make('apps.dashboard.widgets.linfo.mount', compact('mount'));
+});
+
 use Linfo\OS\OS_Windows;
 Route::get('windows', function(){
 	$windows = new OS_Windows(array(

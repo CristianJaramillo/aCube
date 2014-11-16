@@ -1,15 +1,18 @@
-<div class="custom-scroll table-responsive" style="height:290px; overflow-y: scroll;">
+<div class="custom-scroll table-responsive">
 	<table class="table table-striped table-hover table-condensed" id="table-network-linfo">
-		<tr>
-			<th>{{ Lang::get('linfo.device_name') }}</th>
-			<th>{{ Lang::get('linfo.type') }}</th>
-			<th>{{ Lang::get('linfo.sent') }}</th>
-			<th>{{ Lang::get('linfo.received') }}</th>
-			<th>{{ Lang::get('linfo.state') }}</th>
-		</tr>
+		<thead>
+			<tr>
+				<th>{{ Lang::get('linfo.device_name') }}</th>
+				<th>{{ Lang::get('linfo.type') }}</th>
+				<th>{{ Lang::get('linfo.sent') }}</th>
+				<th>{{ Lang::get('linfo.received') }}</th>
+				<th>{{ Lang::get('linfo.state') }}</th>
+			</tr>
+		</thead>
 		<tbody></tbody>
 	</table>
 </div>
+
 <script type="text/javascript">
 
 	var network = {{ json_encode($network) }};
@@ -69,6 +72,14 @@
 				nodeStruct();
 				// Cargamos la estructura
 				loadStruct(settings.data);
+				// Notificamos al usuario.
+				$.smallBox({
+					title : "Widget network list!",
+					content : "<i class='fa fa-clock-o'></i><i>1 seconds ago...</i>",
+					color : "#5F895F",
+					iconSmall : "fa fa-check bounce animated",
+					timeout : 4000
+				});
 			};
 
 			/**
