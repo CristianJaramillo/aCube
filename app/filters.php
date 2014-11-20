@@ -48,6 +48,12 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('auth.ajax', function(){
+	if (Request::ajax())
+	{
+	    return App::abort(403);
+	}
+});
 
 Route::filter('auth.basic', function()
 {

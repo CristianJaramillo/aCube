@@ -103,6 +103,8 @@ Route::get('windows', function(){
 	dd(array($core, $device, $memory, $mount, $network, $hd, $sound_cards));
 });
 
+Route::controller('linfo', 'LinfoController');
+
 /*
  |--------------------------------------------------------------------------
  | END GLOBAL ROUTES

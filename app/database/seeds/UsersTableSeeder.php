@@ -12,26 +12,46 @@ class UsersTableSeeder extends Seeder {
 
 		$users = array(
 				array(
+					'full_name'   => 'Anton Krall',
+					'username'    => 'Anton',
+					'password'    => 'friki454_',
+					'email'       => 'Krall@intruder.mx',
+					'category_id' => 1,
+					'authorized'  => 'on',
+				),
+				array(
+					'full_name'   => 'Andres Alvarado',
+					'username'    => 'Andres',
+					'password'    => 'friki454_',
+					'email'       => 'andres@intruder.mx',
+					'category_id' => 1,
+					'authorized'  => 'on',
+				),
+				array(
 					'full_name'   => 'Cristian Jaramillo',
-					'username'    => 'cristianFX',
+					'username'    => 'Cristian',
 					'password'    => 'friki454_',
 					'email'       => 'cristian@intruder.mx',
 					'category_id' => 1,
 					'authorized'  => 'on',
 				),
-			);
-
-		foreach(range(1, 5) as $index)
-		{
-			$users[] = [
-					'full_name'   => $faker->name,
-					'username'    => $faker->userName,
+				array(
+					'full_name'   => 'Allan Silva',
+					'username'    => 'Allan',
 					'password'    => 'intruder',
-					'email'       => $faker->email,
-					'category_id' => 2,
-					'authorized'  => $faker->randomElement(array('off', 'on')),
-				];
-		}
+					'email'       => 'allan@intruder.mx',
+					'category_id' => 1,
+					'authorized'  => 'on',
+				),
+				array(
+					'full_name'   => 'David Garrido',
+					'username'    => 'David',
+					'password'    => 'intruder',
+					'email'       => 'david@intruder.mx',
+					'category_id' => 1,
+					'authorized'  => 'on',
+				),
+			);
 
 		foreach ($users as $user)
 		{

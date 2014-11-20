@@ -1,86 +1,42 @@
 <?php
 
+use Linfo\Linfo;
+
 class LinfoController extends \BaseController {
 
 	/**
+	 * @var \Linfo
+	 */
+	protected $Linfo;
+
+	/**
+	 * @return void
+	 */
+	public function __construct(Linfo $Linfo)
+	{
+		$this->Linfo = $Linfo;
+		$this->layout = 'apps.dashboard.widgets.linfo.';
+	}
+
+	/**
 	 * Display a listing of the resource.
-	 * GET /linfo
+	 * GET /linfo/core/widget/
+	 * POST /linfo/core/json/
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function getCore($type)
 	{
-		//
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /linfo/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 * POST /linfo
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
-	 * GET /linfo/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /linfo/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /linfo/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 * DELETE /linfo/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		if($type == 'json')
+		{
+			$this->Linfo->setupCore();
+			return \Response::json($this->Linfo->getCore());
+		} elseif ($type == 'widget') {
+			$this->Linfo->setupCore();
+			$this->addParam('core', $this->Linfo->getCore());
+			$this->layout .= 'core';
+			return $this->index();
+		}
 	}
 
 }

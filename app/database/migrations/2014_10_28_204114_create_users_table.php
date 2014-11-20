@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration {
 			$table->string('full_name');
 			$table->string('username')->unique();
 			$table->string('email', 320)->unique();
-			$table->string('password')->default('intruder');			
+			$table->string('password');			
 			$table->integer('category_id')->unsigned();
 			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
 			$table->enum('authorized', ['off', 'on'])->default('off');
