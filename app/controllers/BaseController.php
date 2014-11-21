@@ -60,13 +60,15 @@ class BaseController extends Controller {
 	 */
 	protected function setupApp($app)
 	{
+		/*
 		$page = new PageRepo();
 		// Falta validar que el usuario tenga acceso a este contenido.
 		$page = $page->current($app, 'private');
-		if(is_null($page)) return App::abort();
+		if(is_null($page)) return App::abort(403);
 		$this->addParam(array('title' => $page->title,));
 		$this->layout = $page->app;
 		unset($page);
+		*/
 	}
 
 	/**

@@ -2,16 +2,16 @@
 
 namespace aCube\Repositories;
 
-use aCube\Entities\CategoryPage;
+use aCube\Entities\CategoryPagePerm;
 
-class CategoryPageRepo extends BaseRepo {
+class CategoryPagePermRepo extends BaseRepo {
 
 	/**
 	 * @return aCube○\Entities\CategoryPerm
 	 */
 	public function getEntitie()
 	{
-		return new CategoryPage;
+		return new CategoryPagePerm;
 	}
 
 	/**
@@ -27,7 +27,7 @@ class CategoryPageRepo extends BaseRepo {
 	 * @param int $category_id
      * @return boolean
 	 */
-	public function perm(int $page_id, int $category_id)
+	public function perm($page_id, $category_id)
 	{
 		$count = $this->entitie->countPage($page_id, $category_id);
 

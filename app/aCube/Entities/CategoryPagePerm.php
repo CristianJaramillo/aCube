@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Entities;
+<?php namespace aCube\Entities;
 
 class CategoryPagePerm extends \Eloquent {
 
@@ -16,7 +14,7 @@ class CategoryPagePerm extends \Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [];
+	protected $fillable = ['category_id', 'page_id'];
 
 	/**
      * @param $query

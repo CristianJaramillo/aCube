@@ -17,8 +17,7 @@ class CreatePagesTable extends Migration {
 			$table->engine = 'InnoDB';
 			$table->increments('id');
 			$table->string('name')->unique();
-			$table->string('uri')->nullable();
-			$table->string('layout')->default('layouts.default')->nullable();
+			$table->string('layout')->default('layouts.default');
 			$table->string('lang', 10)->default('es-MX');
 			$table->string('title')->default('Title');
 			$table->string('description')->default('Description');

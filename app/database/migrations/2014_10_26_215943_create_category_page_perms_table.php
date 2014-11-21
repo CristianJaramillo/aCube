@@ -14,6 +14,7 @@ class CreateCategoryPagePermsTable extends Migration {
 	{
 		Schema::create('category_page_perms', function(Blueprint $table)
 		{
+			$table->engine = 'InnoDB';
 			$table->increments('id');
 			$table->integer('category_id')->unsigned();
 			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');

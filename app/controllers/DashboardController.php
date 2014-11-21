@@ -1,7 +1,6 @@
 <?php
 
 use aCube\SmartUI\DashboardUI;
-use Linfo\Linfo;
 
 class DashboardController extends BaseController {
 
@@ -12,27 +11,12 @@ class DashboardController extends BaseController {
 	 * @return \View
 	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
 	 */
-	public function app($app = 'app-dashboard')
+	public function app($algo = null)
 	{
 		// Obtención de objeto page y agregado a params.
-		$this->setupApp($app);
-		return parent::index();
-	}
-
-	/**
-	 * @return void
-	 */
-	public function setupDashboard()
-	{
-		$linfo = new Linfo();
-	    $this->addParam([
-			'core' => $linfo->core,
-			'device' => $linfo->device,
-			'memory' => $linfo->memory,
-			'memorySystem' => $linfo->memorySystem,
-			'network' => $linfo->network,	    	
-	    ]);
-	    unset($linfo);
+		// $this->setupApp($app);
+		// return parent::index();
+		return 'you app!';
 	}
 
 	/**
@@ -64,6 +48,14 @@ class DashboardController extends BaseController {
 		// dd($this->params);
 
 		return parent::index();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function dashboard()
+	{
+		return 'Welcome ' . Auth::user()->full_name . '!';
 	}
 
 }

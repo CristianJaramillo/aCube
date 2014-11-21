@@ -13,7 +13,7 @@
  | GLOBAL ROUTES
  |--------------------------------------------------------------------------
  */
-
+ 
 /*
  |--------------------------------------------------------------------------
  | END GLOBAL ROUTES
@@ -75,6 +75,23 @@ Route::group(array('before' => array('guest')), function(){
 Route::group(['before' => 'auth'], function(){
 	
 	/*
+	 | logout route
+	 */
+	Route::get('logout', ['as' => 'logout', 'uses' => 'SessionController@logout']);
+
+	/*
+	 |----------------------------------------------------------------------
+	 | AUTH FOR RESOURCES GROUP ROUTES
+	 |----------------------------------------------------------------------
+	 */
+	Route::group(['before' => 'auth.app'], function(){
+		/*
+		 | dashboard route
+		 */
+		Route::get('dashboard/{algo?}', ['uses' => 'DashboardController@app']);
+	});
+
+	/*
 	 |----------------------------------------------------------------------
 	 | AUTH FOR PAGES GROUP ROUTES
 	 |----------------------------------------------------------------------
@@ -83,11 +100,7 @@ Route::group(['before' => 'auth'], function(){
 		/*
 		 | dashboard route
 		 */
-		Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
-		/*
-		 | logout route
-		 */
-		Route::get('logout', ['as' => 'logout', 'uses' => 'SessionController@logout']);
+		Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@dashboard']);
 	});
 
 	/*
@@ -96,10 +109,6 @@ Route::group(['before' => 'auth'], function(){
 	 |----------------------------------------------------------------------
 	 */
 	Route::group(['before' => 'auth.resource'], function(){
-		/*
-		 | app/{name} route
-		 */
-		Route::get('app/dashboard', ['as' => 'app-dashboard', 'uses' => 'DashboardController@app']);
 		/*
 		 | linfo/json/{name} route
 		 */

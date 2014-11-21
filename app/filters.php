@@ -100,6 +100,13 @@ Route::filter('csrf', function()
  | Access Authorization to Page Content
  |--------------------------------------------------------------------------
  */
+Route::filter('auth.app', 'AuthorizedFilter@app');
+
+/*
+ |--------------------------------------------------------------------------
+ | Access Authorization to Page Content
+ |--------------------------------------------------------------------------
+ */
 Route::filter('auth.page', 'AuthorizedFilter@page');
 
 /*

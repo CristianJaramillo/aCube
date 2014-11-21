@@ -1,9 +1,7 @@
-<?php
-
-namespace aCube\SmartUI;
+<?php namespace aCube\SmartUI;
 
 use aCube\Entities\User;
-use aCube\Repositories\CategoryPageRepo;
+use aCube\Repositories\CategoryPagePermRepo;
 
 class DashboardUI {
 
@@ -182,7 +180,7 @@ class DashboardUI {
 	 */
 	public function setupNav()
 	{
-		$repository = new CategoryPageRepo();
+		$repository = new CategoryPagePermRepo();
 		
 		$categoryPages = $repository->withWhereAndType('category_id', $this->user->category_id);
 

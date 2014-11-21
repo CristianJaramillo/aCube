@@ -1,8 +1,7 @@
 <?php
 
-use aCube\Repositories\CategoryPageRepo;
+use aCube\Repositories\CategoryPagePermRepo;
 use aCube\Repositories\PageRepo;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AuthorizedFilter {
 	
@@ -19,6 +18,17 @@ class AuthorizedFilter {
 	public function __construct()
 	{
 		$this->routeName = Route::currentRouteName();
+	}
+
+	/**
+	 * @param string $url
+	 * @return string $url
+	 */
+	public function getUrl($url)
+	{
+		if ($url == '/') return $url;
+
+		return preg_replace("/\//", $url, "", 1);
 	}
 
 	/**
@@ -56,28 +66,6 @@ class AuthorizedFilter {
 		return count($path) ? implode('/', $path) : '/';
 	}
 
-
-	/**
-	 * @param Illuminate\Routing\Route $route
-	 * @param Illuminate\Http\Request $request
-	 * @return void
-	 * @throws NotFoundHttpException
-	 */
-	public function filter($route, $request)
-	{
-		$routeName = $this->routeName;
-
-		if(is_null($routeName))
-		{
-			$routeName = $this->implodeUri($request->getPathInfo(), $route->getUri());
-		}
-
-		if(!$this->existsCategoryPerms($this->getPageId($routeName), Auth::user()->category_id))
-		{
-			throw new NotFoundHttpException;
-		}
-	}
-
 	/**
 	 * @param string $routeName
 	 * @return void
@@ -96,7 +84,7 @@ class AuthorizedFilter {
 		$pageRepo = new PageRepo();
 		$page = $pageRepo->where('name', '=', $page_name);
 		unset($pageRepo);
-		return is_null($page) ? 0 : $page->id;
+		return is_null($page) ? $page : $page->id;
 	}
 
 	/**
@@ -106,7 +94,7 @@ class AuthorizedFilter {
 	 */
 	public function existsCategoryPerms($page_id, $category_id)
 	{
-		$categoryPageRepo = new CategoryPageRepo();
+		$categoryPageRepo = new CategoryPagePermRepo();
 
 		return $categoryPageRepo->perm($page_id, $category_id);
 	}
@@ -114,9 +102,37 @@ class AuthorizedFilter {
 	/**
 	 *
 	 */
-	public function page()
+	public function app($route, $request)
 	{
-		// dd($this->routeName);
+		$routeName = $this->routeName;
+
+		if(is_null($routeName))
+		{
+			$routeName = $this->getUrl($request->getPathInfo());
+		}
+
+		dd($routeName);
+	}
+
+	/**
+	 * @param Illuminate\Routing\Route $route
+	 * @param Illuminate\Http\Request $request
+	 * @return void
+	 * @throws NotFoundHttpException
+	 */
+	public function page($route, $request)
+	{
+		$routeName = $this->routeName;
+
+		if(is_null($routeName))
+		{
+			$routeName = $this->implodeUri($request->getPathInfo(), $route->getUri());
+		}
+
+		if(!$this->existsCategoryPerms($this->getPageId($routeName), Auth::user()->category_id))
+		{
+			return \App::abort(403);
+		}
 	}
 
 	/**

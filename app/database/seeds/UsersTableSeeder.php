@@ -1,15 +1,11 @@
 <?php
 
-// Composer: "fzaninotto/faker": "v1.3.0"
-use Faker\Factory as Faker;
 use aCube\Entities\User;
 
 class UsersTableSeeder extends Seeder {
 
 	public function run()
 	{
-		$faker = Faker::create();
-
 		$users = array(
 				array(
 					'full_name'   => 'Allan Silva',
@@ -20,14 +16,14 @@ class UsersTableSeeder extends Seeder {
 				),
 				array(
 					'full_name'   => 'Andres Alvarado',
-					'password'    => 'friki454_',
+					'password'    => 'intruder',
 					'email'       => 'andres@intruder.mx',
 					'category_id' => 4,
 					'authorized'  => 'on',
 				),
 				array(
 					'full_name'   => 'Anton Krall',
-					'password'    => 'friki454_',
+					'password'    => 'intruder',
 					'email'       => 'Krall@intruder.mx',
 					'category_id' => 4,
 					'authorized'  => 'on',
@@ -59,7 +55,6 @@ class UsersTableSeeder extends Seeder {
 		{
 			User::create($user);
 		}
-
 	}
 
 }

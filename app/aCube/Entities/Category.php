@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Entities;
+<?php namespace aCube\Entities;
 
 class Category extends \Eloquent {
 
@@ -16,7 +14,7 @@ class Category extends \Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = [];
+	protected $fillable = ['name'];
 
 	/**
 	 * return encode to utf8 name.
@@ -46,9 +44,17 @@ class Category extends \Eloquent {
     /**
      * @return
      */
-    public function categoryPages()
+    public function categoryPagePerms()
     {
-    	return $this->hasMany('aCube\Entities\CategoryPage', 'category_id', 'id');
+    	return $this->hasMany('aCube\Entities\CategoryPagePerm', 'category_id', 'id');
+    }
+
+    /**
+     * @return
+     */
+    public function categoryResourcePerms()
+    {
+    	return $this->hasMany('aCube\Entities\CategoryResourcePerm', 'category_id', 'id');
     }
 
 }

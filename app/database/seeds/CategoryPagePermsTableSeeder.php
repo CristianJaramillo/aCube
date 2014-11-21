@@ -1,6 +1,6 @@
 <?php
 
-use aCube\Entities\CategoryPage;
+use aCube\Entities\CategoryPagePerm;
 
 class CategoryPagePermsTableSeeder extends Seeder {
 
@@ -21,7 +21,8 @@ class CategoryPagePermsTableSeeder extends Seeder {
 				),
 			);
 
-		foreach ($categoryPagePerms as $categoryPagePerm) {
+		foreach ($categoryPagePerms as $categoryPagePerm)
+		{
 			CategoryPagePerm::create($categoryPagePerm);			
 		}
 	}

@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Entities;
+<?php namespace aCube\Entities;
 
 use Illuminate\Auth\UserTrait;
 use Illuminate\Auth\UserInterface;
