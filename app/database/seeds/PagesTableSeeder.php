@@ -6,7 +6,6 @@ class PagesTableSeeder extends Seeder {
 
 	public function run()
 	{
-
 		/**
 		 * Páginas por defecto para la aplicación.
 		 */
@@ -18,15 +17,6 @@ class PagesTableSeeder extends Seeder {
 				'title'  => 'Dashboard',
 				'description' => 'Panel de administración principal.',
 				'app'    => NULL,
-				'type'   => 'private',
-			],
-			[
-				'name'   => 'app-dashboard',
-				'uri'    => 'app/dashboard',
-				'layout' => NULL,
-				'title'  => 'Dashboard',
-				'description' => 'Dashboard',
-				'app'    => 'apps.dashboard.dashboard',
 				'type'   => 'private',
 			],
 			[
@@ -83,7 +73,6 @@ class PagesTableSeeder extends Seeder {
 		foreach ($pages as $page) {
 			Page::create($page);
 		}
-
 	}
 
 }

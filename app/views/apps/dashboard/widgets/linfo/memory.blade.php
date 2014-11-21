@@ -225,7 +225,7 @@
 	})(jQuery);
 
 	var memoryDonut = function(){
-		$("#memory-donut-graph").donutMemory({"data":{{ json_encode($memory) }}, "url": "{{ asset('json/memory') }}" });
+		$("#memory-donut-graph").donutMemory({"data":{{ json_encode($memory) }}, "url": "{{ route('linfo-json', 'memory') }}" });
 	};
 	
 	// Load morris dependencies and run memoryfunction

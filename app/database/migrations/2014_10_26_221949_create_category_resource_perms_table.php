@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCategoryPagesTable extends Migration {
+class CreateCategoryResourcePermsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,14 +12,13 @@ class CreateCategoryPagesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('category_pages', function(Blueprint $table)
+		Schema::create('category_resource_perms', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('category_id')->unsigned();
 			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
-			$table->integer('page_id')->unsigned();
-			$table->foreign('page_id')->references('id')->on('pages')->onDelete('cascade')->onUpdate('cascade');
-			$table->enum('type', ['layout', 'app', 'resource'])->default('app');
+			$table->integer('resource_id')->unsigned();
+			$table->foreign('resource_id')->references('id')->on('resources')->onDelete('cascade')->onUpdate('cascade');
 			$table->timestamps();
 		});
 	}
@@ -32,7 +31,7 @@ class CreateCategoryPagesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('category_pages');
+		Schema::dropIfExists('category_resource_perms');
 	}
 
 }

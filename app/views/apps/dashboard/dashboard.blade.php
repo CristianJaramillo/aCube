@@ -8,7 +8,7 @@
 
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget" id="wid-id-core"
-				data-widget-load="{{ asset('core') }}"
+				data-widget-load="{{ route('linfo-widget', 'core') }}"
 				data-widget-deletebutton="false"
 				data-widget-editbutton="false" 
 				data-widget-fullscreenbutton="false">
@@ -35,7 +35,7 @@
 
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget" id="wid-id-network" 
-				data-widget-load="{{ asset('network') }}"
+				data-widget-load="{{ route('linfo-widget', 'network') }}"
 				data-widget-deletebutton="false"
 				data-widget-editbutton="false" 
 				data-widget-fullscreenbutton="false">
@@ -67,7 +67,7 @@
 			
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget" id="wid-id-device"
-				data-widget-load="{{ asset('device') }}"
+				data-widget-load="{{ route('linfo-widget', 'device') }}"
 				data-widget-deletebutton="false"
 				data-widget-editbutton="false" 
 				data-widget-fullscreenbutton="false">
@@ -93,7 +93,7 @@
 			
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget" id="wid-id-memory" 
-				data-widget-load="{{ asset('memory') }}"
+				data-widget-load="{{ route('linfo-widget', 'memory') }}"
 				data-widget-editbutton="false" 
 				data-widget-deletebutton="false" 
 				data-widget-fullscreenbutton="false"> 
@@ -147,7 +147,7 @@
 		<article class="col-xs-12">
 			<!-- Widget ID (each widget will need unique ID)-->
 			<div class="jarviswidget" id="wid-id-mount"
-				data-widget-load="{{ asset('mount') }}"
+				data-widget-load="{{ route('linfo-widget', 'mount') }}"
 				data-widget-deletebutton="false"
 				data-widget-editbutton="false" 
 				data-widget-fullscreenbutton="false">

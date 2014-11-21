@@ -37,7 +37,6 @@ abstract class Base {
 		// This magical constant knows all
 		switch ($os)
 		{
-
 			// These are supported
 			case 'Linux':
 			case 'FreeBSD':
@@ -50,7 +49,6 @@ abstract class Base {
 				return PHP_OS;
 			break;
 			case 'WINNT':
-			case 'Windows':
 				return 'Windows';
 			break;
 			case 'CYGWIN':
@@ -74,6 +72,7 @@ abstract class Base {
 	 *
 	 * @param string $type the name of the operating system
 	 * @param array $settings linfo settings
+	 * @param strin $namespace
 	 * @return array the system information
 	 * @throws Linfo\Get\GetInfoException
 	 */
@@ -83,6 +82,24 @@ abstract class Base {
 		if(!class_exists($class)) throw new GetInfoException('OS not found!');
 
 		return new $class($settings);		
+	}
+
+	/**
+	 * @param strign $settings
+	 * @return void
+	 */
+	public function setSettings($settings)
+	{
+		$this->settings = $settings;
+	}
+
+	/**
+	 * @param strign $settings
+	 * @return void
+	 */
+	public function setOS($os)
+	{
+		$this->os = $os;
 	}
 
 }

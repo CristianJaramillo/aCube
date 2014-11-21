@@ -457,7 +457,7 @@ class OS_Windows {
 	 * @access public
 	 * @return array of raid arrays
 	 */
-	private function getRAID() {
+	public function getRAID() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -600,7 +600,7 @@ class OS_Windows {
 	 * @access public
 	 * @return array of battery status
 	 */
-	private function getBattery() {
+	public function getBattery() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -615,7 +615,7 @@ class OS_Windows {
 	 * @access public
 	 * @return array of wifi devices
 	 */
-	private function getWifi() {
+	public function getWifi() {
 	
 		// Time?
 		if (!empty($this->settings['timer']))
@@ -697,7 +697,7 @@ class OS_Windows {
 	 * @access public
 	 * @return array the distro,version or false
 	 */
-	private function getDistro() {
+	public function getDistro() {
 		return false;
 	}
 	

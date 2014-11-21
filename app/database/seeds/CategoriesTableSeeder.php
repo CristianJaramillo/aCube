@@ -14,6 +14,12 @@ class CategoriesTableSeeder extends Seeder {
 				array(
 					'name' => 'guest',
 				),
+				array(
+					'name' => 'manager',
+				),
+				array(
+					'name' => 'technical',
+				),
 			);
 
 		foreach ($categories as $category)

@@ -20,8 +20,8 @@ class CreatePagesTable extends Migration {
 			$table->string('uri')->nullable();
 			$table->string('layout')->default('layouts.default')->nullable();
 			$table->string('lang', 10)->default('es-MX');
-			$table->string('title')->default('aCube - Title');
-			$table->string('description')->default('aCube - Description');
+			$table->string('title')->default('Title');
+			$table->string('description')->default('Description');
 			$table->string('app')->default('apps.default')->nullable();
 			$table->enum('type', ['private', 'public'])->default('public');
 			$table->timestamps();

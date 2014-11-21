@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('CategoriesTableSeeder');
 		$this->call('PagesTableSeeder');
-		$this->call('CategoryPagesTableSeeder');
+		$this->call('CategoryPagePermsTableSeeder');
 		$this->call('UsersTableSeeder');
-		$this->call('ExtSipPhonesTableSeeder');
-		$this->call('RouteTypesTableSeeder');
-		$this->call('RoutesTableSeeder');
-		$this->call('ExtSipPermsTableSeeder');
+		// $this->call('ExtSipPhonesTableSeeder');
+		// $this->call('RouteTypesTableSeeder');
+		// $this->call('RoutesTableSeeder');
+		// $this->call('ExtSipPermsTableSeeder');
 
 	}
 

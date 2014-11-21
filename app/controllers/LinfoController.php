@@ -20,23 +20,31 @@ class LinfoController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /linfo/core/widget/
-	 * POST /linfo/core/json/
-	 *
-	 * @return Response
+	 * GET /linfo/json/{$method}/
+	 * 
+	 * @param string $method
+	 * @return \Response
 	 */
-	public function getCore($type)
+	public function json($method)
 	{
-		if($type == 'json')
-		{
-			$this->Linfo->setupCore();
-			return \Response::json($this->Linfo->getCore());
-		} elseif ($type == 'widget') {
-			$this->Linfo->setupCore();
-			$this->addParam('core', $this->Linfo->getCore());
-			$this->layout .= 'core';
-			return $this->index();
-		}
+		$response = call_user_func_array(array($this->Linfo, 'get' . ucwords($method)), array());
+
+		return \Response::json($response);
 	}
+
+	/**
+	 * Display a listing of the resource.
+	 * GET /linfo/widget/{$method}/
+	 * 
+	 * @param string $method
+	 * @return \Response
+	 */
+	public function widget($method)
+	{
+		$this->addParam($method, call_user_func([$this->Linfo, 'get' . ucwords($method)]));
+		$this->layout .= $method;
+		
+		return $this->index();
+	}	
 
 }

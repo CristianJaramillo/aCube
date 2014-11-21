@@ -111,4 +111,20 @@ class AuthorizedFilter {
 		return $categoryPageRepo->perm($page_id, $category_id);
 	}
 
+	/**
+	 *
+	 */
+	public function page()
+	{
+		// dd($this->routeName);
+	}
+
+	/**
+	 *
+	 */
+	public function resource()
+	{
+		// dd($this->routeName);
+	}
+
 }

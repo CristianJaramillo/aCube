@@ -2,14 +2,14 @@
 
 namespace aCube\Entities;
 
-class CategoryPage extends \Eloquent {
+class CategoryPagePerm extends \Eloquent {
 
 	/**
 	 * The database table used by the entitie.
 	 *
 	 * @var string
 	 */
-	protected $table = 'category_pages';
+	protected $table = 'category_page_perms';
 	
 	/**
 	 * The attibutes from the method create.

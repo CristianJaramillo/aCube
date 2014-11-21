@@ -2,33 +2,8 @@
 
 use Linfo\Get\GetInfoException;
 
-class Linfo extends Base // implements LinfoInterface
+class Linfo extends Base //implements LinfoInterface
 {
-	
-	/**
-	 * @var array
-	 */
-	protected $core = array();
-
-	/**
-	 * @var array
-	 */
-	protected $device = array();
-
-	/**
-	 * @var array
-	 */
-	protected $memory = array();
-
-	/**
-	 * @var array
-	 */
-	protected $mount = array();
-
-	/**
-	 * @var array
-	 */
-	protected $network = array();
 
 	/**
 	 * @return void
@@ -41,43 +16,63 @@ class Linfo extends Base // implements LinfoInterface
 	}
 
 	/**
-	 * @return void
+	 * @return array
 	 */
 	public function getCore()
 	{
-		return $this->core;
+		return array(
+				'icon'        => strtolower($this->os),
+				'os'          => $this->OSClass->getOS(),
+				'distro'      => $this->OSClass->getDistro(),
+				'kernel'      => $this->OSClass->getKernel(),
+				'accessed_ip' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
+				'upTime'      => $this->OSClass->getUpTime(),
+				'hostname'    => $this->OSClass->getHostName(),
+				'cpus'        => $this->OSClass->getCPU(),
+				'cpu_arch'    => $this->OSClass->getCPUArchitecture(),
+				'load'        => $this->OSClass->getLoad(),
+				'process_stats' => $this->OSClass->getProcessStats(),
+			);
 	}
 
 	/**
-	 * @return void
+	 * @return array
 	 */
 	public function getDevice()
 	{
-		return $this->device;
+		return $this->OSClass->getDevs();
 	}
 
 	/**
-	 * @return void
+	 * @return array
+	 */
+	public function getLoad()
+	{
+		return $this->OSClass->getLoad();
+	}
+
+	/**
+	 * @return array
 	 */
 	public function getMemory()
 	{
-		return $this->memory;
+		return $this->OSClass->getRam();
 	}
 
 	/**
-	 * @return void
+	 * @return array
 	 */
 	public function getMount()
 	{
-		return $this->mount;
+		return $this->OSClass->getMounts();
 	}
 
 	/**
-	 * @return void
+	 * @return array
 	 */
 	public function getNetwork()
 	{
-		return $this->network;
+		return $this->OSClass->getNet();
 	}
 
 	/**
@@ -88,60 +83,6 @@ class Linfo extends Base // implements LinfoInterface
 		return array(
 				'dates' => 'm/d/y h:i A (T)'
 			);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function setupCore()
-	{
-		$core = array(
-				'icon'        => strtolower($this->os),
-				'os'          => $this->OSClass->getOS(),
-				'kernel'      => $this->OSClass->getKernel(),
-				'accessed_ip' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
-				'upTime'      => $this->OSClass->getUpTime(),
-				'hostname'    => $this->OSClass->getHostName(),
-				'cpus'        => $this->OSClass->getCPU(),
-				'cpu_arch'    => $this->OSClass->getCPUArchitecture(),
-				'load'        => $this->OSClass->getLoad(),
-				'process_stats' => $this->OSClass->getProcessStats(),
-				// 'service'     => $this->OSClass->getServices(),
-				// 'temp'        => $this->OSClass->getTemps(),
-			);
-		$this->core = $core;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function setupDevice()
-	{
-		$this->device = $this->OSClass->getDevs();
-	}
-
-	/**
-	 * @return array
-	 */
-	public function setupMemory()
-	{
-		$this->memory = $this->OSClass->getRam();
-	}
-
-	/**
-	 * @return array
-	 */
-	public function setupMount()
-	{
-		$this->mount = $this->OSClass->getMounts();
-	}
-
-	/**
-	 * @return array
-	 */
-	public function setupNetwork()
-	{
-		$this->network = $this->OSClass->getNet();
 	}
 
 	/**
