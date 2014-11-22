@@ -13,7 +13,7 @@ class NavigationApp extends \Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'title', 'url', 'url_target', 'icon', 'label_htm', 'sub'];
+	protected $fillable = ['name', 'title', 'url', 'url_target', 'icon', 'label_htm', 'parent'];
 
 	/**
      * @return

@@ -1,6 +1,4 @@
-<?php
-
-namespace aCube\Repositories;
+<?php namespace aCube\Repositories;
 
 use aCube\Entities\CategoryPagePerm;
 

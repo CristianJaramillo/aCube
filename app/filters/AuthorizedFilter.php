@@ -1,7 +1,7 @@
 <?php
 
 use aCube\Repositories\CategoryPagePermRepo;
-use aCube\Repositories\PageRepo;
+use aCube\Entities\Page;
 
 class AuthorizedFilter {
 	
@@ -10,11 +10,6 @@ class AuthorizedFilter {
 	 */
 	protected $routeName;
 
-	/**
-	 * @var string
-	 */
-	protected $type;
-
 	public function __construct()
 	{
 		$this->routeName = Route::currentRouteName();
@@ -22,48 +17,11 @@ class AuthorizedFilter {
 
 	/**
 	 * @param string $url
-	 * @return string $url
+	 * @return string
 	 */
 	public function getUrl($url)
 	{
-		if ($url == '/') return $url;
-
-		return preg_replace("/\//", $url, "", 1);
-	}
-
-	/**
-     * @param string $uri
-     * @param string $path	
-	 * @return string
-	 */
-	public function implodeUri($path, $uri)
-	{
-
-		if ($uri != '/') $uri = '/' . $uri;
-
-		if ($path == $uri)
-		{
-			return $path;
-		}
-
-		$path = preg_split("/\//", $path);
-		$uri  = preg_split("/\//", $uri);
-
-		if(count($path) == count($uri))
-		{
-			$lenght = count($path);
-			$pattern = '/\{([a-zA-Z0-9])+\??\}/';
-			$auxName = array();
-			
-			foreach ($uri as $key => $value) {
-				$count = 0;
-				$aux = preg_replace($pattern, $path[$key], $value, 1, $count);
-				$auxName[] = $aux;
-			}
-			return implode('/', $auxName);
-		}
-
-		return count($path) ? implode('/', $path) : '/';
+		return $url == '/' ? $url : preg_replace("/\//", "", $url, 1);
 	}
 
 	/**
@@ -81,10 +39,8 @@ class AuthorizedFilter {
 	 */
 	public function getPageId($page_name)
 	{
-		$pageRepo = new PageRepo();
-		$page = $pageRepo->where('name', '=', $page_name);
-		unset($pageRepo);
-		return is_null($page) ? $page : $page->id;
+		$page = Page::where('name', $page_name)->lists('id');
+		return (empty($page) ? NULL : $page[0]);
 	}
 
 	/**
@@ -100,9 +56,12 @@ class AuthorizedFilter {
 	}
 
 	/**
-	 *
+	 * @param Illuminate\Routing\Route $route
+	 * @param Illuminate\Http\Request $request
+	 * @return void
+	 * @throws NotFoundHttpException
 	 */
-	public function app($route, $request)
+	public function filter($route, $request)
 	{
 		$routeName = $this->routeName;
 
@@ -111,36 +70,10 @@ class AuthorizedFilter {
 			$routeName = $this->getUrl($request->getPathInfo());
 		}
 
-		dd($routeName);
-	}
-
-	/**
-	 * @param Illuminate\Routing\Route $route
-	 * @param Illuminate\Http\Request $request
-	 * @return void
-	 * @throws NotFoundHttpException
-	 */
-	public function page($route, $request)
-	{
-		$routeName = $this->routeName;
-
-		if(is_null($routeName))
-		{
-			$routeName = $this->implodeUri($request->getPathInfo(), $route->getUri());
-		}
-
-		if(!$this->existsCategoryPerms($this->getPageId($routeName), Auth::user()->category_id))
+		if(!$this->existsCategoryPerms($this->getPageId($routeName), \Auth::user()->category_id))
 		{
 			return \App::abort(403);
 		}
-	}
-
-	/**
-	 *
-	 */
-	public function resource()
-	{
-		// dd($this->routeName);
 	}
 
 }

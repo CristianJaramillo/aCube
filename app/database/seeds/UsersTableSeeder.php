@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder {
 				array(
 					'full_name'   => 'Anton Krall',
 					'password'    => 'intruder',
-					'email'       => 'Krall@intruder.mx',
+					'email'       => 'aKrall@intruder.mx',
 					'category_id' => 4,
 					'authorized'  => 'on',
 				),

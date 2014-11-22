@@ -18,11 +18,11 @@ class CreateNavigationAppsTable extends Migration {
 			$table->increments('id');
 			$table->string('name')->unique();
 			$table->string('title');
-			$table->string('url');
+			$table->string('url')->nullable();
 			$table->string('url_target')->nullable();
 			$table->string('icon')->nullable();
 			$table->string('label_htm')->nullable();
-			$table->string('sub')->nullable();
+			$table->string('parent')->nullable();
 			$table->timestamps();
 		});
 	}

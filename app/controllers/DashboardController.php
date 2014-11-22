@@ -1,6 +1,6 @@
 <?php
 
-use aCube\SmartUI\DashboardUI;
+use aCube\SmartUI\Dashboard;
 
 class DashboardController extends BaseController {
 
@@ -13,9 +13,6 @@ class DashboardController extends BaseController {
 	 */
 	public function app($algo = null)
 	{
-		// Obtención de objeto page y agregado a params.
-		// $this->setupApp($app);
-		// return parent::index();
 		return 'you app!';
 	}
 
@@ -30,7 +27,7 @@ class DashboardController extends BaseController {
 		$this->setupPage();
 
 		// Nueva instancia DashboardUI
-		$dashboard = new DashboardUI(Auth::user());
+		$dashboard = new Dashboard(Auth::user());
 
 		// Añadimos la clase por default
 		$dashboard->setPageBodyProp('class', 'smart-style-1 fixed-navigation fixed-header fixed-ribbon');
@@ -38,24 +35,13 @@ class DashboardController extends BaseController {
 		// Genaramos la estructura del menu de navegación
 		$dashboard->setupNav();
 
-		// Generamos la configuración.
-		$dashboard->setupConfig();
-
 		// Añadimos las configuraciones del dashboard.
-		$this->addParam($dashboard->getConfig());
+		$this->addParam($dashboard->getAllConfig());
 
 		// Parametros globales por enviar a la vista.
 		// dd($this->params);
 
 		return parent::index();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function dashboard()
-	{
-		return 'Welcome ' . Auth::user()->full_name . '!';
 	}
 
 }

@@ -19,6 +19,14 @@ class CategoryNavigationAppPerm extends \Eloquent {
 	/**
      * @return
      */
+    public function scopeWithAll($query, $column, $value)
+    {
+        return $query->where($column, $value)->with('category', 'navigationApp');
+    }
+
+	/**
+     * @return
+     */
     public function category()
     {
         return $this->belongsTo('aCube\Entities\Category', 'category_id', 'id');

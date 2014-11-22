@@ -97,21 +97,21 @@ Route::filter('csrf', function()
 
 /*
  |--------------------------------------------------------------------------
- | Access Authorization to Page Content
+ | Access Authorization to App
  |--------------------------------------------------------------------------
  */
-Route::filter('auth.app', 'AuthorizedFilter@app');
+// Route::filter('auth.app', 'AuthorizedFilter@app');
 
 /*
  |--------------------------------------------------------------------------
- | Access Authorization to Page Content
+ | Access Authorization to Page
  |--------------------------------------------------------------------------
  */
-Route::filter('auth.page', 'AuthorizedFilter@page');
+Route::filter('auth.page', 'AuthorizedFilter');
 
 /*
  |--------------------------------------------------------------------------
  | Access Authorization to Resources
  |--------------------------------------------------------------------------
  */
-Route::filter('auth.resource', 'AuthorizedFilter@resource');
+// Route::filter('auth.resource', 'AuthorizedFilter@resource');

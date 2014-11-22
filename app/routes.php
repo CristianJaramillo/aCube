@@ -81,14 +81,14 @@ Route::group(['before' => 'auth'], function(){
 
 	/*
 	 |----------------------------------------------------------------------
-	 | AUTH FOR RESOURCES GROUP ROUTES
+	 | AUTH FOR APPS GROUP ROUTES
 	 |----------------------------------------------------------------------
 	 */
-	Route::group(['before' => 'auth.app'], function(){
+	Route::group([], function(){
 		/*
 		 | dashboard route
 		 */
-		Route::get('dashboard/{algo?}', ['uses' => 'DashboardController@app']);
+		Route::get('dashboard', ['uses' => 'DashboardController@app']);
 	});
 
 	/*
@@ -100,7 +100,7 @@ Route::group(['before' => 'auth'], function(){
 		/*
 		 | dashboard route
 		 */
-		Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@dashboard']);
+		Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
 	});
 
 	/*
@@ -108,7 +108,13 @@ Route::group(['before' => 'auth'], function(){
 	 | AUTH FOR RESOURCES GROUP ROUTES
 	 |----------------------------------------------------------------------
 	 */
-	Route::group(['before' => 'auth.resource'], function(){
+	Route::group([], function(){
+		/*
+		 | ajax/{app} route
+		 */
+		Route::get('ajax/{app}', function($app){
+			return "<h1 style=\"text-align:center;\">" . $app . "</h1>";
+		});
 		/*
 		 | linfo/json/{name} route
 		 */
