@@ -32,7 +32,7 @@ class CreateCategoryApiRoutePermsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('api_route_perms');
+		Schema::dropIfExists('category_api_route_perms');
 	}
 
 }

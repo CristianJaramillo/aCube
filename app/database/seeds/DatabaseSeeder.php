@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder {
 		Eloquent::unguard();
 
 		$this->call('CategoriesTableSeeder');
+		$this->call('ApiRoutesTableSeeder');
+		$this->call('CategoryApiRoutePermsTableSeeder');
 		$this->call('PagesTableSeeder');
 		$this->call('CategoryPagePermsTableSeeder');
 		$this->call('NavigationAppsTableSeeder');

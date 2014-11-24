@@ -107,34 +107,45 @@ Route::group(['before' => 'auth'], function(){
 
 	/*
 	 |----------------------------------------------------------------------
-	 | AUTH FOR RESOURCES GROUP ROUTES
+	 | AUTH FOR API GROUP ROUTES
 	 |----------------------------------------------------------------------
 	 */
-	Route::group([], function(){
+	Route::group(['before' => 'auth.api'], function(){
+	
 		/*
 		 | ajax/{app} route
 		 */
 		Route::get('ajax/{app}', function($app){
 			return "<h1 style=\"text-align:center;\">" . $app . "</h1>";
 		});
+	
 		/*
 		 | linfo/json/{name} route
 		 */
 		Route::get('linfo/json/{name}', ['as' => 'linfo-json', 'uses' => 'LinfoController@json']);
+
 		/*
 		 | linfo/widget/{name} route
 		 */
-		Route::get('linfo/widget/{name}', ['as' => 'linfo-widget', 'uses' => 'LinfoController@widget']);		
+		Route::get('linfo/widget/{name}', ['as' => 'linfo-widget', 'uses' => 'LinfoController@widget']);
+
+		/*
+		 | CSRT security group
+		 */
+		Route::group(array('before' => 'csrf'), function(){
+			/*
+			 | user/json/{method} route
+			 */
+			Route::post('user/json/{method}', ['as' => 'user-json', 'uses' => 'UserController@json']);
+		});
+
 	});
 
 	/*
 	 | CSRT security group
 	 */
 	Route::group(array('before' => 'csrf'), function(){
-		/*
-		 | user/json/{method} route
-		 */
-		Route::post('user/json/{method}', ['uses' => 'UserController@json']);
+
 	});
 
 });

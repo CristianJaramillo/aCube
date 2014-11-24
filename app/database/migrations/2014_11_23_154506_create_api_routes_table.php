@@ -16,10 +16,10 @@ class CreateApiRoutesTable extends Migration {
 		{
 			$table->engine = 'InnoDB';
 			$table->increments('id');
-			$table->string('name')->unique();
+			$table->string('name');
 			$table->string('uri');
 			$table->string('url');
-			$table->enum('method', ['GET', 'GET|HEAD', 'POST', 'PUT', 'ANY']);
+			$table->enum('method', ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])->default('GET');
 			$table->timestamps();
 		});
 	}

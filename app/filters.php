@@ -48,11 +48,15 @@ Route::filter('auth', function()
 	}
 });
 
-Route::filter('auth.ajax', function(){
+Route::filter('auth.ajax', function($route, $request){
 	if (!Request::ajax())
 	{
+		if(Request::isMethod('get'))
+		{
+			return Redirect::to(preg_replace("/\//", "/#", $request->getPathInfo(), 1));
+		}
 	    return App::abort(403);
-	}
+	} 
 });
 
 Route::filter('auth.basic', function()
@@ -100,7 +104,7 @@ Route::filter('csrf', function()
  | Access Authorization to App
  |--------------------------------------------------------------------------
  */
-// Route::filter('auth.app', 'AuthorizedFilter@app');
+Route::filter('auth.api', 'AuthorizedFilter@api');
 
 /*
  |--------------------------------------------------------------------------
