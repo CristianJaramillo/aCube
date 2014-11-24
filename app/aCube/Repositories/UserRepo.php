@@ -13,6 +13,14 @@ class UserRepo extends BaseRepo {
 	}
 
 	/**
+	 * @return
+	 */
+	public function withAll()
+	{
+		return $this->entitie->withAll();
+	}
+
+	/**
 	 * @return aCube\Entities\User
 	 */
 	public function newUser()

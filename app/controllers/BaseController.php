@@ -19,11 +19,6 @@ class BaseController extends Controller {
 	 */
 	protected $params = array();
 
-	public function example()
-	{
-		return 'dymamic routes';
-	}
-
 	/**
 	 * @param array|string $var
 	 * @param mixed $param
@@ -53,22 +48,6 @@ class BaseController extends Controller {
 			
 			unset($$var);
 		}
-	}
-
-	/**
-	 * @return void
-	 */
-	protected function setupApp($app)
-	{
-		/*
-		$page = new PageRepo();
-		// Falta validar que el usuario tenga acceso a este contenido.
-		$page = $page->current($app, 'private');
-		if(is_null($page)) return App::abort(403);
-		$this->addParam(array('title' => $page->title,));
-		$this->layout = $page->app;
-		unset($page);
-		*/
 	}
 
 	/**

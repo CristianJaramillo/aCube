@@ -16,6 +16,20 @@ class CategoryPagePerm extends \Eloquent {
 	 */
 	protected $fillable = ['category_id', 'page_id'];
 
+    /**
+     * The attributes defining guarded
+     *
+     * @var array
+     */ 
+    protected $guarded = [];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
 	/**
      * @param $query
      * @param $page_id

@@ -17,6 +17,20 @@ class Category extends \Eloquent {
 	protected $fillable = ['name'];
 
 	/**
+	 * The attributes defining guarded
+	 *
+	 * @var array
+	 */	
+	protected $guarded = [];
+
+	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = ['created_at', 'updated_at'];
+
+	/**
 	 * return encode to utf8 name.
 	 *
 	 * @var string
@@ -44,6 +58,22 @@ class Category extends \Eloquent {
     /**
      * @return
      */
+    public function categoryApiRoutePerms()
+    {
+    	return $this->hasMany('aCube\Entities\CategoryApiRoutePerm', 'category_id', 'id');
+    }
+
+    /**
+     * @return
+     */
+    public function categoryNavigationAppPerms()
+    {
+    	return $this->hasMany('aCube\Entities\CategoryNavigationAppPerm', 'category_id', 'id');
+    }
+
+    /**
+     * @return
+     */
     public function categoryPagePerms()
     {
     	return $this->hasMany('aCube\Entities\CategoryPagePerm', 'category_id', 'id');
@@ -52,9 +82,9 @@ class Category extends \Eloquent {
     /**
      * @return
      */
-    public function categoryResourcePerms()
+    public function users()
     {
-    	return $this->hasMany('aCube\Entities\CategoryResourcePerm', 'category_id', 'id');
+    	return $this->hasMany('aCube\Entities\User', 'category_id', 'id');
     }
 
 }

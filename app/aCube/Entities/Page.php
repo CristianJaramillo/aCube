@@ -17,6 +17,20 @@ class Page extends \Eloquent {
 	protected $fillable = ['name', 'layout', 'lang', 'title', 'description', 'app', 'type'];
 
 	/**
+	 * The attributes defining guarded
+	 *
+	 * @var array
+	 */	
+	protected $guarded = [];
+
+	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = ['created_at', 'updated_at'];
+
+	/**
 	 * return utf8_encode description.
 	 *
 	 * @var string 

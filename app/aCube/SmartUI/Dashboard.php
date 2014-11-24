@@ -13,13 +13,6 @@ class Dashboard {
 	protected $breadcrumbs = array();
 
 	/**
-	 * Set dashboard config
-	 *
-	 * @var array
-	 */
-	protected $dashboard_config;
-
-	/**
 	 * Set true for lock.php and login.php
 	 *
 	 * @var boolean
@@ -67,14 +60,6 @@ class Dashboard {
 	public function getBreadcrumbs()
 	{
 		return $this->breadcrumbs;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getConfig()
-	{
-		return $this->dashboard_config;
 	}
 
 	/**
@@ -189,19 +174,19 @@ class Dashboard {
 
 			$aux['title'] = $categoryNavigationAppPerm->navigationApp->title;
 			
-			if(!is_null($categoryNavigationAppPerm->navigationApp->url))
+			if (!is_null($categoryNavigationAppPerm->navigationApp->url))
 				$aux['url'] = $categoryNavigationAppPerm->navigationApp->url;
 
-			if(!is_null($categoryNavigationAppPerm->navigationApp->url_target))
+			if (!is_null($categoryNavigationAppPerm->navigationApp->url_target))
 				$aux['url_target'] = $categoryNavigationAppPerm->navigationApp->url_target;
 
-			if(!is_null($categoryNavigationAppPerm->navigationApp->icon))
+			if (!is_null($categoryNavigationAppPerm->navigationApp->icon))
 				$aux['icon'] = $categoryNavigationAppPerm->navigationApp->icon;
 
-			if(!is_null($categoryNavigationAppPerm->navigationApp->label_htm))
+			if (!is_null($categoryNavigationAppPerm->navigationApp->label_htm))
 				$aux['label_htm'] = $categoryNavigationAppPerm->navigationApp->label_htm;
 
-			if(!is_null($categoryNavigationAppPerm->navigationApp->parent))
+			if (!is_null($categoryNavigationAppPerm->navigationApp->parent))
 				$aux['parent'] = $categoryNavigationAppPerm->navigationApp->parent;
 
 			$items[$categoryNavigationAppPerm->navigationApp->name] = $aux;
@@ -224,27 +209,7 @@ class Dashboard {
 		{
 			if (isset($item['parent']))
 			{
-				$array = preg_split("/[.]/", $item['parent']);
-				$item_name = $array[0];				
-
-				if (!isset($nav[$item_name]['sub']))
-					$nav[$item_name]['sub'] = array();
-
-				if(count($array) == 1)
-				{
-					unset($item['parent']);					
-					$nav[$item_name]['sub'][$key] = $item;
-				} else {
-					$sub_item_name = $array[1];
-
-					if ( !isset($nav[$item_name]['sub'][$sub_item_name]) )
-						$nav[$item_name]['sub'][$sub_item_name] = array();
-					if ( !isset($nav[$item_name]['sub'][$sub_item_name]['sub']) )
-						$nav[$item_name]['sub'][$sub_item_name]['sub'] = array();
-					unset($item['parent']);
-					$nav[$item_name]['sub'][$sub_item_name]['sub'][$key] = $item;
-				}
-
+				$this->addItem($item, $key, $nav);
 			} else {
 				$item['sub'] = isset($nav[$key]['sub']) ? $nav[$key]['sub'] : array();
 				if(count($item['sub']) == 0) unset($item['sub']); 
@@ -257,11 +222,26 @@ class Dashboard {
 
 	/**
 	 * @param array $children
+	 * @param string $children
 	 * @param array $parent
-	 * @return
+	 * @return void
 	 */
-	public function addItem(array &$children, array &$parent)
+	public function addItem(array &$children, &$children_name, array &$parent)
 	{
-		
+		$array = preg_split("/[.]/", $children['parent']);
+		$parent_name = $array[0];
+
+		if (!isset($parent[$parent_name]['sub']))
+			$parent[$parent_name]['sub'] = array();
+
+		if(count($array) == 1)
+		{
+			unset($children['parent']);					
+			$parent[$parent_name]['sub'][$children_name] = $children;
+		} else {
+			unset($array[0]);
+			$children['parent'] = implode(".", $array);
+			$this->addItem($children, $children_name, $parent[$parent_name]['sub']);
+		}
 	}
 }

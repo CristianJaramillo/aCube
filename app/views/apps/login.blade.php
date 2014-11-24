@@ -91,7 +91,10 @@
 @endsection
 
 @section('script')
-	@parent
+	@parent	
+	<!-- JQUERY VALIDATE -->
+	<script src="{{ asset('js/plugin/jquery-validate/jquery.validate.min.js') }}"></script>
+
 	<script type="text/javascript">
 			
 		runAllForms();

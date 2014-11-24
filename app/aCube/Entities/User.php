@@ -35,7 +35,7 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['password', 'remember_token', 'created_at'];
+	protected $hidden = ['password', 'remember_token', 'created_at', 'updated_at'];
 
 	/**
 	 * return encode to utf8 full_name.
@@ -71,6 +71,30 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
         {
             $this->attributes['password'] = \Hash::make($value);
         }
+    }
+
+    /**
+     * @return
+     */
+    public function category()
+    {
+    	return $this->hasOne('aCube\Entities\Category', 'id', 'category_id');
+    }
+
+    /**
+     * @return
+     */
+    public function userDashboardConfig()
+    {
+    	return $this->belongsTo('aCube\Entities\UserDashboardConfig', 'id', 'id');
+    }
+
+    /**
+     * @return
+     */
+    public function scopeWithAll($query)
+    {
+    	return $query->with('category')->get();
     }
 
 }

@@ -16,6 +16,20 @@ class CategoryNavigationAppPerm extends \Eloquent {
 	 */
 	protected $fillable = ['category_id', 'navigation_app_id'];
 
+    /**
+     * The attributes defining guarded
+     *
+     * @var array
+     */ 
+    protected $guarded = [];
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['created_at', 'updated_at'];
+
 	/**
      * @return
      */
@@ -38,5 +52,6 @@ class CategoryNavigationAppPerm extends \Eloquent {
     public function navigationApp()
     {
         return $this->belongsTo('aCube\Entities\NavigationApp', 'navigation_app_id', 'id');
-    }	
+    }
+    	
 }

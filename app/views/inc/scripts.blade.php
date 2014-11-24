@@ -4,10 +4,10 @@
 		<script data-pace-options='{ "restartOnRequestAfter": true }' src="{{ asset('js/plugin/pace/pace.min.js') }}"></script>-->
 
 		<!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script>
 			if (!window.jQuery) {
-				document.write('<script src="{{ asset('js/libs/jquery-2.0.2.min.js') }}"><\/script>');
+				document.write('<script src="{{ asset('js/libs/jquery-2.1.1.min.js') }}"><\/script>');
 			}
 		</script>
 
@@ -75,3 +75,7 @@
 		<!-- ENHANCEMENT PLUGINS : NOT A REQUIREMENT -->
 		<!-- Voice command : plugin -->
 		<script src="{{ asset('js/speech/voicecommand.min.js') }}"></script>		
+
+		<!-- SmartChat UI : plugin -->
+		<script src="{{ asset('js/smart-chat-ui/smart.chat.ui.min.js') }}"></script>
+		<script src="{{ asset('js/smart-chat-ui/smart.chat.manager.min.js') }}"></script>

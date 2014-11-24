@@ -9,11 +9,11 @@ class DashboardController extends BaseController {
 	 * 
 	 * @param $name
 	 * @return \View
-	 * @throws \Symfony\Component\HttpKernel\Exception\HttpException
 	 */
-	public function app($algo = null)
+	public function app()
 	{
-		return 'you app!';
+		$this->layout = 'apps.dashboard.dashboard';
+		return $this->index();
 	}
 
 	/**
@@ -21,7 +21,7 @@ class DashboardController extends BaseController {
 	 *
 	 * @return \view
 	 */
-	public function index()
+	public function show()
 	{
 		// Obtención de objeto page y agregado a params.
 		$this->setupPage();
@@ -41,7 +41,7 @@ class DashboardController extends BaseController {
 		// Parametros globales por enviar a la vista.
 		// dd($this->params);
 
-		return parent::index();
+		return $this->index();
 	}
 
 }

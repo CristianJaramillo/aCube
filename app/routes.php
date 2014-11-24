@@ -5,15 +5,13 @@
 | Application Routes
 |--------------------------------------------------------------------------
 */
-
-// Debugbar::disable();
-
+//\Debugbar::disable();
 /*
  |--------------------------------------------------------------------------
  | GLOBAL ROUTES
  |--------------------------------------------------------------------------
  */
- 
+
 /*
  |--------------------------------------------------------------------------
  | END GLOBAL ROUTES
@@ -84,11 +82,15 @@ Route::group(['before' => 'auth'], function(){
 	 | AUTH FOR APPS GROUP ROUTES
 	 |----------------------------------------------------------------------
 	 */
-	Route::group([], function(){
+	Route::group(['before' => array('auth.ajax')], function(){
 		/*
 		 | dashboard route
 		 */
 		Route::get('dashboard', ['uses' => 'DashboardController@app']);
+		/*
+		 | datatable/users route
+		 */
+		Route::get('datatable', ['uses' => 'DataTableController@app']);
 	});
 
 	/*
@@ -100,7 +102,7 @@ Route::group(['before' => 'auth'], function(){
 		/*
 		 | dashboard route
 		 */
-		Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+		Route::get('/', ['as' => 'dashboard', 'uses' => 'DashboardController@show']);
 	});
 
 	/*
@@ -122,14 +124,17 @@ Route::group(['before' => 'auth'], function(){
 		/*
 		 | linfo/widget/{name} route
 		 */
-		Route::get('linfo/widget/{name}', ['as' => 'linfo-widget', 'uses' => 'LinfoController@widget']);
+		Route::get('linfo/widget/{name}', ['as' => 'linfo-widget', 'uses' => 'LinfoController@widget']);		
 	});
 
 	/*
 	 | CSRT security group
 	 */
 	Route::group(array('before' => 'csrf'), function(){
-		
+		/*
+		 | user/json/{method} route
+		 */
+		Route::post('user/json/{method}', ['uses' => 'UserController@json']);
 	});
 
 });

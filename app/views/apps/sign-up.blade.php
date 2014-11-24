@@ -124,86 +124,90 @@
 
 @section('script')
 	@parent
+	
+	<!-- JQUERY VALIDATE -->
+	<script src="{{ asset('js/plugin/jquery-validate/jquery.validate.min.js') }}"></script>
 
-		<script type="text/javascript">
-			runAllForms();
-			
+	<script type="text/javascript">
+		
+		runAllForms();
+				
+		// Validation
+		$(function() {
 			// Validation
-			$(function() {
-				// Validation
-				$("#smart-form-register").validate({
+			$("#smart-form-register").validate({
 
-					// Rules for form validation
-					rules : {
-						username : {
-							required : true
-						},
-						email : {
-							required : true,
-							email : true
-						},
-						email_confirmation: {
-							required: true,
-							email: true, 
-							equalTo: '#email'
-						},
+				// Rules for form validation
+				rules : {
+					username : {
+						required : true
+					},
+					email : {
+						required : true,
+						email : true
+					},
+					email_confirmation: {
+						required: true,
+						email: true, 
+						equalTo: '#email'
+					},
 						password : {
-							required : true,
-							minlength : 3,
-							maxlength : 20
-						},
-						password_confirmation : {
-							required : true,
-							minlength : 3,
-							maxlength : 20,
-							equalTo : '#password'
-						},
-						full_name : {
-							required : true
-						}
+						required : true,
+						minlength : 3,
+						maxlength : 20
 					},
-
-					// Messages for form validation
-					messages : {
-						username : {
-							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.username'))) }}'
-						},
-						email : {
-							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email'))) }}',
-							email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email'))) }}'
-						},
-						email_confirmation : {
-							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}',
-							email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}',
-							equalTo : '{{ Lang::get('validation.confirmed', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}'
-						},
-						password : {
-							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password'))) }}'
-						},
-						password_confirmation : {
-							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password_confirmation'))) }}',
-							equalTo : '{{ Lang::get('validation.confirmed', array('attribute' => Lang::get('validation.attributes.password_confirmation'))) }}'
-						},
-						full_name : {
-							required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.full_name'))) }}'
-						},
+					password_confirmation : {
+						required : true,
+						minlength : 3,
+						maxlength : 20,
+						equalTo : '#password'
 					},
-
-					// Ajax form submition
-					submitHandler : function(form) {
-						$(form).ajaxSubmit({
-							success : function() {
-								$("#smart-form-register").addClass('submited');
-							}
-						});
-					},
-
-					// Do not change code below
-					errorPlacement : function(error, element) {
-						error.insertAfter(element.parent());
+					full_name : {
+						required : true
 					}
-				});
+				},
 
+				// Messages for form validation
+				messages : {
+					username : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.username'))) }}'
+					},
+					email : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email'))) }}',
+						email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email'))) }}'
+					},
+					email_confirmation : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}',
+						email : '{{ Lang::get('validation.message_valid', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}',
+						equalTo : '{{ Lang::get('validation.confirmed', array('attribute' => Lang::get('validation.attributes.email_confirmation'))) }}'
+					},
+					password : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password'))) }}'
+					},
+					password_confirmation : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.password_confirmation'))) }}',
+						equalTo : '{{ Lang::get('validation.confirmed', array('attribute' => Lang::get('validation.attributes.password_confirmation'))) }}'
+					},
+					full_name : {
+						required : '{{ Lang::get('validation.message_required', array('attribute' => Lang::get('validation.attributes.full_name'))) }}'
+					},
+				},
+
+				// Ajax form submition
+				submitHandler : function(form) {
+					$(form).ajaxSubmit({
+						success : function() {
+							$("#smart-form-register").addClass('submited');
+						}
+					});
+				},
+
+				// Do not change code below
+				errorPlacement : function(error, element) {
+					error.insertAfter(element.parent());
+				}
 			});
-		</script>
+
+		});
+	</script>
 @endsection

@@ -8,7 +8,7 @@ class CategoryNavigationAppPermsTableSeeder extends Seeder {
 	{
 		$categoryNavigationAppPerms = array();
 
-		foreach (range(1, 12) as $index) {
+		foreach (range(1, 10) as $index) {
 			$categoryNavigationAppPerms[] = array(
 					'category_id' => 1,
 					'navigation_app_id' => $index,

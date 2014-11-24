@@ -1,4 +1,4 @@
-		<!-- Your GOOGLE ANALYTICS CODE Below -->
+		<!-- GOOGLE ANALYTICS CODE BELOW -->
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
 				_gaq.push(['_setAccount', 'UA-XXXXXXXX-X']);
@@ -12,9 +12,8 @@
 				var s = document.getElementsByTagName('script')[0];
 				s.parentNode.insertBefore(ga, s);
 			})();
-
 		</script>
-
+		<!-- END GOOGLE ANALYTICS CODE BELOW -->
 	</body>
 
 </html>
