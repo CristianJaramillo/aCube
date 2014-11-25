@@ -42,7 +42,21 @@
 						value = aux; 
 					break;
 					case 'load':
-						var tr = '<td colspan="2"><div class="bar-holder"><span class="text"><strong>'+key+'</strong></span><div class="progress"><div class="progress-bar bg-color-blue"aria-valuetransitiongoal="'+value+'"aria-valuenow="'+value+'" style="width:'+value+'%;">'+value+'%</div></div></div></td>';
+						if(isInteger(value))
+						{
+							var tr = getProgress(key, value, 'blue');
+						} else {
+							var tr = '';
+							if (value.now!=undefined) {
+								tr += getProgress(key + " now", (value.now * 100));
+							}
+							if (value.5min!=undefined) {
+								tr += getProgress(key + " now", (value.5min * 100));
+							}
+							if (value.5min!=undefined) {
+								tr += getProgress(key + " now", (value.15min * 100));
+							}
+						}
 					break;
 					case 'os':
 						value = '<i class="' + icon + '"/> ' + value;
@@ -73,6 +87,11 @@
 				el.tbody.append('<tr>'+tr+'</tr>');
 			};
 
+			var getProgress = function(label, value, color)
+			{
+				return '<td colspan="2"><div class="bar-holder"><span class="text"><strong>'+label+'</strong></span><div class="progress"><div class="progress-bar bg-color-'+color+'"aria-valuetransitiongoal="'+value+'"aria-valuenow="'+value+'" style="width:'+value+'%;">'+value+'%</div></div></div></td>';
+			}
+
 			/**
 				* Inicia el plugin.
 				*/
@@ -93,9 +112,17 @@
 				});
 			};
 
+			var isFloat = function(n) {
+			    return n === +n && n !== (n|0);
+			}
+
+			var isInteger = function(n) {
+			    return n === +n && n === (n|0);
+			}
+
 			/**
-				* Carga la estructura de la tabla
-				*/
+             * Carga la estructura de la tabla
+			 */
 			var loadStruct = function(data){
 					
 				if(settings.iconType!=undefined){
