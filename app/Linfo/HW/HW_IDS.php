@@ -1,4 +1,4 @@
-<?php namespace Linfo\Get;
+<?php namespace Linfo\HW;
 
 /**
  * This file is part of Linfo (c) 2010 Joseph Gillotti.
@@ -61,7 +61,7 @@ class HW_IDS {
 			'_'.substr(md5(getContents('/proc/sys/kernel/hostname')), 0, 10) : '_x';
 
 		// Path to the cache file
-		$this->_cache_file = CACHE_PATH.'/ids_cache'.$sys_id.($this->_use_json ? '.json' : '');
+		$this->_cache_file = storage_path('cache/ids_cache'.$sys_id.($this->_use_json ? '.json' : ''));
 
 		// Load contents of cache
 		$this->_populate_cache();
@@ -220,7 +220,7 @@ class HW_IDS {
 	 * @access private
 	 */
 	private function _write_cache() {
-		if (is_writable(CACHE_PATH)) 
+		if (is_writable(storage_path()))
 			@file_put_contents($this->_cache_file, $this->_use_json ? 
 				json_encode(array(
 					'hw' => array(

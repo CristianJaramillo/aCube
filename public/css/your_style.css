@@ -17,3 +17,28 @@
  * - BODY
  * - CUSTOM STYLES
  */
+
+/* All icons conform to this */
+.icon {
+	height: 16px;
+	display: block;
+	float: left;
+	margin-right: 4px;
+	background-repeat: no-repeat;
+	min-width: 16px;
+}
+.icon_os_linux { background-image: url('../img/icons/os_linux.gif'); width: 14px; }
+.icon_os_windows { background-image: url('../img/icons/os_windows.gif'); width: 14px; }
+.icon_os_freebsd { background-image: url('../img/icons/os_freebsd.png'); width: 14px; }
+.icon_os_netbsd { background-image: url('../img/icons/os_netbsd.png'); width: 16px; }
+.icon_os_openbsd { background-image: url('../img/icons/os_openbsd.png'); width: 16px; }
+.icon_os_minix { background-image: url('../img/icons/os_minix.png'); width: 18px; }
+.icon_os_solaris { background-image: url('../img/icons/os_solaris.png'); width: 31px; }
+.icon_os_darwin { background-image: url('../img/icons/os_darwin.png'); width: 14px; }
+.icon_os_dragonflybsd { background-image: url('../img/icons/os_dragonflybsd.png'); width: 16px; }
+.icon_os_cygwin { background-image: url('../img/icons/os_cygwin.png'); width: 16px; height: 16px;}
+.icon_distro_ubuntu { background-image: url('../img/icons/distro_ubuntu.png'); width: 16px; }
+.icon_distro_debian { background-image: url('../img/icons/distro_debian.png'); width: 16px; }
+.icon_distro_centos { background-image: url('../img/icons/distro_centos.png'); width: 16px; }
+.icon_distro_fedora { background-image: url('../img/icons/distro_fedora.png'); width: 16px; }
+.icon_distro_arch { background-image: url('../img/icons/distro_arch.png'); width: 16px; }

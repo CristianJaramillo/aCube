@@ -8,61 +8,92 @@ class NavigationAppsTableSeeder extends Seeder {
 	{
 		$navigationApps = array(
 				array(
-					"name"  => "dashboard",
-					"title" => "Dashboard",
+					"name"  => "welcome",
+					"title" => "Home",
 					"url"   => "dashboard",
 					"icon"  => "fa-home",
 				),
 				array(
-					"name"  => "users",
-					"title" => "Users",
-					"icon"  => "fa-group",
+					"name"  => "admin",
+					"title" => "Administraci&oacute;n"
 				),
 				array(
-					"name"   => "all-users",
-					"title"  => "All Users",
-					"url"    => "datatable",
-					"parent" => "users",
+					"name"   => "firewall",
+					"title"  => "Firewall",
+					"parent" => "admin",
 				),
 				array(
-					"name"   => "configurations",
-					"title"  => "Configurations",
-					"icon"   => "fa-gear",
+					"name"   => "roles",
+					"title"  => "Roles",
+					"parent" => "admin",
 				),
 				array(
-					"name"   => "n",
-					"title"  => "Levels",
-					"icon"   => "fa-folder",
+					"name"   => "extensions",
+					"title"  => "Extensiones",
+					"parent" => "admin.roles",
+				),
+
+				array(
+					"name"  => "config",
+					"title" => "Configuraciones"
 				),
 				array(
-					"name"   => "n1",
-					"title"  => "Level 1",
-					"icon"   => "fa-folder",
-					"parent" => "n",
+					"name"   => "dial-plan",
+					"title"  => "Dial Plan",
+					"parent" => "config",
 				),
 				array(
-					"name"   => "n2",
-					"title"  => "Level 2",
-					"icon"   => "fa-folder",
-					"parent" => "n.n1",
+					"name"   => "ivr",
+					"title"  => "IVR",
+					"parent" => "config",
 				),
 				array(
-					"name"   => "n3",
-					"title"  => "Level 3",
-					"icon"   => "fa-folder",
-					"parent" => "n.n1.n2",
+					"name"   => "trunks",
+					"title"  => "Trunks",
+					"parent" => "config",
+				),
+
+				array(
+					"name"  => "server",
+					"title" => "Servidor"
 				),
 				array(
-					"name"   => "n4",
-					"title"  => "Level 4",
-					"icon"   => "fa-folder",
-					"parent" => "n.n1.n2.n3",
+					"name"   => "license",
+					"title"  => "Licencia",
+					"parent" => "server",
 				),
 				array(
-					"name"   => "n5",
-					"title"  => "Level 5",
-					"icon"   => "fa-folder",
-					"parent" => "n.n1.n2.n3.n4",
+					"name"   => "services",
+					"title"  => "Servicios",
+					"parent" => "server",
+				),
+				array(
+					"name"   => "resources",
+					"title"  => "Recursos",
+					"parent" => "server",
+				),
+				array(
+					"name"  => "report",
+					"title" => "Reportes"
+				),
+				array(
+					"name"   => "cdr",
+					"title"  => "CDR",
+					"parent" => "report",
+				),
+				array(
+					"name"   => "call-center",
+					"title"  => "Call Center",
+					"parent" => "report",
+				),
+				array(
+					"name"   => "tarifador",
+					"title"  => "Tarificador",
+					"parent" => "report",
+				),
+				array(
+					"name"  => "apps",
+					"title" => "Aplicaciones"
 				),
 			);
 

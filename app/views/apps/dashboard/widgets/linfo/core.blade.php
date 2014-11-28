@@ -3,7 +3,7 @@
 		<tbody></tbody>
 	</table>
 </div>
-
+<link rel="stylesheet" type="text/css" href="{{ asset('css/your_style.css') }}"/>
 <script type="text/javascript">
 
 	(function($){
@@ -33,42 +33,45 @@
 				switch(key)
 				{
 					case 'cpus':
+						var cpus = 0;
 						var aux = '';
 						if (value.Vendor!=undefined){aux+=value.Vendor + '';}
 						$.each(value, function(a, b){
 							if(aux!=''){aux+='<br/>';}
+							cpus++;
 							aux += b.Vendor + '-' + b.Model + ' (' + b.MHz + ')';
-						}); 
-						value = aux; 
+						});
+						key += ' ('+cpus+')'; 
+						value = aux;
+					break;
+					case 'distro':
+						value = '<i class="icon icon_distro_'+value.name.toLowerCase()+'"/>'+value.name+' '+value.version;
 					break;
 					case 'load':
-						if(isInteger(value))
-						{
-							var tr = getProgress(key, value, 'blue');
-						} else {
-							var tr = '';
-							if (value.now!=undefined) {
-								tr += getProgress(key + " now", (value.now * 100));
-							}
-							if (value.5min!=undefined) {
-								tr += getProgress(key + " now", (value.5min * 100));
-							}
-							if (value.5min!=undefined) {
-								tr += getProgress(key + " now", (value.15min * 100));
-							}
-						}
+						var td = '<div class="row">';
+						$.each(value, function(label, load){
+							td += getProgress(label, load, 'blue');
+						});
+						value = td + '</div>';
 					break;
 					case 'os':
 						value = '<i class="' + icon + '"/> ' + value;
 					break;
 					case 'process_stats':
 						var tr = '';
-						if(value.exists!=undefined){delete value.exists;}
-						$.each(value, function(a, b){
-							if(tr!=''){tr+='<tr/><tr>';}
-							tr+='<th>'+a+'</th><td>'+b+'</td>';
-						});
-						tr = '<tr>'+tr+'</tr>';
+						if (value.totals!=undefined)
+						{
+							tr += '<tr><th>process</th><td>' +
+							      'running: ' + value.totals.running + 
+							      '; zombie:' + value.totals.zombie +
+							      '; stopped: ' + value.totals.stopped +
+							      '; sleeping: ' + value.totals.sleeping + 
+							      '; totals: ' + value.proc_total + '</tr>';
+
+						};
+						if (value.threads!=undefined) {
+							tr += '<tr><th>threads</th><td>' + value.threads + '</td></tr>';
+						};
 					break;
 					case 'upTime':
 						var aux = '';
@@ -81,16 +84,15 @@
 						value = aux; 
 					break;
 				}
+				if (tr==undefined){var tr='<tr><th>'+key+'</th><td>'+value+'</td></tr>';};
 
-				if (tr==undefined){tr='<th>'+key+'</th><td>'+value+'</td>';};
-						
-				el.tbody.append('<tr>'+tr+'</tr>');
+				el.tbody.append(tr);
 			};
 
 			var getProgress = function(label, value, color)
 			{
-				return '<td colspan="2"><div class="bar-holder"><span class="text"><strong>'+label+'</strong></span><div class="progress"><div class="progress-bar bg-color-'+color+'"aria-valuetransitiongoal="'+value+'"aria-valuenow="'+value+'" style="width:'+value+'%;">'+value+'%</div></div></div></td>';
-			}
+				return '<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12"><span class="text">'+label+' <span class="pull-right">'+Math.round(value*100)+'%</span></span><div class="progress progress-xs"><div class="progress-bar bg-color-'+color+'" style="width: '+(value*100)+'%;"></div></div></div>';
+			};
 
 			/**
 				* Inicia el plugin.
@@ -133,7 +135,6 @@
 					icon = (icon!=undefined?icon:'') + data.icon;
 					delete data.icon;
 				}
-
 				$.each(data, addRow);
 
 			};

@@ -1,4 +1,4 @@
-<div class="custom-scroll table-responsive" style="height:290px; overflow-y: scroll;">
+<div class="custom-scroll table-responsive">
 	<table class="table table-striped table-hover table-condensed" id="table-device-linfo">
 		<thead>
 			<tr>

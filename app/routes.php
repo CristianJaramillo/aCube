@@ -11,7 +11,11 @@
  | GLOBAL ROUTES
  |--------------------------------------------------------------------------
  */
-
+use Linfo\Linfo;
+Route::get('linfo', function(){
+	$linfo = new Linfo();
+	return $linfo->getCore();
+});
 /*
  |--------------------------------------------------------------------------
  | END GLOBAL ROUTES

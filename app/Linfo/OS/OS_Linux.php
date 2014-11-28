@@ -24,6 +24,7 @@ use Linfo\Get\GetMbMonException;
 use Linfo\Get\GetSensord;
 use Linfo\Get\GetSensordException;
 use Linfo\Get\GetInfoException;
+use Linfo\HW\HW_IDS;
 use Linfo\Linfo\LinfoError;
 use Linfo\Linfo\LinfoTimerStart;
 
@@ -366,7 +367,7 @@ class OS_Linux {
 		list(, $boot) = $boot;
 
 		// Return
-		return $uptime . '; booted '.date($this->settings['dates'], $boot);
+		return $uptime + ['booted' => date($this->settings['dates'], $boot)];
 	}
 
 	/**
@@ -632,27 +633,19 @@ class OS_Linux {
 			// This mount
 			$mount = $match[$i];
 			
-			// Should we not show this?
-			if (in_array($mount[1], $this->settings['hide']['storage_devices']) || in_array($mount[3], $this->settings['hide']['filesystems']))
-				continue;
-			
 			// Spaces and other things in the mount path are escaped C style. Fix that.
 			$mount[2] = stripcslashes($mount[2]);
 			
 			// Get these
 			$size = @disk_total_space($mount[2]);
 			$free = @disk_free_space($mount[2]);
-			$used = $size != false && $free != false ? $size - $free : false;
+			$used = $size != false && $free != false ? $size - $free : 0;
 
 			// If it's a symlink, find out where it really goes.
 			// (using realpath instead of readlink because the former gives absolute paths)
 			$symlink = is_link($mount[1]) ? realpath($mount[1]) : false;
 			
-			// Optionally get mount options
-			if ($this->settings['show']['mounts_options'] && !in_array($mount[3], (array) $this->settings['hide']['fs_mount_options'])) 
-				$mount_options = explode(',', $mount[4]);
-			else 
-				$mount_options = array();
+			$mount_options = array();
 
 			// Might be good, go for it
 			$mounts[] = array(
