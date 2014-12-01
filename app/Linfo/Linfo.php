@@ -21,16 +21,16 @@ class Linfo extends Base //implements LinfoInterface
 	public function getCore()
 	{
 		return array(
-				'icon'        => strtolower($this->os),
-				'os'          => $this->OSClass->getOS(),
-				'distro'      => $this->OSClass->getDistro(),
-				'kernel'      => $this->OSClass->getKernel(),
-				'accessed_ip' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
-				'upTime'      => $this->OSClass->getUpTime(),
-				'hostname'    => $this->OSClass->getHostName(),
-				'cpus'        => $this->OSClass->getCPU(),
-				'cpu_arch'    => $this->OSClass->getCPUArchitecture(),
-				'load'        => $this->OSClass->getLoad(),
+				'icon'          => strtolower($this->os),
+				'os'            => $this->OSClass->getOS(),
+				'distro'        => $this->OSClass->getDistro(),
+				'kernel'        => $this->OSClass->getKernel(),
+				'accessed_ip'   => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : 'Unknown',
+				'upTime'        => $this->OSClass->getUpTime(),
+				'hostname'      => $this->OSClass->getHostName(),
+				'cpus'          => $this->OSClass->getCPU(),
+				'cpu_arch'      => $this->OSClass->getCPUArchitecture(),
+				'load'          => $this->OSClass->getLoad(),
 				'process_stats' => $this->OSClass->getProcessStats(),
 			);
 	}
@@ -73,6 +73,14 @@ class Linfo extends Base //implements LinfoInterface
 	public function getNetwork()
 	{
 		return $this->OSClass->getNet();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getService()
+	{
+		return $this->OSClass->getServices();
 	}
 
 	/**

@@ -1151,6 +1151,8 @@ class OS_Linux {
 		// Convert paths of executables to PID files
 		$pids = array();
 		$do_process_search = false;
+		
+		//
 		if (count($this->settings['services']['executables']) > 0) {
 			$potential_paths = @glob('/proc/*/cmdline');
 			if (is_array($potential_paths)) {

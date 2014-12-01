@@ -49,34 +49,55 @@
 
 				for (var i = list_mount.length - 1; i >= 0; i--)
 				{
-					if (list_mount[i].name == value.mount) { exist_mount = true; };
+					if (list_mount[i].name == value.mount) { exist_mount = true; break;};
 				};
 
 				if (!exist_mount)
 				{
-					list_mount.push({"name":value.mount});
+					var size = value.size==null || value.size == false ? 0 : parseInt(value.size);
+					var free = value.free==null || value.free == false ? 0 : parseInt(value.free);
+					var used = value.used==null || value.used == false ? 0 : parseInt(value.used);
 
-					var tr = "";
+					if (size != 0)
+					{
+						console.log(value);
 
-					tr += "<td>" + value.devtype + "</td>";
+						list_mount.push({
+							"name": value.mount,
+							"size": size,
+							"free": free,
+							"used": used
+						});
 
-					tr += "<td>" + value.mount + "</td>";
-					
-					tr += "<td>" + (value.label==null ? '' : value.label) + "</td>";
-					
-					tr += "<td>" + (value.type==null ? '' : value.type) + "</td>";
-					
-					tr += "<td>" + (value.size==null ? bytesToSize(0) : bytesToSize(parseInt((value.size == false ? 0 : value.size)))) + "</td>";
-											
-					tr += "<td>" + (value.free==null ? bytesToSize(0) : bytesToSize(parseInt((value.free == false ? 0 : value.free)))) + "</td>";
+						var tr = "<td>" + (value.devtype == undefined ? value.device : value.devtype) + "</td>";
 
-					tr += "<td>" + (value.used==null ? bytesToSize(0) : bytesToSize(parseInt(value.used))) + "</td>";
+						tr += "<td>" + value.mount + "</td>";
+						
+						tr += "<td>" + (value.label==null ? '' : value.label) + "</td>";
+						
+						tr += "<td>" + (value.type==null ? '' : value.type) + "</td>";
+						
+						tr += "<td>" + bytesToSize(size) + "</td>";
+												
+						tr += "<td>" + bytesToSize(free) + "</td>";
 
-					tr += "<td>" + getProgress('', (value.used_percent == false ? 0 : value.used_percent), 'green') + "</td>";
-					
-					el.tbody.append('<tr>'+tr+'</tr>');
+						tr += "<td>" + bytesToSize(used) + "</td>";
+
+						var percent_used = Math.round(((used * 100) / size) * 100) / 100;
+
+						tr += "<td>" + getProgress(bytesToSize(used), percent_used, 'green') + "</td>";
+						
+						el.tbody.append('<tr>'+tr+'</tr>');
+					};
 				};
 
+			};
+
+			/**
+			 *
+			 */
+			var getLabel = function(label, icon) {
+				return "<i class=\"fa fa-"+icon+"\"/>"+label;
 			};
 
 			/**
@@ -140,7 +161,11 @@
 			 */
 			var getProgress = function(label, value, color)
 			{
-				return '<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12"><span class="text">'+label+' <span class="pull-right">'+value+'%</span></span><div class="progress progress-xs"><div class="progress-bar bg-color-'+color+'" style="width: '+value+'%;"></div></div></div>';
+				if(value > 80) icon = "exclamation-triangle";
+				else if(value > 50) icon = "warning";
+				else icon = "check";
+
+				return '<div class="col-xs-6 col-sm-6 col-md-12 col-lg-12"><span class="text">'+getLabel('', icon)+' <span class="pull-right">'+value+'%</span></span><div class="progress progress-xs progress-striped active"><div class="progress-bar bg-color-'+color+'" style="width: '+value+'%;"></div></div></div>';
 			};
 
 			/**
@@ -158,6 +183,18 @@
 				}
 
 				$.each(data, addRow);
+
+				var size = free = used = percent_used = 0;
+
+				for (var i = list_mount.length - 1; i >= 0; i--) {
+					size += list_mount[i].size;
+					free += list_mount[i].free;
+					used += list_mount[i].used;
+				};
+
+				percent_used = Math.round(((used * 100) / size) * 100) / 100;
+
+				el.append("<tfoot><tr><td colspan=\"4\">Totals</td><td>"+bytesToSize(size)+"</td><td>"+bytesToSize(free)+"</td><td>"+bytesToSize(used)+"</td><td>"+getProgress(bytesToSize(used), percent_used, 'red')+"</td></tr></tfoot>");
 
 			};
 

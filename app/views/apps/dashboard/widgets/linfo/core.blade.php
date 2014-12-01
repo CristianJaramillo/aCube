@@ -48,11 +48,11 @@
 						value = '<i class="icon icon_distro_'+value.name.toLowerCase()+'"/>'+value.name+' '+value.version;
 					break;
 					case 'load':
-						var td = '<div class="row">';
+						var td = '';
 						$.each(value, function(label, load){
 							td += getProgress(label, load, 'blue');
 						});
-						value = td + '</div>';
+						value = td;
 					break;
 					case 'os':
 						value = '<i class="' + icon + '"/> ' + value;
