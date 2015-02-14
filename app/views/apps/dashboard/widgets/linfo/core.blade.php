@@ -30,6 +30,9 @@
 				* Añade 1 o mas filas a la tabla.
 				*/
 			var addRow = function(key, value){
+				console.log(key);
+				console.log(value);
+				console.log("----------------------------------------------");
 				switch(key)
 				{
 					case 'cpus':
@@ -45,7 +48,9 @@
 						value = aux;
 					break;
 					case 'distro':
-						value = '<i class="icon icon_distro_'+value.name.toLowerCase()+'"/>'+value.name+' '+value.version;
+						if (value !== false) {
+							value = '<i class="icon icon_distro_'+value.name.toLowerCase()+'"/>'+value.name+' '+value.version;
+						};
 					break;
 					case 'load':
 						var td = '';
